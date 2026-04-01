@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cb-sim-v3';
+const CACHE_NAME = 'cb-sim-v4';
 const APP_SHELL = [
   './',
   './index.html',

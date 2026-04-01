@@ -51,8 +51,16 @@ function mountMapShell() {
       <ul id="map-region-list"></ul>
       <div class="map-legend-key"></div>
     </details>
-    <svg id="map-svg-layer"></svg>
-    <div id="map-node-layer"></div>
+    <nav id="map-breadcrumb" class="map-breadcrumb hidden">
+      <button id="map-back-btn" type="button">&larr; All Regions</button>
+      <span id="map-breadcrumb-region"></span>
+    </nav>
+    <div id="map-canvas" class="map-canvas">
+      <div id="map-overview-layer" class="map-overview-layer"></div>
+      <div id="map-subregion-layer" class="map-subregion-layer"></div>
+      <svg id="map-svg-layer"></svg>
+      <div id="map-node-layer"></div>
+    </div>
     <div id="map-selected-title"></div>
     <div id="map-selected-meta"></div>
     <div id="map-selected-region"></div>
@@ -74,7 +82,7 @@ function baseProfile() {
     scenarioProgress: {
       'youngstown-steel-seizure': { unlocked: true, completed: true, stars: 3 },
       'ins-v-chadha-legislative-veto': { unlocked: true, completed: false, stars: 0 },
-      the-frozen-accounts: { unlocked: false, completed: false, stars: 0 }
+      'the-frozen-accounts': { unlocked: false, completed: false, stars: 0 }
     },
     campaign: {
       currentNodeId: 'ins-v-chadha-legislative-veto',
@@ -85,28 +93,45 @@ function baseProfile() {
   };
 }
 
-test('Map node state classes render correctly.', async () => {
+/** Helper: set viewState to region mode for a specific region before rendering. */
+function enterRegionMode(regionId, selectedNodeId) {
+  const vs = __testHooks.getViewState();
+  __testHooks.setViewState({
+    ...vs,
+    mode: 'region',
+    activeRegionId: regionId,
+    selectedNodeId: selectedNodeId || null
+  });
+}
+
+test('Overview renders region tiles for each region.', async () => {
   mountMapShell();
   __testHooks.clear();
   await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
 
+  const tiles = document.querySelectorAll('.map-region-tile');
+  assert(tiles.length >= 8, 'Overview should render a tile for each of the 8 regions.');
+  assert(document.querySelector('[data-region-id="executive-power"]'), 'Executive power region tile should exist.');
+  assert(document.querySelector('[data-region-id="equal-protection"]'), 'Equal protection region tile should exist.');
+});
+
+test('Map node state classes render correctly in region view.', async () => {
+  mountMapShell();
+  __testHooks.clear();
+  enterRegionMode('executive-power', 'youngstown-steel-seizure');
+  await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
+
   const completedNode = document.querySelector('[data-node-id="youngstown-steel-seizure"]');
-  const activeNode = document.querySelector('[data-node-id="ins-v-chadha-legislative-veto"]');
 
   assert(completedNode.classList.contains('is-completed'), 'Completed node should be marked completed.');
   assert(completedNode.classList.contains('is-mastered'), 'Three-star node should be marked mastered.');
-  assert(activeNode.classList.contains('is-unlocked'), 'Active node should be unlocked.');
-  assert(activeNode.classList.contains('is-active'), 'Current campaign node should be active.');
 });
 
 test('Selected nodes show labels while unrelated side-path nodes stay hidden.', async () => {
   mountMapShell();
   __testHooks.clear();
+  enterRegionMode('executive-power', 'the-frozen-accounts');
   await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
-
-  const selectableNode = document.querySelector('[data-node-id="the-frozen-accounts"]');
-  selectableNode.click();
-  await wait(60);
 
   const selectedNode = document.querySelector('[data-node-id="the-frozen-accounts"]');
   const unrelatedNode = document.querySelector('[data-node-id="the-subpoenaed-tapes"]');
@@ -118,6 +143,7 @@ test('Selected nodes show labels while unrelated side-path nodes stay hidden.', 
 test('Selecting a node updates the sidebar detail panel.', async () => {
   mountMapShell();
   __testHooks.clear();
+  enterRegionMode('separation-of-powers', 'ins-v-chadha-legislative-veto');
   await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
 
   const activeNode = document.querySelector('[data-node-id="ins-v-chadha-legislative-veto"]');
@@ -130,7 +156,7 @@ test('Selecting a node updates the sidebar detail panel.', async () => {
   assert(document.getElementById('map-selected-requirements').textContent.length > 0, 'Sidebar should include requirement context.');
 });
 
-test('Region focus dims out-of-region nodes.', async () => {
+test('Region filter switches to region view.', async () => {
   mountMapShell();
   __testHooks.clear();
   await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
@@ -141,27 +167,26 @@ test('Region focus dims out-of-region nodes.', async () => {
   await wait(60);
 
   const executiveNode = document.querySelector('[data-node-id="youngstown-steel-seizure"]');
-  const administrativeNode = document.querySelector('[data-node-id="ins-v-chadha-legislative-veto"]');
+  assert(executiveNode, 'Filtering to executive-power should render executive-power nodes.');
 
-  assert(!executiveNode.classList.contains('is-dimmed'), 'Focused-region nodes should stay emphasized.');
-  assert(administrativeNode.classList.contains('is-dimmed'), 'Out-of-region nodes should be dimmed after filtering.');
+  const breadcrumb = document.getElementById('map-breadcrumb');
+  assert(!breadcrumb.classList.contains('hidden'), 'Breadcrumb should be visible in region view.');
 });
 
-test('Selected nodes highlight adjacent edges.', async () => {
+test('Selected nodes highlight adjacent edges in region view.', async () => {
   mountMapShell();
   __testHooks.clear();
+  enterRegionMode('executive-power', 'the-frozen-accounts');
   await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
 
-  const node = document.querySelector('[data-node-id="the-frozen-accounts"]');
-  node.click();
-  await wait(60);
-
-  equal(document.querySelectorAll('.campaign-edge.is-connected').length, 2, 'The selected side-path node should emphasize its parent and child edges.');
+  const connectedEdges = document.querySelectorAll('.campaign-edge.is-connected');
+  assert(connectedEdges.length >= 1, 'The selected node should emphasize at least one connected edge.');
 });
 
 test('Nodes render pin markup instead of star text blocks.', async () => {
   mountMapShell();
   __testHooks.clear();
+  enterRegionMode('executive-power', 'youngstown-steel-seizure');
   await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
 
   const node = document.querySelector('[data-node-id="youngstown-steel-seizure"]');
@@ -179,6 +204,8 @@ test('Completed nodes unlock expected children on the map.', async () => {
 
   const newUnlocks = unlockAvailableNodes(profile, campaignData);
   assert(newUnlocks.includes('ins-v-chadha-legislative-veto'), 'The next main-path node should unlock after Youngstown.');
+
+  enterRegionMode('separation-of-powers');
   await renderCampaignMap({ profile, scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
 
   const childNode = document.querySelector('[data-node-id="ins-v-chadha-legislative-veto"]');

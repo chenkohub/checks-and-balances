@@ -265,6 +265,42 @@ function rescaleCoord(value, min, max, padding) {
   return padding + ((value - min) / range) * (100 - 2 * padding);
 }
 
+/* ── Color helpers (hex → rgba, no color-mix needed) ───────────────── */
+
+function hexToRgb(hex) {
+  const h = hex.replace('#', '');
+  return {
+    r: parseInt(h.substring(0, 2), 16) || 0,
+    g: parseInt(h.substring(2, 4), 16) || 0,
+    b: parseInt(h.substring(4, 6), 16) || 0
+  };
+}
+
+function rgba(hex, alpha) {
+  const { r, g, b } = hexToRgb(hex);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function tileStyleVars(hex) {
+  return [
+    `--tile-bg:${rgba(hex, 0.08)}`,
+    `--tile-border:${rgba(hex, 0.30)}`,
+    `--tile-hover-bg:${rgba(hex, 0.14)}`,
+    `--tile-hover-border:${rgba(hex, 0.60)}`,
+    `--tile-glow:${rgba(hex, 0.10)}`,
+    `--region-color:${hex}`,
+    `--tile-bar-color:${hex}`
+  ].join(';');
+}
+
+function regionWashVars(hex) {
+  return [
+    `--region-wash-strong:${rgba(hex, 0.18)}`,
+    `--region-wash-mid:${rgba(hex, 0.12)}`,
+    `--region-wash-light:${rgba(hex, 0.04)}`
+  ].join(';');
+}
+
 /* ── Overview rendering ────────────────────────────────────────────── */
 
 function getRegionProgress(campaignData, profile, regionId) {
@@ -304,7 +340,7 @@ function renderOverview(campaignData, profile) {
         type="button"
         class="map-region-tile"
         data-region-id="${escapeHtml(region.id)}"
-        style="--region-color: ${color};"
+        style="${tileStyleVars(color)}"
         aria-label="${escapeHtml(region.label)} — ${progress.completed} of ${progress.total} complete"
       >
         <span class="map-region-tile-label">${escapeHtml(region.label)}</span>
@@ -496,7 +532,11 @@ function renderRegionView(campaignData, profile, scenarioCatalog, regionId, onPl
 
   // Set region color wash on the canvas
   if (canvas && region?.color) {
-    canvas.style.setProperty('--active-region-color', region.color);
+    const washStyle = regionWashVars(region.color);
+    washStyle.split(';').forEach((pair) => {
+      const [prop, val] = pair.split(':');
+      if (prop && val) canvas.style.setProperty(prop.trim(), val.trim());
+    });
     canvas.classList.add('has-active-region');
   }
 
@@ -601,7 +641,9 @@ function bindMapControls() {
       const canvas = document.getElementById('map-canvas');
       if (canvas) {
         canvas.classList.remove('has-active-region');
-        canvas.style.removeProperty('--active-region-color');
+        canvas.style.removeProperty('--region-wash-strong');
+        canvas.style.removeProperty('--region-wash-mid');
+        canvas.style.removeProperty('--region-wash-light');
       }
       if (lastRenderContext) {
         await renderCampaignMap(lastRenderContext);

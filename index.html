@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
   <script>
     (() => {
-      const MAP_UI_BUILD = '2026-04-01-rz4p0';
+      const MAP_UI_BUILD = '2026-04-01-r0fpk';
       const buildKey = 'cb-sim-map-ui-build';
       const reloadParam = 'cb-map-ui-reload';
 
@@ -31,7 +31,7 @@
             localStorage.setItem(buildKey, MAP_UI_BUILD);
           }
 
-          caches.delete('cb-sim-v3').finally(() => {
+          caches.delete('cb-sim-v4').finally(() => {
             if (!alreadyReloaded) {
               url.searchParams.set(reloadParam, MAP_UI_BUILD);
               window.location.replace(url.toString());
@@ -49,7 +49,7 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=2026-04-01-rz4p0" />
+  <link rel="stylesheet" href="styles.css?v=2026-04-01-r0fpk" />
 </head>
 <body>
   <a href="#main-content" class="skip-link sr-only">Skip to main content</a>
@@ -247,7 +247,13 @@
           </section>
 
           <section class="surface-card map-canvas-card">
+            <nav id="map-breadcrumb" class="map-breadcrumb hidden" aria-label="Map navigation">
+              <button id="map-back-btn" class="map-back-btn" type="button" aria-label="Back to all regions">&larr; All Regions</button>
+              <span id="map-breadcrumb-region" class="map-breadcrumb-region"></span>
+            </nav>
             <div id="map-canvas" class="map-canvas">
+              <div id="map-overview-layer" class="map-overview-layer"></div>
+              <div id="map-subregion-layer" class="map-subregion-layer"></div>
               <svg id="map-svg-layer" class="map-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
               <div id="map-node-layer" class="map-node-layer"></div>
             </div>
@@ -689,7 +695,7 @@
     </div>
   </aside>
 
-  <script type="module" src="game.js?v=2026-04-01-rz4p0"></script>
+  <script type="module" src="game.js?v=2026-04-01-r0fpk"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {

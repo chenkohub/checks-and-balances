@@ -3,35 +3,304 @@
   "regions": [
     {
       "id": "judicial-power",
-      "label": "Judicial Power"
+      "label": "Judicial Power",
+      "color": "#475569",
+      "subRegions": [
+        {
+          "id": "standing-justiciability",
+          "label": "Standing & Justiciability",
+          "color": "rgba(71,85,105,0.10)",
+          "nodeIds": [
+            "environmental-standing",
+            "abortion-clinic-mootness",
+            "gerrymandering-challenge",
+            "the-partisan-gerrymander-challenge"
+          ]
+        },
+        {
+          "id": "judicial-review",
+          "label": "Judicial Review & Enforcement",
+          "color": "rgba(71,85,105,0.18)",
+          "nodeIds": [
+            "second-amendment-interpretation-methods",
+            "president-refuses-court-order",
+            "agency-defiance-judicial-review"
+          ]
+        }
+      ]
     },
     {
       "id": "executive-power",
-      "label": "Executive Power"
+      "label": "Executive Power",
+      "color": "#b45309",
+      "subRegions": [
+        {
+          "id": "executive-authority",
+          "label": "Executive Authority",
+          "color": "rgba(180,83,9,0.10)",
+          "nodeIds": [
+            "youngstown-steel-seizure",
+            "the-frozen-accounts",
+            "the-frozen-accounts-statutory-twist",
+            "the-tariff-gambit",
+            "youngstown-full-analysis",
+            "president-seizes-semiconductor-plants"
+          ]
+        },
+        {
+          "id": "privilege-immunity",
+          "label": "Privilege & Immunity",
+          "color": "rgba(180,83,9,0.18)",
+          "nodeIds": [
+            "the-subpoenaed-tapes",
+            "executive-privilege-congressional-subpoena",
+            "the-state-of-the-union-incident",
+            "the-rally-gone-wrong",
+            "presidential-immunity-framework",
+            "presidential-campaign-rally-assault"
+          ]
+        },
+        {
+          "id": "removal-power",
+          "label": "Removal Power",
+          "color": "rgba(180,83,9,0.08)",
+          "nodeIds": [
+            "removal-independent-agency-head",
+            "independent-ai-safety-director",
+            "removal-multi-member-commission",
+            "double-insulated-inspector-general",
+            "seila-law-deep-dive"
+          ]
+        }
+      ]
     },
     {
       "id": "separation-of-powers",
-      "label": "Separation of Powers"
+      "label": "Separation of Powers",
+      "color": "#0f766e",
+      "subRegions": [
+        {
+          "id": "legislative-veto",
+          "label": "Legislative Veto & Bicameralism",
+          "color": "rgba(15,118,110,0.10)",
+          "nodeIds": [
+            "ins-v-chadha-legislative-veto",
+            "the-nullification-resolution",
+            "the-sixtyday-window",
+            "the-approval-requirement",
+            "ai-oversight-legislative-veto"
+          ]
+        },
+        {
+          "id": "nondelegation",
+          "label": "Nondelegation",
+          "color": "rgba(15,118,110,0.18)",
+          "nodeIds": [
+            "nondelegation-intelligible-principle",
+            "the-public-interest-mandate",
+            "the-registration-directive",
+            "pandemic-emergency-delegation"
+          ]
+        },
+        {
+          "id": "major-questions",
+          "label": "Major Questions & Structure",
+          "color": "rgba(15,118,110,0.08)",
+          "nodeIds": [
+            "epa-carbon-major-questions",
+            "the-unsupervised-adjudicator",
+            "the-congressional-commission",
+            "tech-czar-appointments",
+            "congressional-inspector-general"
+          ]
+        }
+      ]
     },
     {
       "id": "congressional-power",
-      "label": "Congressional Power"
+      "label": "Congressional Power",
+      "color": "#9f1239",
+      "subRegions": [
+        {
+          "id": "commerce-clause",
+          "label": "Commerce Clause",
+          "color": "rgba(159,18,57,0.10)",
+          "nodeIds": [
+            "the-school-zone-statute",
+            "the-home-garden-prohibition",
+            "the-purchase-mandate",
+            "federal-mental-health-act",
+            "domestic-violence-housing-act",
+            "intrastate-endangered-species",
+            "homegrown-psychedelics-regulation",
+            "national-broadband-mandate",
+            "nutrition-mandate-inactivity"
+          ]
+        },
+        {
+          "id": "spending-power",
+          "label": "Spending Power",
+          "color": "rgba(159,18,57,0.18)",
+          "nodeIds": [
+            "spending-clause-coercion",
+            "the-highway-incentive",
+            "the-medicaid-ultimatum",
+            "education-standards-funding",
+            "education-medicaid-spending-coercion"
+          ]
+        },
+        {
+          "id": "necessary-proper-taxing",
+          "label": "Necessary & Proper / Taxing",
+          "color": "rgba(159,18,57,0.08)",
+          "nodeIds": [
+            "mcculloch-modern-bank",
+            "carbon-emissions-charge",
+            "social-media-age-verification-fee"
+          ]
+        }
+      ]
     },
     {
       "id": "federalism",
-      "label": "Federalism"
+      "label": "Federalism",
+      "color": "#166534",
+      "subRegions": [
+        {
+          "id": "anti-commandeering",
+          "label": "Anti-Commandeering",
+          "color": "rgba(22,101,52,0.10)",
+          "nodeIds": [
+            "the-waste-disposal-directive",
+            "the-background-check-order",
+            "federal-gun-registry-commandeering"
+          ]
+        },
+        {
+          "id": "dormant-commerce",
+          "label": "Dormant Commerce Clause",
+          "color": "rgba(22,101,52,0.18)",
+          "nodeIds": [
+            "state-wine-shipping-ban",
+            "dormant-commerce-clause-flow-control",
+            "state-truck-length-safety",
+            "dairy-subsidy-scheme",
+            "humane-poultry-standards-dcc"
+          ]
+        },
+        {
+          "id": "preemption-privileges",
+          "label": "Preemption & Privileges",
+          "color": "rgba(22,101,52,0.08)",
+          "nodeIds": [
+            "insurance-regulation-mccarran-ferguson",
+            "nonresident-fishing-license-fees",
+            "medical-school-residency-preference",
+            "state-drone-privacy-preemption",
+            "federal-preemption-cannabis"
+          ]
+        }
+      ]
     },
     {
       "id": "foreign-affairs",
-      "label": "Foreign Affairs"
+      "label": "Foreign Affairs",
+      "color": "#1e3a5f",
+      "subRegions": [
+        {
+          "id": "treaties-agreements",
+          "label": "Treaties & Executive Agreements",
+          "color": "rgba(30,58,95,0.10)",
+          "nodeIds": [
+            "the-hostage-crisis-executive-agreement",
+            "the-treaty-enforcement-memo",
+            "the-passport-dispute",
+            "passport-recognition-power",
+            "climate-executive-agreement",
+            "treaty-delegation-international-body"
+          ]
+        },
+        {
+          "id": "war-powers",
+          "label": "War Powers",
+          "color": "rgba(30,58,95,0.18)",
+          "nodeIds": [
+            "the-foreign-arms-embargo",
+            "the-unilateral-bombing-campaign",
+            "unilateral-military-strike"
+          ]
+        }
+      ]
     },
     {
       "id": "equal-protection",
-      "label": "Equal Protection"
+      "label": "Equal Protection",
+      "color": "#c2410c",
+      "subRegions": [
+        {
+          "id": "strict-scrutiny",
+          "label": "Strict Scrutiny (Race)",
+          "color": "rgba(194,65,12,0.10)",
+          "nodeIds": [
+            "equal-protection-scrutiny-framework",
+            "school-admissions-test-disparate-impact",
+            "fire-department-diversity-program",
+            "resegregation-after-unitary-status",
+            "race-neutral-admissions-post-sffa",
+            "police-promotion-exam-disparate-impact",
+            "disparate-impact-intent-framework"
+          ]
+        },
+        {
+          "id": "intermediate-scrutiny",
+          "label": "Intermediate Scrutiny (Sex/Gender)",
+          "color": "rgba(194,65,12,0.18)",
+          "nodeIds": [
+            "pregnancy-leave-classification",
+            "male-parental-leave-discrimination",
+            "women-stem-scholarship",
+            "inheritance-rights-nonmarital-children",
+            "gender-identity-birth-certificate"
+          ]
+        },
+        {
+          "id": "rational-basis",
+          "label": "Rational Basis",
+          "color": "rgba(194,65,12,0.08)",
+          "nodeIds": [
+            "food-truck-licensing-ban",
+            "drug-conviction-business-license-ban",
+            "adoption-agency-orientation-ban",
+            "voter-id-fundamental-interest"
+          ]
+        }
+      ]
     },
     {
       "id": "due-process",
-      "label": "Due Process"
+      "label": "Due Process",
+      "color": "#9d174d",
+      "subRegions": [
+        {
+          "id": "incorporation",
+          "label": "Incorporation",
+          "color": "rgba(157,23,77,0.10)",
+          "nodeIds": [
+            "grand-jury-incorporation"
+          ]
+        },
+        {
+          "id": "substantive-dp",
+          "label": "Substantive Due Process",
+          "color": "rgba(157,23,77,0.18)",
+          "nodeIds": [
+            "food-truck-proximity-ban",
+            "post-dobbs-six-week-ban",
+            "surrogacy-ban-substantive-due-process",
+            "marriage-counseling-mandate"
+          ]
+        }
+      ]
     }
   ],
   "nodes": [
@@ -39,8 +308,8 @@
       "id": "environmental-standing",
       "scenarioId": "environmental-standing",
       "regionId": "judicial-power",
-      "x": 10.0,
-      "y": 10.0,
+      "x": 10,
+      "y": 10,
       "requiresAll": [],
       "requiresAny": [],
       "requiresMinStarsInRegion": 0,
@@ -53,7 +322,7 @@
       "id": "abortion-clinic-mootness",
       "scenarioId": "abortion-clinic-mootness",
       "regionId": "judicial-power",
-      "x": 5.0,
+      "x": 5,
       "y": 36.7,
       "requiresAll": [
         "environmental-standing"
@@ -66,7 +335,7 @@
       "id": "second-amendment-interpretation-methods",
       "scenarioId": "second-amendment-interpretation-methods",
       "regionId": "judicial-power",
-      "x": 15.0,
+      "x": 15,
       "y": 36.7,
       "requiresAll": [
         "environmental-standing"
@@ -79,7 +348,7 @@
       "id": "president-refuses-court-order",
       "scenarioId": "president-refuses-court-order",
       "regionId": "judicial-power",
-      "x": 5.0,
+      "x": 5,
       "y": 63.3,
       "requiresAll": [
         "second-amendment-interpretation-methods"
@@ -94,8 +363,8 @@
       "id": "agency-defiance-judicial-review",
       "scenarioId": "agency-defiance-judicial-review",
       "regionId": "judicial-power",
-      "x": 5.0,
-      "y": 90.0,
+      "x": 5,
+      "y": 90,
       "requiresAll": [
         "president-refuses-court-order"
       ],
@@ -107,7 +376,7 @@
       "id": "gerrymandering-challenge",
       "scenarioId": "gerrymandering-challenge",
       "regionId": "judicial-power",
-      "x": 15.0,
+      "x": 15,
       "y": 63.3,
       "requiresAll": [
         "abortion-clinic-mootness"
@@ -120,8 +389,8 @@
       "id": "the-partisan-gerrymander-challenge",
       "scenarioId": "the-partisan-gerrymander-challenge",
       "regionId": "judicial-power",
-      "x": 15.0,
-      "y": 90.0,
+      "x": 15,
+      "y": 90,
       "requiresAll": [
         "gerrymandering-challenge"
       ],
@@ -136,8 +405,8 @@
       "id": "youngstown-steel-seizure",
       "scenarioId": "youngstown-steel-seizure",
       "regionId": "executive-power",
-      "x": 18.0,
-      "y": 10.0,
+      "x": 18,
+      "y": 10,
       "requiresAll": [],
       "requiresAny": [],
       "requiresMinStarsInRegion": 0,
@@ -150,8 +419,8 @@
       "id": "the-frozen-accounts",
       "scenarioId": "the-frozen-accounts",
       "regionId": "executive-power",
-      "x": 18.0,
-      "y": 26.0,
+      "x": 18,
+      "y": 26,
       "requiresAll": [
         "youngstown-steel-seizure"
       ],
@@ -163,8 +432,8 @@
       "id": "the-frozen-accounts-statutory-twist",
       "scenarioId": "the-frozen-accounts-statutory-twist",
       "regionId": "executive-power",
-      "x": 18.0,
-      "y": 42.0,
+      "x": 18,
+      "y": 42,
       "requiresAll": [
         "the-frozen-accounts"
       ],
@@ -176,8 +445,8 @@
       "id": "the-tariff-gambit",
       "scenarioId": "the-tariff-gambit",
       "regionId": "executive-power",
-      "x": 18.0,
-      "y": 58.0,
+      "x": 18,
+      "y": 58,
       "requiresAll": [
         "the-frozen-accounts-statutory-twist"
       ],
@@ -189,8 +458,8 @@
       "id": "youngstown-full-analysis",
       "scenarioId": "youngstown-full-analysis",
       "regionId": "executive-power",
-      "x": 18.0,
-      "y": 74.0,
+      "x": 18,
+      "y": 74,
       "requiresAll": [
         "the-frozen-accounts-statutory-twist",
         "the-tariff-gambit"
@@ -206,7 +475,7 @@
       "scenarioId": "president-seizes-semiconductor-plants",
       "regionId": "executive-power",
       "x": 20.5,
-      "y": 26.0,
+      "y": 26,
       "requiresAll": [
         "youngstown-steel-seizure"
       ],
@@ -218,8 +487,8 @@
       "id": "the-subpoenaed-tapes",
       "scenarioId": "the-subpoenaed-tapes",
       "regionId": "executive-power",
-      "x": 23.0,
-      "y": 26.0,
+      "x": 23,
+      "y": 26,
       "requiresAll": [
         "youngstown-steel-seizure"
       ],
@@ -234,7 +503,7 @@
       "scenarioId": "executive-privilege-congressional-subpoena",
       "regionId": "executive-power",
       "x": 20.5,
-      "y": 42.0,
+      "y": 42,
       "requiresAll": [
         "the-subpoenaed-tapes"
       ],
@@ -246,8 +515,8 @@
       "id": "the-state-of-the-union-incident",
       "scenarioId": "the-state-of-the-union-incident",
       "regionId": "executive-power",
-      "x": 23.0,
-      "y": 42.0,
+      "x": 23,
+      "y": 42,
       "requiresAll": [
         "the-subpoenaed-tapes"
       ],
@@ -259,8 +528,8 @@
       "id": "the-rally-gone-wrong",
       "scenarioId": "the-rally-gone-wrong",
       "regionId": "executive-power",
-      "x": 28.0,
-      "y": 58.0,
+      "x": 28,
+      "y": 58,
       "requiresAll": [
         "the-state-of-the-union-incident"
       ],
@@ -272,8 +541,8 @@
       "id": "presidential-immunity-framework",
       "scenarioId": "presidential-immunity-framework",
       "regionId": "executive-power",
-      "x": 28.0,
-      "y": 74.0,
+      "x": 28,
+      "y": 74,
       "requiresAll": [
         "the-state-of-the-union-incident",
         "the-rally-gone-wrong"
@@ -288,8 +557,8 @@
       "id": "presidential-campaign-rally-assault",
       "scenarioId": "presidential-campaign-rally-assault",
       "regionId": "executive-power",
-      "x": 23.0,
-      "y": 90.0,
+      "x": 23,
+      "y": 90,
       "requiresAll": [
         "presidential-immunity-framework"
       ],
@@ -301,8 +570,8 @@
       "id": "removal-independent-agency-head",
       "scenarioId": "removal-independent-agency-head",
       "regionId": "executive-power",
-      "x": 28.0,
-      "y": 10.0,
+      "x": 28,
+      "y": 10,
       "requiresAll": [
         "nondelegation-intelligible-principle"
       ],
@@ -317,7 +586,7 @@
       "scenarioId": "independent-ai-safety-director",
       "regionId": "executive-power",
       "x": 25.5,
-      "y": 26.0,
+      "y": 26,
       "requiresAll": [
         "removal-independent-agency-head"
       ],
@@ -329,8 +598,8 @@
       "id": "removal-multi-member-commission",
       "scenarioId": "removal-multi-member-commission",
       "regionId": "executive-power",
-      "x": 28.0,
-      "y": 26.0,
+      "x": 28,
+      "y": 26,
       "requiresAll": [
         "removal-independent-agency-head"
       ],
@@ -343,7 +612,7 @@
       "scenarioId": "double-insulated-inspector-general",
       "regionId": "executive-power",
       "x": 25.5,
-      "y": 42.0,
+      "y": 42,
       "requiresAll": [
         "removal-multi-member-commission"
       ],
@@ -355,8 +624,8 @@
       "id": "seila-law-deep-dive",
       "scenarioId": "seila-law-deep-dive",
       "regionId": "executive-power",
-      "x": 28.0,
-      "y": 42.0,
+      "x": 28,
+      "y": 42,
       "requiresAll": [
         "removal-multi-member-commission"
       ],
@@ -370,8 +639,8 @@
       "id": "ins-v-chadha-legislative-veto",
       "scenarioId": "ins-v-chadha-legislative-veto",
       "regionId": "separation-of-powers",
-      "x": 36.0,
-      "y": 10.0,
+      "x": 36,
+      "y": 10,
       "requiresAll": [
         "youngstown-steel-seizure"
       ],
@@ -386,7 +655,7 @@
       "id": "the-nullification-resolution",
       "scenarioId": "the-nullification-resolution",
       "regionId": "separation-of-powers",
-      "x": 31.0,
+      "x": 31,
       "y": 23.3,
       "requiresAll": [
         "ins-v-chadha-legislative-veto"
@@ -399,7 +668,7 @@
       "id": "the-sixtyday-window",
       "scenarioId": "the-sixtyday-window",
       "regionId": "separation-of-powers",
-      "x": 31.0,
+      "x": 31,
       "y": 36.7,
       "requiresAll": [
         "the-nullification-resolution"
@@ -412,8 +681,8 @@
       "id": "the-approval-requirement",
       "scenarioId": "the-approval-requirement",
       "regionId": "separation-of-powers",
-      "x": 31.0,
-      "y": 50.0,
+      "x": 31,
+      "y": 50,
       "requiresAll": [
         "the-sixtyday-window"
       ],
@@ -425,7 +694,7 @@
       "id": "ai-oversight-legislative-veto",
       "scenarioId": "ai-oversight-legislative-veto",
       "regionId": "separation-of-powers",
-      "x": 36.0,
+      "x": 36,
       "y": 23.3,
       "requiresAll": [
         "ins-v-chadha-legislative-veto"
@@ -438,7 +707,7 @@
       "id": "nondelegation-intelligible-principle",
       "scenarioId": "nondelegation-intelligible-principle",
       "regionId": "separation-of-powers",
-      "x": 41.0,
+      "x": 41,
       "y": 23.3,
       "requiresAll": [
         "ins-v-chadha-legislative-veto"
@@ -466,8 +735,8 @@
       "id": "the-registration-directive",
       "scenarioId": "the-registration-directive",
       "regionId": "separation-of-powers",
-      "x": 41.0,
-      "y": 50.0,
+      "x": 41,
+      "y": 50,
       "requiresAll": [
         "the-public-interest-mandate"
       ],
@@ -492,7 +761,7 @@
       "id": "epa-carbon-major-questions",
       "scenarioId": "epa-carbon-major-questions",
       "regionId": "separation-of-powers",
-      "x": 41.0,
+      "x": 41,
       "y": 36.7,
       "requiresAll": [
         "nondelegation-intelligible-principle"
@@ -507,7 +776,7 @@
       "id": "the-unsupervised-adjudicator",
       "scenarioId": "the-unsupervised-adjudicator",
       "regionId": "separation-of-powers",
-      "x": 36.0,
+      "x": 36,
       "y": 63.3,
       "requiresAll": [],
       "requiresAny": [
@@ -521,7 +790,7 @@
       "id": "the-congressional-commission",
       "scenarioId": "the-congressional-commission",
       "regionId": "separation-of-powers",
-      "x": 31.0,
+      "x": 31,
       "y": 76.7,
       "requiresAll": [
         "the-unsupervised-adjudicator"
@@ -534,7 +803,7 @@
       "id": "tech-czar-appointments",
       "scenarioId": "tech-czar-appointments",
       "regionId": "separation-of-powers",
-      "x": 41.0,
+      "x": 41,
       "y": 76.7,
       "requiresAll": [
         "the-unsupervised-adjudicator"
@@ -547,8 +816,8 @@
       "id": "congressional-inspector-general",
       "scenarioId": "congressional-inspector-general",
       "regionId": "separation-of-powers",
-      "x": 36.0,
-      "y": 90.0,
+      "x": 36,
+      "y": 90,
       "requiresAll": [
         "the-congressional-commission"
       ],
@@ -562,8 +831,8 @@
       "id": "mcculloch-modern-bank",
       "scenarioId": "mcculloch-modern-bank",
       "regionId": "congressional-power",
-      "x": 44.0,
-      "y": 10.0,
+      "x": 44,
+      "y": 10,
       "requiresAll": [],
       "requiresAny": [],
       "requiresMinStarsInRegion": 0,
@@ -576,8 +845,8 @@
       "id": "spending-clause-coercion",
       "scenarioId": "spending-clause-coercion",
       "regionId": "congressional-power",
-      "x": 56.0,
-      "y": 10.0,
+      "x": 56,
+      "y": 10,
       "requiresAll": [
         "nondelegation-intelligible-principle"
       ],
@@ -591,8 +860,8 @@
       "id": "the-school-zone-statute",
       "scenarioId": "the-school-zone-statute",
       "regionId": "congressional-power",
-      "x": 44.0,
-      "y": 30.0,
+      "x": 44,
+      "y": 30,
       "requiresAll": [
         "spending-clause-coercion"
       ],
@@ -606,8 +875,8 @@
       "id": "the-home-garden-prohibition",
       "scenarioId": "the-home-garden-prohibition",
       "regionId": "congressional-power",
-      "x": 44.0,
-      "y": 50.0,
+      "x": 44,
+      "y": 50,
       "requiresAll": [
         "the-school-zone-statute"
       ],
@@ -621,8 +890,8 @@
       "id": "the-purchase-mandate",
       "scenarioId": "the-purchase-mandate",
       "regionId": "congressional-power",
-      "x": 44.0,
-      "y": 70.0,
+      "x": 44,
+      "y": 70,
       "requiresAll": [
         "the-home-garden-prohibition"
       ],
@@ -637,8 +906,8 @@
       "id": "federal-mental-health-act",
       "scenarioId": "federal-mental-health-act",
       "regionId": "congressional-power",
-      "x": 47.0,
-      "y": 50.0,
+      "x": 47,
+      "y": 50,
       "requiresAll": [
         "the-school-zone-statute"
       ],
@@ -650,8 +919,8 @@
       "id": "domestic-violence-housing-act",
       "scenarioId": "domestic-violence-housing-act",
       "regionId": "congressional-power",
-      "x": 50.0,
-      "y": 70.0,
+      "x": 50,
+      "y": 70,
       "requiresAll": [
         "federal-mental-health-act"
       ],
@@ -663,8 +932,8 @@
       "id": "intrastate-endangered-species",
       "scenarioId": "intrastate-endangered-species",
       "regionId": "congressional-power",
-      "x": 56.0,
-      "y": 70.0,
+      "x": 56,
+      "y": 70,
       "requiresAll": [
         "the-home-garden-prohibition"
       ],
@@ -676,8 +945,8 @@
       "id": "homegrown-psychedelics-regulation",
       "scenarioId": "homegrown-psychedelics-regulation",
       "regionId": "congressional-power",
-      "x": 44.0,
-      "y": 90.0,
+      "x": 44,
+      "y": 90,
       "requiresAll": [
         "intrastate-endangered-species"
       ],
@@ -689,8 +958,8 @@
       "id": "national-broadband-mandate",
       "scenarioId": "national-broadband-mandate",
       "regionId": "congressional-power",
-      "x": 50.0,
-      "y": 90.0,
+      "x": 50,
+      "y": 90,
       "requiresAll": [
         "the-purchase-mandate"
       ],
@@ -702,8 +971,8 @@
       "id": "nutrition-mandate-inactivity",
       "scenarioId": "nutrition-mandate-inactivity",
       "regionId": "congressional-power",
-      "x": 56.0,
-      "y": 90.0,
+      "x": 56,
+      "y": 90,
       "requiresAll": [
         "the-purchase-mandate"
       ],
@@ -715,8 +984,8 @@
       "id": "the-highway-incentive",
       "scenarioId": "the-highway-incentive",
       "regionId": "congressional-power",
-      "x": 48.0,
-      "y": 30.0,
+      "x": 48,
+      "y": 30,
       "requiresAll": [
         "spending-clause-coercion"
       ],
@@ -728,8 +997,8 @@
       "id": "the-medicaid-ultimatum",
       "scenarioId": "the-medicaid-ultimatum",
       "regionId": "congressional-power",
-      "x": 50.0,
-      "y": 50.0,
+      "x": 50,
+      "y": 50,
       "requiresAll": [
         "the-highway-incentive"
       ],
@@ -741,8 +1010,8 @@
       "id": "education-standards-funding",
       "scenarioId": "education-standards-funding",
       "regionId": "congressional-power",
-      "x": 52.0,
-      "y": 30.0,
+      "x": 52,
+      "y": 30,
       "requiresAll": [
         "spending-clause-coercion"
       ],
@@ -754,8 +1023,8 @@
       "id": "education-medicaid-spending-coercion",
       "scenarioId": "education-medicaid-spending-coercion",
       "regionId": "congressional-power",
-      "x": 53.0,
-      "y": 50.0,
+      "x": 53,
+      "y": 50,
       "requiresAll": [
         "education-standards-funding"
       ],
@@ -767,8 +1036,8 @@
       "id": "carbon-emissions-charge",
       "scenarioId": "carbon-emissions-charge",
       "regionId": "congressional-power",
-      "x": 56.0,
-      "y": 30.0,
+      "x": 56,
+      "y": 30,
       "requiresAll": [
         "mcculloch-modern-bank"
       ],
@@ -780,8 +1049,8 @@
       "id": "social-media-age-verification-fee",
       "scenarioId": "social-media-age-verification-fee",
       "regionId": "congressional-power",
-      "x": 56.0,
-      "y": 50.0,
+      "x": 56,
+      "y": 50,
       "requiresAll": [
         "carbon-emissions-charge"
       ],
@@ -793,8 +1062,8 @@
       "id": "the-waste-disposal-directive",
       "scenarioId": "the-waste-disposal-directive",
       "regionId": "federalism",
-      "x": 64.0,
-      "y": 10.0,
+      "x": 64,
+      "y": 10,
       "requiresAll": [],
       "requiresAny": [
         "the-medicaid-ultimatum",
@@ -810,7 +1079,7 @@
       "id": "the-background-check-order",
       "scenarioId": "the-background-check-order",
       "regionId": "federalism",
-      "x": 59.0,
+      "x": 59,
       "y": 36.7,
       "requiresAll": [
         "the-waste-disposal-directive"
@@ -823,7 +1092,7 @@
       "id": "federal-gun-registry-commandeering",
       "scenarioId": "federal-gun-registry-commandeering",
       "regionId": "federalism",
-      "x": 59.0,
+      "x": 59,
       "y": 63.3,
       "requiresAll": [
         "the-background-check-order"
@@ -836,7 +1105,7 @@
       "id": "state-wine-shipping-ban",
       "scenarioId": "state-wine-shipping-ban",
       "regionId": "federalism",
-      "x": 64.0,
+      "x": 64,
       "y": 36.7,
       "requiresAll": [
         "the-waste-disposal-directive"
@@ -879,8 +1148,8 @@
       "id": "dairy-subsidy-scheme",
       "scenarioId": "dairy-subsidy-scheme",
       "regionId": "federalism",
-      "x": 59.0,
-      "y": 90.0,
+      "x": 59,
+      "y": 90,
       "requiresAll": [
         "dormant-commerce-clause-flow-control"
       ],
@@ -893,7 +1162,7 @@
       "scenarioId": "humane-poultry-standards-dcc",
       "regionId": "federalism",
       "x": 61.5,
-      "y": 90.0,
+      "y": 90,
       "requiresAll": [
         "state-truck-length-safety"
       ],
@@ -905,8 +1174,8 @@
       "id": "insurance-regulation-mccarran-ferguson",
       "scenarioId": "insurance-regulation-mccarran-ferguson",
       "regionId": "federalism",
-      "x": 64.0,
-      "y": 90.0,
+      "x": 64,
+      "y": 90,
       "requiresAll": [
         "dormant-commerce-clause-flow-control"
       ],
@@ -918,7 +1187,7 @@
       "id": "nonresident-fishing-license-fees",
       "scenarioId": "nonresident-fishing-license-fees",
       "regionId": "federalism",
-      "x": 69.0,
+      "x": 69,
       "y": 63.3,
       "requiresAll": [
         "state-wine-shipping-ban"
@@ -932,7 +1201,7 @@
       "scenarioId": "medical-school-residency-preference",
       "regionId": "federalism",
       "x": 66.5,
-      "y": 90.0,
+      "y": 90,
       "requiresAll": [
         "nonresident-fishing-license-fees"
       ],
@@ -944,7 +1213,7 @@
       "id": "state-drone-privacy-preemption",
       "scenarioId": "state-drone-privacy-preemption",
       "regionId": "federalism",
-      "x": 69.0,
+      "x": 69,
       "y": 36.7,
       "requiresAll": [
         "the-waste-disposal-directive"
@@ -957,8 +1226,8 @@
       "id": "federal-preemption-cannabis",
       "scenarioId": "federal-preemption-cannabis",
       "regionId": "federalism",
-      "x": 69.0,
-      "y": 90.0,
+      "x": 69,
+      "y": 90,
       "requiresAll": [],
       "requiresAny": [
         "the-background-check-order",
@@ -973,8 +1242,8 @@
       "id": "the-foreign-arms-embargo",
       "scenarioId": "the-foreign-arms-embargo",
       "regionId": "foreign-affairs",
-      "x": 76.0,
-      "y": 10.0,
+      "x": 76,
+      "y": 10,
       "requiresAll": [
         "the-waste-disposal-directive"
       ],
@@ -989,8 +1258,8 @@
       "id": "the-hostage-crisis-executive-agreement",
       "scenarioId": "the-hostage-crisis-executive-agreement",
       "regionId": "foreign-affairs",
-      "x": 76.0,
-      "y": 30.0,
+      "x": 76,
+      "y": 30,
       "requiresAll": [
         "the-foreign-arms-embargo"
       ],
@@ -1004,8 +1273,8 @@
       "id": "the-treaty-enforcement-memo",
       "scenarioId": "the-treaty-enforcement-memo",
       "regionId": "foreign-affairs",
-      "x": 72.0,
-      "y": 50.0,
+      "x": 72,
+      "y": 50,
       "requiresAll": [
         "the-hostage-crisis-executive-agreement"
       ],
@@ -1017,8 +1286,8 @@
       "id": "the-passport-dispute",
       "scenarioId": "the-passport-dispute",
       "regionId": "foreign-affairs",
-      "x": 72.0,
-      "y": 70.0,
+      "x": 72,
+      "y": 70,
       "requiresAll": [
         "the-treaty-enforcement-memo"
       ],
@@ -1030,8 +1299,8 @@
       "id": "passport-recognition-power",
       "scenarioId": "passport-recognition-power",
       "regionId": "foreign-affairs",
-      "x": 76.0,
-      "y": 90.0,
+      "x": 76,
+      "y": 90,
       "requiresAll": [
         "the-passport-dispute"
       ],
@@ -1043,8 +1312,8 @@
       "id": "climate-executive-agreement",
       "scenarioId": "climate-executive-agreement",
       "regionId": "foreign-affairs",
-      "x": 76.0,
-      "y": 50.0,
+      "x": 76,
+      "y": 50,
       "requiresAll": [
         "the-hostage-crisis-executive-agreement"
       ],
@@ -1056,8 +1325,8 @@
       "id": "treaty-delegation-international-body",
       "scenarioId": "treaty-delegation-international-body",
       "regionId": "foreign-affairs",
-      "x": 76.0,
-      "y": 70.0,
+      "x": 76,
+      "y": 70,
       "requiresAll": [
         "the-treaty-enforcement-memo"
       ],
@@ -1071,8 +1340,8 @@
       "id": "the-unilateral-bombing-campaign",
       "scenarioId": "the-unilateral-bombing-campaign",
       "regionId": "foreign-affairs",
-      "x": 80.0,
-      "y": 50.0,
+      "x": 80,
+      "y": 50,
       "requiresAll": [
         "the-hostage-crisis-executive-agreement"
       ],
@@ -1086,8 +1355,8 @@
       "id": "unilateral-military-strike",
       "scenarioId": "unilateral-military-strike",
       "regionId": "foreign-affairs",
-      "x": 80.0,
-      "y": 70.0,
+      "x": 80,
+      "y": 70,
       "requiresAll": [
         "the-unilateral-bombing-campaign"
       ],
@@ -1099,8 +1368,8 @@
       "id": "equal-protection-scrutiny-framework",
       "scenarioId": "equal-protection-scrutiny-framework",
       "regionId": "equal-protection",
-      "x": 89.0,
-      "y": 10.0,
+      "x": 89,
+      "y": 10,
       "requiresAll": [
         "the-partisan-gerrymander-challenge"
       ],
@@ -1115,8 +1384,8 @@
       "id": "school-admissions-test-disparate-impact",
       "scenarioId": "school-admissions-test-disparate-impact",
       "regionId": "equal-protection",
-      "x": 83.0,
-      "y": 30.0,
+      "x": 83,
+      "y": 30,
       "requiresAll": [
         "equal-protection-scrutiny-framework"
       ],
@@ -1130,8 +1399,8 @@
       "id": "fire-department-diversity-program",
       "scenarioId": "fire-department-diversity-program",
       "regionId": "equal-protection",
-      "x": 83.0,
-      "y": 50.0,
+      "x": 83,
+      "y": 50,
       "requiresAll": [
         "school-admissions-test-disparate-impact"
       ],
@@ -1143,8 +1412,8 @@
       "id": "resegregation-after-unitary-status",
       "scenarioId": "resegregation-after-unitary-status",
       "regionId": "equal-protection",
-      "x": 83.0,
-      "y": 70.0,
+      "x": 83,
+      "y": 70,
       "requiresAll": [
         "fire-department-diversity-program"
       ],
@@ -1156,8 +1425,8 @@
       "id": "race-neutral-admissions-post-sffa",
       "scenarioId": "race-neutral-admissions-post-sffa",
       "regionId": "equal-protection",
-      "x": 86.0,
-      "y": 70.0,
+      "x": 86,
+      "y": 70,
       "requiresAll": [
         "fire-department-diversity-program"
       ],
@@ -1169,8 +1438,8 @@
       "id": "pregnancy-leave-classification",
       "scenarioId": "pregnancy-leave-classification",
       "regionId": "equal-protection",
-      "x": 87.0,
-      "y": 30.0,
+      "x": 87,
+      "y": 30,
       "requiresAll": [
         "equal-protection-scrutiny-framework"
       ],
@@ -1182,8 +1451,8 @@
       "id": "male-parental-leave-discrimination",
       "scenarioId": "male-parental-leave-discrimination",
       "regionId": "equal-protection",
-      "x": 86.0,
-      "y": 50.0,
+      "x": 86,
+      "y": 50,
       "requiresAll": [
         "pregnancy-leave-classification"
       ],
@@ -1197,8 +1466,8 @@
       "id": "women-stem-scholarship",
       "scenarioId": "women-stem-scholarship",
       "regionId": "equal-protection",
-      "x": 89.0,
-      "y": 70.0,
+      "x": 89,
+      "y": 70,
       "requiresAll": [
         "male-parental-leave-discrimination"
       ],
@@ -1210,8 +1479,8 @@
       "id": "inheritance-rights-nonmarital-children",
       "scenarioId": "inheritance-rights-nonmarital-children",
       "regionId": "equal-protection",
-      "x": 89.0,
-      "y": 50.0,
+      "x": 89,
+      "y": 50,
       "requiresAll": [
         "pregnancy-leave-classification"
       ],
@@ -1223,8 +1492,8 @@
       "id": "gender-identity-birth-certificate",
       "scenarioId": "gender-identity-birth-certificate",
       "regionId": "equal-protection",
-      "x": 89.0,
-      "y": 90.0,
+      "x": 89,
+      "y": 90,
       "requiresAll": [
         "women-stem-scholarship"
       ],
@@ -1238,8 +1507,8 @@
       "id": "food-truck-licensing-ban",
       "scenarioId": "food-truck-licensing-ban",
       "regionId": "equal-protection",
-      "x": 91.0,
-      "y": 30.0,
+      "x": 91,
+      "y": 30,
       "requiresAll": [
         "equal-protection-scrutiny-framework"
       ],
@@ -1253,8 +1522,8 @@
       "id": "drug-conviction-business-license-ban",
       "scenarioId": "drug-conviction-business-license-ban",
       "regionId": "equal-protection",
-      "x": 92.0,
-      "y": 50.0,
+      "x": 92,
+      "y": 50,
       "requiresAll": [
         "food-truck-licensing-ban"
       ],
@@ -1266,8 +1535,8 @@
       "id": "adoption-agency-orientation-ban",
       "scenarioId": "adoption-agency-orientation-ban",
       "regionId": "equal-protection",
-      "x": 92.0,
-      "y": 70.0,
+      "x": 92,
+      "y": 70,
       "requiresAll": [
         "drug-conviction-business-license-ban"
       ],
@@ -1279,8 +1548,8 @@
       "id": "police-promotion-exam-disparate-impact",
       "scenarioId": "police-promotion-exam-disparate-impact",
       "regionId": "equal-protection",
-      "x": 95.0,
-      "y": 50.0,
+      "x": 95,
+      "y": 50,
       "requiresAll": [
         "school-admissions-test-disparate-impact"
       ],
@@ -1292,8 +1561,8 @@
       "id": "disparate-impact-intent-framework",
       "scenarioId": "disparate-impact-intent-framework",
       "regionId": "equal-protection",
-      "x": 95.0,
-      "y": 70.0,
+      "x": 95,
+      "y": 70,
       "requiresAll": [
         "police-promotion-exam-disparate-impact"
       ],
@@ -1307,8 +1576,8 @@
       "id": "voter-id-fundamental-interest",
       "scenarioId": "voter-id-fundamental-interest",
       "regionId": "equal-protection",
-      "x": 95.0,
-      "y": 30.0,
+      "x": 95,
+      "y": 30,
       "requiresAll": [
         "equal-protection-scrutiny-framework"
       ],
@@ -1320,8 +1589,8 @@
       "id": "grand-jury-incorporation",
       "scenarioId": "grand-jury-incorporation",
       "regionId": "due-process",
-      "x": 102.0,
-      "y": 10.0,
+      "x": 102,
+      "y": 10,
       "requiresAll": [
         "equal-protection-scrutiny-framework"
       ],
@@ -1336,8 +1605,8 @@
       "id": "food-truck-proximity-ban",
       "scenarioId": "food-truck-proximity-ban",
       "regionId": "due-process",
-      "x": 98.0,
-      "y": 50.0,
+      "x": 98,
+      "y": 50,
       "requiresAll": [
         "grand-jury-incorporation"
       ],
@@ -1349,8 +1618,8 @@
       "id": "post-dobbs-six-week-ban",
       "scenarioId": "post-dobbs-six-week-ban",
       "regionId": "due-process",
-      "x": 106.0,
-      "y": 50.0,
+      "x": 106,
+      "y": 50,
       "requiresAll": [
         "grand-jury-incorporation"
       ],
@@ -1364,8 +1633,8 @@
       "id": "surrogacy-ban-substantive-due-process",
       "scenarioId": "surrogacy-ban-substantive-due-process",
       "regionId": "due-process",
-      "x": 98.0,
-      "y": 90.0,
+      "x": 98,
+      "y": 90,
       "requiresAll": [
         "post-dobbs-six-week-ban"
       ],
@@ -1379,8 +1648,8 @@
       "id": "marriage-counseling-mandate",
       "scenarioId": "marriage-counseling-mandate",
       "regionId": "due-process",
-      "x": 106.0,
-      "y": 90.0,
+      "x": 106,
+      "y": 90,
       "requiresAll": [
         "post-dobbs-six-week-ban"
       ],
