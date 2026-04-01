@@ -48,3 +48,30 @@
   margin-top: 0;
 }
 
+/* Case popup scenario cross-links */
+.case-popup-scenarios {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border-light);
+  font-size: var(--font-size-xs);
+}
+
+.case-popup-scenario-link {
+  display: inline-block;
+  padding: 2px var(--space-sm);
+  margin: 2px;
+  background: var(--color-judiciary-bg);
+  color: var(--color-judiciary);
+  border: 1px solid var(--color-judiciary-light);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  text-transform: capitalize;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.case-popup-scenario-link:hover {
+  background: var(--color-judiciary-light);
+  color: #fff;
+}
+

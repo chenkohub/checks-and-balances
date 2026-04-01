@@ -183,13 +183,21 @@ export function renderCasePopup(caseOrReference, anchorElement) {
 
   const caseMetadata = formatCaseMetadata(record);
 
+  const scenarioLinks = Array.isArray(record.scenarioIds) && record.scenarioIds.length > 0
+    ? `<div class=”case-popup-scenarios”>
+        <strong>Featured in:</strong>
+        ${record.scenarioIds.map((sid) => `<button type=”button” class=”case-popup-scenario-link” data-scenario-id=”${sid}”>${sid.replace(/-/g, ' ')}</button>`).join(' ')}
+       </div>`
+    : '';
+
   popup.innerHTML = `
-    <button type="button" class="case-popup-close" aria-label="Close case details">&times;</button>
-    <h4 class="case-popup-name">${record.name}</h4>
-    ${caseMetadata ? `<p class="case-popup-year">${caseMetadata}</p>` : ''}
-    <p class="case-popup-holding"><strong>Holding:</strong> ${record.holding}</p>
-    <p class="case-popup-significance"><strong>Significance:</strong> ${record.significance}</p>
-    ${record.keyQuote ? `<blockquote class="case-popup-quote">“${record.keyQuote}”</blockquote>` : ''}
+    <button type=”button” class=”case-popup-close” aria-label=”Close case details”>&times;</button>
+    <h4 class=”case-popup-name”>${record.name}</h4>
+    ${caseMetadata ? `<p class=”case-popup-year”>${caseMetadata}</p>` : ''}
+    <p class=”case-popup-holding”><strong>Holding:</strong> ${record.holding}</p>
+    <p class=”case-popup-significance”><strong>Significance:</strong> ${record.significance}</p>
+    ${record.keyQuote ? `<blockquote class=”case-popup-quote”>”${record.keyQuote}”</blockquote>` : ''}
+    ${scenarioLinks}
   `;
 
   popup.classList.remove('hidden');
@@ -200,6 +208,14 @@ export function renderCasePopup(caseOrReference, anchorElement) {
   if (closeBtn) {
     closeBtn.addEventListener('click', hideCasePopup, { once: true });
   }
+
+  popup.querySelectorAll('.case-popup-scenario-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      const scenarioId = link.dataset.scenarioId;
+      hideCasePopup();
+      window.location.hash = `#/library?search=${encodeURIComponent(scenarioId)}`;
+    }, { once: true });
+  });
 
   return popup;
 }

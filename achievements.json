@@ -112,6 +112,90 @@
       "rule": {
         "type": "completeAllScenarios"
       }
+    },
+    {
+      "id": "youngstown-scholar",
+      "title": "Youngstown Scholar",
+      "description": "Achieve 80%+ accuracy across 3+ Youngstown Framework scenarios.",
+      "icon": "\u2696\ufe0f",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "youngstown",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "commerce-clause-expert",
+      "title": "Commerce Clause Expert",
+      "description": "Achieve 80%+ accuracy across 3+ Commerce Clause scenarios.",
+      "icon": "\ud83d\udcb0",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "commerce-clause",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "non-delegation-master",
+      "title": "Non-Delegation Master",
+      "description": "Achieve 80%+ accuracy across 3+ Non-Delegation Doctrine scenarios.",
+      "icon": "\ud83d\udcdc",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "non-delegation",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "removal-power-authority",
+      "title": "Removal Power Authority",
+      "description": "Achieve 80%+ accuracy across 3+ Removal Power scenarios.",
+      "icon": "\ud83d\udd28",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "removal-power",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "spending-clause-specialist",
+      "title": "Spending Clause Specialist",
+      "description": "Achieve 80%+ accuracy across 3+ Spending Clause scenarios.",
+      "icon": "\ud83d\udcb5",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "spending-clause",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "anti-commandeering-defender",
+      "title": "Anti-Commandeering Defender",
+      "description": "Achieve 80%+ accuracy across 3+ Tenth Amendment / Anti-Commandeering scenarios.",
+      "icon": "\ud83c\udff0",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "tenth-amendment",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "constitutional-generalist",
+      "title": "Constitutional Generalist",
+      "description": "Complete 20+ scenarios with 75%+ overall accuracy across all doctrines.",
+      "icon": "\ud83c\udf93",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "",
+        "minAttempts": 20,
+        "minAccuracy": 75
+      }
     }
   ]
 }

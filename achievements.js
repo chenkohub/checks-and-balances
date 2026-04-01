@@ -84,6 +84,23 @@ function evaluateRule(rule, profile, analytics, context) {
       return hasCompletedMainPath(profile, campaignData);
     case 'completeAllScenarios':
       return hasCompletedAllScenarios(profile);
+    case 'doctrineAccuracy': {
+      const prefix = (rule.doctrineSlugPrefix || rule.doctrineSlug || '').toLowerCase();
+      const minAttempts = Number(rule.minAttempts || 3);
+      const minAccuracy = Number(rule.minAccuracy || 80);
+      const mastery = profile?.doctrineMastery || {};
+      // Aggregate across all doctrine slugs matching the prefix
+      let totalEarned = 0, totalPossible = 0, totalAttempts = 0;
+      for (const [slug, entry] of Object.entries(mastery)) {
+        if (slug.startsWith(prefix)) {
+          totalEarned += entry.earned || 0;
+          totalPossible += entry.possible || 0;
+          totalAttempts += entry.attempts || 0;
+        }
+      }
+      const accuracy = totalPossible > 0 ? Math.round((totalEarned / totalPossible) * 100) : 0;
+      return totalAttempts >= minAttempts && accuracy >= minAccuracy;
+    }
     default:
       return false;
   }

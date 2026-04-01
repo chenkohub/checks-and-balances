@@ -1156,6 +1156,13 @@ async function renderHomeScreen() {
     continueButton.disabled = !currentScenario;
   }
 
+  // Update Weak Spots option with count badge
+  const weakCount = getWeakScenarioIds(loadAnalyticsHistory()).length;
+  const weakOption = document.querySelector('#mode-select option[value="weakSpots"]');
+  if (weakOption) {
+    weakOption.textContent = weakCount > 0 ? `Weak Spots (${weakCount})` : 'Weak Spots';
+  }
+
   const mentor = await getHomeMentorContent(currentProfile);
   renderMentorPanel('home-mentor-panel', mentor);
 
