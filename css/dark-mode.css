@@ -1,0 +1,203 @@
+/* ==============================================================
+   DARK MODE — prefers-color-scheme
+   ============================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1a1a2e;
+    --color-surface: #16213e;
+    --color-text: #ecf0f1;
+    --color-text-muted: #95a5a6;
+    --color-text-light: #7f8c8d;
+    --color-border: #2c3e50;
+    --color-border-light: #1c2a3a;
+    --color-judiciary-bg: rgba(41, 128, 185, 0.15);
+    --color-executive-bg: rgba(192, 57, 43, 0.15);
+    --color-legislature-bg: rgba(39, 174, 96, 0.15);
+    --color-correct-bg: rgba(39, 174, 96, 0.15);
+    --color-partial-bg: rgba(243, 156, 18, 0.15);
+    --color-incorrect-bg: rgba(231, 76, 60, 0.15);
+    --color-accent: #0f3460;
+    --color-accent-hover: #1a5276;
+    --app-background-texture:
+      radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 18%),
+      radial-gradient(circle at 82% 0%, rgba(41, 128, 185, 0.16) 0%, rgba(41, 128, 185, 0) 28%),
+      radial-gradient(circle at 50% 100%, rgba(15, 52, 96, 0.22) 0%, rgba(15, 52, 96, 0) 38%);
+    --feedback-panel-texture:
+      linear-gradient(180deg, rgba(22, 33, 62, 0.97) 0%, rgba(17, 24, 39, 0.95) 100%),
+      radial-gradient(circle at top left, rgba(41, 128, 185, 0.16) 0%, rgba(41, 128, 185, 0) 34%);
+    --feedback-panel-border: rgba(255, 255, 255, 0.08);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  #landing-screen {
+    background: linear-gradient(135deg, #0a0a1a 0%, #0f1a2e 50%, #0a2540 100%);
+  }
+
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .professor-note,
+  .feedback-collapsible.professor-note {
+    background: rgba(41, 128, 185, 0.1);
+    border-color: rgba(41, 128, 185, 0.3);
+  }
+
+  .other-side,
+  .feedback-collapsible.other-side {
+    background: rgba(243, 156, 18, 0.1);
+    border-color: rgba(243, 156, 18, 0.3);
+  }
+
+  .analytical-lens-badge {
+    background: rgba(108, 52, 131, 0.15);
+    border-color: rgba(108, 52, 131, 0.3);
+  }
+
+  .selector {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .selector option {
+    background: #0f1a2e;
+  }
+
+  .results-table thead {
+    background: #0f3460;
+  }
+
+  .results-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .choice-review-row.review-correct {
+    background: rgba(39, 174, 96, 0.1);
+    border-left-color: var(--color-correct);
+  }
+
+  .choice-review-row.review-partial {
+    background: rgba(243, 156, 18, 0.1);
+    border-left-color: var(--color-partial);
+  }
+
+  .choice-review-row.review-incorrect {
+    background: rgba(231, 76, 60, 0.1);
+    border-left-color: var(--color-incorrect);
+  }
+
+  .grade-ring {
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(41, 128, 185, 0.15);
+  }
+
+  .grade-ring-inner {
+    background: var(--color-surface);
+  }
+}
+
+
+/* ==============================================================
+   PHASE 6 — DARK MODE ADDITIONS
+   ============================================================== */
+
+body.dark-mode .precedent-tracker {
+  background: var(--color-surface);
+  border-left-color: var(--color-border);
+}
+
+body.dark-mode .precedent-item {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body.dark-mode .precedent-item.precedent-affirmed {
+  background: rgba(39, 174, 96, 0.1);
+}
+
+body.dark-mode .precedent-item.precedent-denied {
+  background: rgba(243, 156, 18, 0.1);
+}
+
+body.dark-mode .exam-review-professor {
+  background: rgba(41, 128, 185, 0.1);
+  border-color: rgba(41, 128, 185, 0.3);
+}
+
+body.dark-mode .exam-review-other-side {
+  background: rgba(243, 156, 18, 0.1);
+  border-color: rgba(243, 156, 18, 0.3);
+}
+
+body.dark-mode .exam-review-explanation {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body.dark-mode .exam-review-summary {
+  background: var(--color-surface);
+}
+
+body.dark-mode .exam-review-scenario {
+  border-color: var(--color-border);
+}
+
+body.dark-mode .timer-display.critical {
+  background: var(--color-incorrect);
+  color: #ffffff;
+}
+
+/* prefers-color-scheme dark additions */
+@media (prefers-color-scheme: dark) {
+  .precedent-tracker {
+    background: var(--color-surface);
+    border-left-color: var(--color-border);
+  }
+
+  .precedent-item {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .precedent-item.precedent-affirmed {
+    background: rgba(39, 174, 96, 0.1);
+  }
+
+  .precedent-item.precedent-denied {
+    background: rgba(243, 156, 18, 0.1);
+  }
+
+  .exam-review-professor {
+    background: rgba(41, 128, 185, 0.1);
+    border-color: rgba(41, 128, 185, 0.3);
+  }
+
+  .exam-review-other-side {
+    background: rgba(243, 156, 18, 0.1);
+    border-color: rgba(243, 156, 18, 0.3);
+  }
+
+  .exam-review-explanation {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .exam-review-summary {
+    background: var(--color-surface);
+  }
+
+  .exam-review-scenario {
+    border-color: var(--color-border);
+  }
+}
+
+/* ==============================================================
+   REDUCED MOTION
+   ============================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

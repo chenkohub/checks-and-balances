@@ -1,0 +1,71 @@
+{
+  "_comment": "Copy this template to create a new scenario. Remove all _comment fields before adding to scenarios.json.",
+  "id": "your-scenario-id",
+  "title": "Descriptive Title of the Constitutional Crisis",
+  "branch": "judiciary",
+  "_comment_branch": "One of: judiciary, congress, president, executive",
+  "doctrineArea": "Your Doctrine Area / Subcategory",
+  "difficulty": "medium",
+  "_comment_difficulty": "One of: easy, medium, hard",
+  "description": "1-2 paragraphs describing the factual setup of the constitutional crisis. Set the scene with enough detail for students to analyze the legal issues.",
+  "overallExplanation": "A comprehensive doctrinal explanation shown after the scenario is completed. Reference the key legal principles and how they apply to the facts.",
+  "caseReferences": ["case-id-from-cases-json"],
+  "_comment_caseReferences": "Array of case IDs from data/cases.json. These appear as clickable references during gameplay.",
+  "professorNote": "Optional deeper teaching point — a nuance that goes beyond the basic rule.",
+  "otherSide": "Optional: present the strongest argument for the losing side to build analytical balance.",
+  "analyticalLens": null,
+  "_comment_analyticalLens": "Optional: 'formalist', 'functionalist', or 'both'",
+  "steps": [
+    {
+      "number": 1,
+      "title": "",
+      "type": "multiple_choice",
+      "_comment_type": "One of: multiple_choice, argument_builder, counter_argument",
+      "prompt": "The question prompt for this step.",
+      "choices": [
+        {
+          "id": "your-scenario-id-step-1-choice-1",
+          "_comment_id": "Convention: {scenario-id}-step-{N}-choice-{N}",
+          "text": "The correct answer text.",
+          "points": 10,
+          "correct": "correct",
+          "_comment_correct": "One of: 'correct', 'incorrect', 'partial', true, false",
+          "explanation": "Detailed explanation of why this is correct.",
+          "whyTempting": null,
+          "_comment_whyTempting": "Optional: why a wrong answer is appealing (for incorrect choices)",
+          "distinguishingPrinciple": null,
+          "_comment_distinguishingPrinciple": "Optional: the key distinction that separates this from the right answer",
+          "trapOnly": false,
+          "_comment_trapOnly": "If true, only shown on Hard difficulty",
+          "setsPrecedent": null,
+          "_comment_setsPrecedent": "Optional object like { \"precedentKey\": true } for Campaign mode"
+        },
+        {
+          "id": "your-scenario-id-step-1-choice-2",
+          "text": "A plausible but incorrect answer.",
+          "points": 0,
+          "correct": "incorrect",
+          "explanation": "Explanation of why this is wrong and what principle it misapplies."
+        },
+        {
+          "id": "your-scenario-id-step-1-choice-3",
+          "text": "A partially correct answer.",
+          "points": 3,
+          "correct": "partial",
+          "explanation": "Explanation of what this gets right and what it misses."
+        },
+        {
+          "id": "your-scenario-id-step-1-choice-4",
+          "text": "Another incorrect answer.",
+          "points": 0,
+          "correct": "incorrect",
+          "explanation": "Explanation of the error."
+        }
+      ]
+    }
+  ],
+  "hypoVariations": [],
+  "_comment_hypoVariations": "Optional array — see hypo-template.json for the format.",
+  "precedentConditions": [],
+  "_comment_precedentConditions": "Optional array for Campaign mode. Each entry: { key, value, label, descriptionAppend, stepOverrides }"
+}

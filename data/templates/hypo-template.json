@@ -1,0 +1,21 @@
+{
+  "_comment": "Copy this template to add hypo variations to a scenario's hypoVariations array. Remove all _comment fields.",
+  "_comment_usage": "Add one or more of these objects to a scenario's 'hypoVariations' array in scenarios.json.",
+  "id": "hypo-scenario-id-1",
+  "_comment_id": "Convention: hypo-{scenario-id}-{number}",
+  "prompt": "What if the facts were slightly different? For example: 'What if Congress had passed a statute explicitly authorizing the President's action?'",
+  "choices": [
+    {
+      "text": "The correct analysis given the changed facts.",
+      "correct": true,
+      "explanation": "Detailed explanation of why this is correct under the modified hypothetical.",
+      "points": null,
+      "_comment_points": "Optional: number of points to award. If null/absent, hypo is purely educational (no scoring impact)."
+    },
+    {
+      "text": "An incorrect but plausible analysis.",
+      "correct": false,
+      "explanation": "Explanation of the error and how the changed facts affect the analysis differently than the student assumed."
+    }
+  ]
+}

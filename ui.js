@@ -186,6 +186,15 @@ export function updateTimerDisplay(timerState, announceUpdate = false) {
   timerDisplay.classList.toggle('critical', timerState.totalSeconds <= 60 && timerState.totalSeconds > 0);
   timerDisplay.classList.toggle('expired', timerState.totalSeconds === 0);
 
+  // Update aria-label for critical/warning states
+  if (timerState.totalSeconds <= 60 && timerState.totalSeconds > 0) {
+    timerDisplay.setAttribute('aria-label', `Critical: only ${timerState.formatted} remaining`);
+  } else if (timerState.totalSeconds <= 300) {
+    timerDisplay.setAttribute('aria-label', `Warning: ${timerState.formatted} remaining`);
+  } else {
+    timerDisplay.setAttribute('aria-label', `Time remaining: ${timerState.formatted}`);
+  }
+
   if (!announceUpdate) {
     return;
   }
@@ -276,6 +285,7 @@ export function showModal(modalId, options = {}) {
 
   modal.classList.remove('hidden');
   modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
   modal.addEventListener('keydown', state.keydownHandler);
 
   state.clickHandler = (event) => {
@@ -310,6 +320,11 @@ export function hideModal(modalId) {
 
   modal.classList.add('hidden');
   modal.setAttribute('aria-hidden', 'true');
+
+  // Only remove scroll lock if no other modals are open
+  if (modalState.size <= 1) {
+    document.body.classList.remove('modal-open');
+  }
 
   if (state) {
     modal.removeEventListener('keydown', state.keydownHandler);
@@ -432,8 +447,11 @@ export function showToast(message, options = {}) {
   toast.className = `toast toast-${options.variant || 'info'}`;
   toast.setAttribute('role', 'status');
   toast.innerHTML = `
-    ${options.title ? `<strong>${options.title}</strong>` : ''}
-    <span>${message}</span>
+    <div class="toast-body">
+      ${options.title ? `<strong>${options.title}</strong>` : ''}
+      <span>${message}</span>
+    </div>
+    <button type="button" class="toast-dismiss" aria-label="Dismiss">&times;</button>
   `;
   stack.appendChild(toast);
 
@@ -442,7 +460,8 @@ export function showToast(message, options = {}) {
     window.setTimeout(() => toast.remove(), prefersReducedMotion() ? 0 : 220);
   };
 
-  window.setTimeout(removeToast, Number(options.duration || 2800));
+  toast.querySelector('.toast-dismiss')?.addEventListener('click', removeToast);
+  window.setTimeout(removeToast, Number(options.duration || 4000));
   return toast;
 }
 

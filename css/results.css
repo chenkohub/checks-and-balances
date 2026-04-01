@@ -1,0 +1,192 @@
+/* ==============================================================
+   END-OF-GAME SCREEN — Results Card with Radial Score Chart
+   ============================================================== */
+#end-screen {
+  justify-content: flex-start;
+  align-items: center;
+  padding: var(--space-xxl) var(--space-lg);
+  background: transparent;
+}
+
+.end-container {
+  max-width: var(--max-width);
+  width: 100%;
+  text-align: center;
+}
+
+.end-title {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-xl);
+  color: var(--color-text);
+}
+
+/* Results Card */
+.end-results-card {
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-xxl) var(--space-xl);
+  margin-bottom: var(--space-xl);
+  animation: scaleUp var(--transition-slow) forwards;
+}
+
+/* Grade Ring — radial score chart via conic-gradient */
+.grade-display {
+  margin-bottom: var(--space-xl);
+}
+
+.grade-ring {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+  position: relative;
+  /* conic-gradient set dynamically via inline style:
+     background: conic-gradient(var(--color-correct) 0% Xdeg, var(--color-border-light) Xdeg 360deg); */
+  background: conic-gradient(
+    var(--color-judiciary-light) 0%,
+    var(--color-legislature-light) 50%,
+    var(--color-executive-light) 100%
+  );
+  box-shadow: var(--shadow-lg);
+}
+
+.grade-ring-inner {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.grade-letter {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.grade-title-text {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.grade-description {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+}
+
+/* Score Summary */
+.score-summary {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.score-summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-bg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  min-width: 140px;
+}
+
+.score-summary-label {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.score-summary-value {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--color-text);
+}
+
+/* Results Table */
+.results-table-wrapper {
+  text-align: left;
+  margin-bottom: var(--space-xl);
+}
+
+.results-table-heading {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--space-md);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.results-table thead {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.results-table th {
+  padding: var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.results-table td {
+  padding: var(--space-md);
+  font-size: var(--font-size-sm);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.results-table tbody tr:nth-child(even) {
+  background: var(--color-bg);
+}
+
+.results-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Performance color indicator in table cells */
+.results-table .perf-good   { color: var(--color-correct); font-weight: 600; }
+.results-table .perf-ok     { color: var(--color-partial); font-weight: 600; }
+.results-table .perf-poor   { color: var(--color-incorrect); font-weight: 600; }
+
+/* Review Answers (Exam Prep) */
+.review-answers {
+  text-align: left;
+  margin-bottom: var(--space-xl);
+}
+
+.review-answers-heading {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.end-actions {
+  margin-top: var(--space-lg);
+}
+

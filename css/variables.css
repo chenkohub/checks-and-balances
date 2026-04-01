@@ -1,0 +1,86 @@
+/* ==============================================================
+   styles.css — Checks & Balances: The Simulation
+   Phase 5 — Final Visual Polish & Responsive Design
+   ============================================================== */
+
+/* ==============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================== */
+:root {
+  /* Branch Colors */
+  --color-judiciary: #1a5276;
+  --color-judiciary-light: #2980b9;
+  --color-judiciary-bg: #eaf2f8;
+  --color-executive: #7b241c;
+  --color-executive-light: #c0392b;
+  --color-executive-bg: #f9ebea;
+  --color-legislature: #1e8449;
+  --color-legislature-light: #27ae60;
+  --color-legislature-bg: #eafaf1;
+
+  /* Neutral Palette */
+  --color-bg: #f4f6f7;
+  --color-surface: #ffffff;
+  --color-text: #2c3e50;
+  --color-text-muted: #7f8c8d;
+  --color-text-light: #bdc3c7;
+  --color-border: #d5dbdb;
+  --color-border-light: #eaeded;
+
+  /* Feedback Colors */
+  --color-correct: #27ae60;
+  --color-correct-bg: #eafaf1;
+  --color-partial: #f39c12;
+  --color-partial-bg: #fef9e7;
+  --color-incorrect: #e74c3c;
+  --color-incorrect-bg: #fdedec;
+
+  /* Accent */
+  --color-accent: #2c3e50;
+  --color-accent-hover: #1a252f;
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-xxl: 2.75rem;
+  --line-height: 1.6;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-xxl: 3rem;
+
+  /* Layout */
+  --max-width: 820px;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --app-background-texture:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 18%),
+    radial-gradient(circle at 82% 0%, rgba(41, 128, 185, 0.10) 0%, rgba(41, 128, 185, 0) 28%),
+    radial-gradient(circle at 50% 100%, rgba(26, 82, 118, 0.06) 0%, rgba(26, 82, 118, 0) 38%);
+  --feedback-panel-texture:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.985) 0%, rgba(248, 250, 251, 0.965) 100%),
+    radial-gradient(circle at top left, rgba(41, 128, 185, 0.08) 0%, rgba(41, 128, 185, 0) 34%);
+  --feedback-panel-border: rgba(44, 62, 80, 0.10);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+

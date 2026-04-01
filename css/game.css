@@ -1,0 +1,611 @@
+/* ==============================================================
+   GAME HEADER
+   ============================================================== */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* ==============================================================
+   BRANCH BADGE — with emoji icons & pulse animation
+   ============================================================== */
+.branch-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  transition: background var(--transition-base), color var(--transition-base),
+    border-color var(--transition-base);
+  min-height: 44px; /* touch-friendly */
+}
+
+.branch-badge.branch-judiciary {
+  background: var(--color-judiciary-bg);
+  color: var(--color-judiciary);
+  border: 1px solid var(--color-judiciary-light);
+}
+
+.branch-badge.branch-president {
+  background: var(--color-executive-bg);
+  color: var(--color-executive);
+  border: 1px solid var(--color-executive-light);
+}
+
+.branch-badge.branch-congress {
+  background: var(--color-legislature-bg);
+  color: var(--color-legislature);
+  border: 1px solid var(--color-legislature-light);
+}
+
+.branch-badge.anim-pulse {
+  animation: branchPulse 600ms ease;
+}
+
+.branch-icon {
+  font-size: var(--font-size-lg);
+}
+
+/* Timer */
+.timer-display {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg);
+  border-radius: var(--border-radius);
+}
+
+.timer-display.warning {
+  color: var(--color-incorrect);
+  background: var(--color-incorrect-bg);
+}
+
+/* Score */
+.score-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.score-label {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.score-value {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+/* ==============================================================
+   SEGMENTED PROGRESS BAR
+   ============================================================== */
+.progress-container {
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Legacy single bar (fallback) */
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--color-border-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    var(--color-judiciary-light),
+    var(--color-legislature-light)
+  );
+  border-radius: 999px;
+  transition: width var(--transition-slow);
+}
+
+.progress-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  min-width: 100px;
+  text-align: right;
+}
+
+/* Segmented bar */
+.segmented-progress {
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  height: 10px;
+  align-items: stretch;
+}
+
+.segmented-progress .seg {
+  flex: 1;
+  border-radius: 999px;
+  background: var(--color-border-light);
+  transition: background var(--transition-base);
+  position: relative;
+}
+
+.segmented-progress .seg.seg-correct {
+  background: var(--color-correct);
+}
+
+.segmented-progress .seg.seg-partial {
+  background: var(--color-partial);
+}
+
+.segmented-progress .seg.seg-incorrect {
+  background: var(--color-incorrect);
+}
+
+.segmented-progress .seg.seg-current {
+  background: var(--color-judiciary-light);
+  animation: segmentPulse 1.2s ease-in-out infinite;
+}
+
+.segmented-progress .seg.seg-upcoming {
+  background: var(--color-border-light);
+}
+
+/* ==============================================================
+   SCENARIO AREA
+   ============================================================== */
+.scenario-area {
+  flex: 1;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.scenario-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.scenario-title {
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+  flex: 1 1 100%;
+}
+
+.difficulty-badge {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.difficulty-badge.easy {
+  background: var(--color-correct-bg);
+  color: var(--color-correct);
+}
+
+.difficulty-badge.medium {
+  background: var(--color-partial-bg);
+  color: var(--color-partial);
+}
+
+.difficulty-badge.hard {
+  background: var(--color-incorrect-bg);
+  color: var(--color-incorrect);
+}
+
+.doctrine-tag {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  background: var(--color-judiciary-bg);
+  color: var(--color-judiciary);
+  font-weight: 500;
+}
+
+.scenario-description {
+  font-size: var(--font-size-md);
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  border-left: 4px solid var(--color-judiciary-light);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Step Indicator */
+.step-indicator {
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.step-indicator span {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-bg);
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Step Prompt */
+.step-prompt {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* ==============================================================
+   CHOICE BUTTONS — with hover lift, active press, flash states
+   ============================================================== */
+.choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.choice-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), transform var(--transition-fast),
+    box-shadow var(--transition-fast), background var(--transition-fast),
+    color var(--transition-fast);
+  min-height: 48px; /* touch target */
+}
+
+.choice-btn:hover {
+  border-color: var(--color-judiciary-light);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.choice-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.choice-btn:focus-visible {
+  outline: 2px solid var(--color-judiciary-light);
+  outline-offset: 2px;
+}
+
+.choice-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* Suppress hover effects on touch devices */
+@media (hover: none) {
+  .choice-btn:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--color-border);
+  }
+}
+
+/* Flash states after selection */
+.choice-btn.flash-correct {
+  background: var(--color-correct-bg);
+  border-color: var(--color-correct);
+  color: var(--color-correct);
+  animation: flashGreen 500ms ease;
+}
+
+.choice-btn.flash-incorrect {
+  background: var(--color-incorrect-bg);
+  border-color: var(--color-incorrect);
+  color: var(--color-incorrect);
+  animation: flashRed 500ms ease;
+}
+
+.choice-btn.flash-partial {
+  background: var(--color-partial-bg);
+  border-color: var(--color-partial);
+  color: var(--color-partial);
+  animation: flashYellow 500ms ease;
+}
+
+/* ==============================================================
+   ARGUMENT BUILDER
+   ============================================================== */
+.argument-builder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.argument-builder-context {
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  border-left: 4px solid var(--color-executive-light);
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+}
+
+.argument-builder-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.argument-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+  min-height: 48px; /* touch target */
+}
+
+.argument-option:hover {
+  border-color: var(--color-judiciary-light);
+  background: var(--color-judiciary-bg);
+}
+
+.argument-option input[type="checkbox"] {
+  accent-color: var(--color-judiciary-light);
+  width: 18px;
+  height: 18px;
+}
+
+.argument-option.selected {
+  border-color: var(--color-judiciary-light);
+  background: var(--color-judiciary-bg);
+}
+
+.btn-submit-args {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: var(--space-md);
+}
+
+/* Argument Builder — Results & Evaluation */
+.argument-builder-results {
+  padding: var(--space-lg);
+}
+
+.argument-builder-results h4 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-md);
+  color: var(--color-text);
+}
+
+.arg-total-score {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.arg-result {
+  padding: var(--space-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--space-md);
+  border-left: 4px solid var(--color-border);
+}
+
+.arg-result-strong {
+  background: var(--color-correct-bg);
+  border-left-color: var(--color-correct);
+}
+
+.arg-result-weak {
+  background: var(--color-incorrect-bg);
+  border-left-color: var(--color-incorrect);
+}
+
+.arg-result-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.arg-result-points {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.arg-result-feedback {
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+/* Argument Builder — Options Panel (Supplemental) */
+.argument-builder-options-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.builder-section-title {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.builder-instructions {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+/* ==============================================================
+   COUNTER-ARGUMENT — RESPONSE TYPE BADGES
+   ============================================================== */
+.counter-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.counsel-icon {
+  font-size: var(--font-size-lg);
+}
+
+.counter-prompt {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.response-type-badge {
+  display: inline-block;
+  padding: 2px var(--space-sm);
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: var(--space-xs);
+  vertical-align: middle;
+}
+
+.response-type-concede {
+  background: var(--color-partial-bg);
+  color: var(--color-partial);
+}
+
+.response-type-distinguish {
+  background: var(--color-judiciary-bg);
+  color: var(--color-judiciary);
+}
+
+.response-type-rebut {
+  background: var(--color-correct-bg);
+  color: var(--color-correct);
+}
+
+/* Counter-Argument */
+.counter-argument {
+  padding: var(--space-lg);
+}
+
+.counter-text {
+  padding: var(--space-lg);
+  background: var(--color-incorrect-bg);
+  border-left: 4px solid var(--color-incorrect);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-md);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+  font-style: italic;
+}
+
+.counter-responses {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ==============================================================
+   HINT SYSTEM (Easy mode)
+   ============================================================== */
+.btn-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-partial-bg);
+  color: var(--color-partial);
+  border: 1px solid var(--color-partial);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  margin-bottom: var(--space-md);
+}
+
+.btn-hint:hover {
+  background: var(--color-partial);
+  color: #fff;
+}
+
+.hint-content {
+  padding: var(--space-md);
+  background: var(--color-partial-bg);
+  border-left: 4px solid var(--color-partial);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+}
+

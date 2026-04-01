@@ -140,6 +140,17 @@ function renderCards(entries, profile, handlers = {}) {
     return;
   }
 
+  if (entries.length === 0) {
+    container.innerHTML = `
+      <div class="library-empty-state">
+        <span class="library-empty-icon" aria-hidden="true">🔍</span>
+        <p class="library-empty-title">No scenarios match your filters</p>
+        <p class="library-empty-hint">Try broadening your search or changing the filter selections.</p>
+      </div>
+    `;
+    return;
+  }
+
   const sandboxEnabled = Boolean(profile?.settings?.sandboxEnabled);
   container.innerHTML = entries.map((entry) => {
     const locked = !entry.unlocked;

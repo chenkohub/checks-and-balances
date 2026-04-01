@@ -11,7 +11,8 @@
       "Separation of Powers",
       "Article III Jurisdiction"
     ],
-    "keyQuote": "It is emphatically the province and duty of the judicial department to say what the law is."
+    "keyQuote": "It is emphatically the province and duty of the judicial department to say what the law is.",
+    "scenarioIds": []
   },
   {
     "id": "mcculloch-v-maryland",
@@ -26,7 +27,11 @@
       "Federalism",
       "Supremacy Clause"
     ],
-    "keyQuote": "Let the end be legitimate, let it be within the scope of the constitution, and all means which are appropriate, which are plainly adapted to that end, which are not prohibited, but consist with the letter and spirit of the constitution, are constitutional."
+    "keyQuote": "Let the end be legitimate, let it be within the scope of the constitution, and all means which are appropriate, which are plainly adapted to that end, which are not prohibited, but consist with the letter and spirit of the constitution, are constitutional.",
+    "scenarioIds": [
+      "scenario_009",
+      "scenario_023"
+    ]
   },
   {
     "id": "wickard-v-filburn",
@@ -40,7 +45,11 @@
       "Congressional Power",
       "Aggregation Principle"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_021",
+      "scenario_022"
+    ]
   },
   {
     "id": "youngstown-v-sawyer",
@@ -55,7 +64,19 @@
       "Separation of Powers",
       "Executive Orders"
     ],
-    "keyQuote": "The framers suspected that emergency powers would tend to kindle emergencies."
+    "keyQuote": "The framers suspected that emergency powers would tend to kindle emergencies.",
+    "scenarioIds": [
+      "scenario_006",
+      "scenario_007",
+      "scenario_008",
+      "scenario_028",
+      "scenario_029",
+      "scenario_030",
+      "scenario_031",
+      "scenario_032",
+      "youngstown-full-analysis",
+      "youngstown-steel-seizure"
+    ]
   },
   {
     "id": "baker-v-carr",
@@ -70,7 +91,10 @@
       "Equal Protection",
       "Gerrymandering"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_033"
+    ]
   },
   {
     "id": "reynolds-v-sims",
@@ -84,7 +108,10 @@
       "Gerrymandering",
       "Voting Rights"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_033"
+    ]
   },
   {
     "id": "us-v-nixon",
@@ -99,7 +126,10 @@
       "Separation of Powers",
       "Balancing Test"
     ],
-    "keyQuote": "Nowhere in the Constitution is there any explicit reference to a privilege of confidentiality, yet to the extent this interest relates to the effective discharge of a President's powers, it is constitutionally based."
+    "keyQuote": "Nowhere in the Constitution is there any explicit reference to a privilege of confidentiality, yet to the extent this interest relates to the effective discharge of a President's powers, it is constitutionally based.",
+    "scenarioIds": [
+      "scenario_009"
+    ]
   },
   {
     "id": "nixon-v-fitzgerald",
@@ -113,7 +143,12 @@
       "Presidential Power",
       "Civil Liability"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "presidential-immunity-framework",
+      "scenario_010",
+      "scenario_011"
+    ]
   },
   {
     "id": "ins-v-chadha",
@@ -128,7 +163,14 @@
       "Bicameralism and Presentment",
       "Administrative State"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "ins-v-chadha-legislative-veto",
+      "scenario_016",
+      "scenario_017",
+      "scenario_018",
+      "scenario_032"
+    ]
   },
   {
     "id": "schechter-poultry-v-us",
@@ -143,7 +185,12 @@
       "Congressional Power",
       "Administrative State"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "nondelegation-intelligible-principle",
+      "scenario_014",
+      "scenario_015"
+    ]
   },
   {
     "id": "panama-refining-v-ryan",
@@ -157,7 +204,13 @@
       "Congressional Power",
       "Administrative State"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "nondelegation-intelligible-principle",
+      "scenario_014",
+      "scenario_015",
+      "scenario_028"
+    ]
   },
   {
     "id": "gundy-v-us",
@@ -171,7 +224,12 @@
       "Administrative State",
       "Congressional Power"
     ],
-    "keyQuote": "Legislators might seek to take credit for addressing a social problem by sending it to the executive for resolution, while at the same time blaming the executive for the problems that attend whatever measures he chooses to pursue."
+    "keyQuote": "Legislators might seek to take credit for addressing a social problem by sending it to the executive for resolution, while at the same time blaming the executive for the problems that attend whatever measures he chooses to pursue.",
+    "scenarioIds": [
+      "nondelegation-intelligible-principle",
+      "scenario_014",
+      "scenario_015"
+    ]
   },
   {
     "id": "buckley-v-valeo",
@@ -185,7 +243,11 @@
       "Separation of Powers",
       "Officers of the United States"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_019",
+      "scenario_020"
+    ]
   },
   {
     "id": "lucia-v-sec",
@@ -199,7 +261,11 @@
       "Administrative State",
       "Officers of the United States"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_019",
+      "scenario_020"
+    ]
   },
   {
     "id": "us-v-arthrex",
@@ -213,7 +279,8 @@
       "Principal vs. Inferior Officers",
       "Administrative State"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "myers-v-us",
@@ -227,7 +294,11 @@
       "Presidential Power",
       "Separation of Powers"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "removal-independent-agency-head",
+      "seila-law-deep-dive"
+    ]
   },
   {
     "id": "humphreys-executor-v-us",
@@ -242,7 +313,12 @@
       "Administrative State",
       "Presidential Power"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "removal-independent-agency-head",
+      "removal-multi-member-commission",
+      "seila-law-deep-dive"
+    ]
   },
   {
     "id": "morrison-v-olson",
@@ -257,7 +333,11 @@
       "Separation of Powers",
       "Formalism vs. Functionalism"
     ],
-    "keyQuote": "This wolf comes as a wolf."
+    "keyQuote": "This wolf comes as a wolf.",
+    "scenarioIds": [
+      "removal-multi-member-commission",
+      "seila-law-deep-dive"
+    ]
   },
   {
     "id": "seila-law-v-cfpb",
@@ -272,7 +352,8 @@
       "Presidential Power",
       "Unitary Executive"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "collins-v-yellen",
@@ -286,7 +367,8 @@
       "Independent Agencies",
       "Severability"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "trump-v-wilcox",
@@ -301,7 +383,12 @@
       "Presidential Power",
       "Unitary Executive"
     ],
-    "keyQuote": "Because the Constitution vests the executive power in the President, he may remove without cause executive officers who exercise that power on his behalf, subject to narrow exceptions recognized by our precedents."
+    "keyQuote": "Because the Constitution vests the executive power in the President, he may remove without cause executive officers who exercise that power on his behalf, subject to narrow exceptions recognized by our precedents.",
+    "scenarioIds": [
+      "removal-independent-agency-head",
+      "removal-multi-member-commission",
+      "seila-law-deep-dive"
+    ]
   },
   {
     "id": "trump-v-us",
@@ -316,7 +403,12 @@
       "Separation of Powers",
       "Core Presidential Powers"
     ],
-    "keyQuote": "The President must be free to act with energy, vigor, and decisiveness."
+    "keyQuote": "The President must be free to act with energy, vigor, and decisiveness.",
+    "scenarioIds": [
+      "presidential-immunity-framework",
+      "scenario_010",
+      "scenario_011"
+    ]
   },
   {
     "id": "clinton-v-jones",
@@ -330,7 +422,11 @@
       "Presidential Power",
       "Civil Liability"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "presidential-immunity-framework",
+      "scenario_011"
+    ]
   },
   {
     "id": "us-v-lopez",
@@ -345,7 +441,12 @@
       "Federalism",
       "Substantial Effects Test"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_021",
+      "scenario_022",
+      "scenario_023"
+    ]
   },
   {
     "id": "us-v-morrison",
@@ -359,7 +460,10 @@
       "Congressional Power",
       "Federalism"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_021"
+    ]
   },
   {
     "id": "gonzales-v-raich",
@@ -374,7 +478,10 @@
       "Controlled Substances",
       "Aggregation Principle"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_022"
+    ]
   },
   {
     "id": "nfib-v-sebelius",
@@ -390,7 +497,8 @@
       "Congressional Power",
       "Federalism"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "south-dakota-v-dole",
@@ -405,7 +513,13 @@
       "Federalism",
       "Conditional Funding"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "federal-preemption-cannabis",
+      "scenario_024",
+      "scenario_025",
+      "spending-clause-coercion"
+    ]
   },
   {
     "id": "new-york-v-us",
@@ -420,7 +534,12 @@
       "Federalism",
       "State Sovereignty"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "federal-preemption-cannabis",
+      "scenario_026",
+      "scenario_027"
+    ]
   },
   {
     "id": "printz-v-us",
@@ -435,7 +554,12 @@
       "Federalism",
       "State Sovereignty"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "federal-preemption-cannabis",
+      "scenario_026",
+      "scenario_027"
+    ]
   },
   {
     "id": "murphy-v-ncaa",
@@ -450,7 +574,12 @@
       "Federalism",
       "State Sovereignty"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "federal-preemption-cannabis",
+      "scenario_026",
+      "scenario_027"
+    ]
   },
   {
     "id": "us-v-curtiss-wright",
@@ -465,7 +594,8 @@
       "Non-Delegation Doctrine",
       "Youngstown Framework"
     ],
-    "keyQuote": "The President alone has the power to speak or listen as a representative of the nation. He makes treaties with the advice and consent of the Senate; but he alone negotiates."
+    "keyQuote": "The President alone has the power to speak or listen as a representative of the nation. He makes treaties with the advice and consent of the Senate; but he alone negotiates.",
+    "scenarioIds": []
   },
   {
     "id": "dames-moore-v-regan",
@@ -480,7 +610,15 @@
       "Youngstown Framework",
       "Executive Agreements"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_006",
+      "scenario_007",
+      "scenario_008",
+      "scenario_029",
+      "scenario_030",
+      "youngstown-full-analysis"
+    ]
   },
   {
     "id": "medellin-v-texas",
@@ -496,7 +634,12 @@
       "Treaty Power",
       "Self-Executing Treaties"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_007",
+      "scenario_030",
+      "scenario_031"
+    ]
   },
   {
     "id": "zivotofsky-v-kerry",
@@ -511,7 +654,12 @@
       "Youngstown Framework",
       "Recognition Power"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_007",
+      "scenario_031",
+      "youngstown-full-analysis"
+    ]
   },
   {
     "id": "rucho-v-common-cause",
@@ -526,7 +674,10 @@
       "Justiciability",
       "Equal Protection"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_033"
+    ]
   },
   {
     "id": "bush-v-gore",
@@ -541,7 +692,10 @@
       "Electoral Process",
       "Justiciability"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "scenario_033"
+    ]
   },
   {
     "id": "plessy-v-ferguson",
@@ -555,7 +709,8 @@
       "Racial Classification",
       "Separate But Equal"
     ],
-    "keyQuote": "Legislation is powerless to eradicate racial instincts, and the attempt to do so can only result in accentuating the difficulties of the present situation."
+    "keyQuote": "Legislation is powerless to eradicate racial instincts, and the attempt to do so can only result in accentuating the difficulties of the present situation.",
+    "scenarioIds": []
   },
   {
     "id": "strauder-v-west-virginia",
@@ -569,7 +724,8 @@
       "Racial Classification",
       "Jury Rights"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "korematsu-v-united-states",
@@ -584,7 +740,8 @@
       "Racial Classification",
       "War Powers"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "brown-v-board-of-education",
@@ -599,7 +756,8 @@
       "Racial Classification",
       "School Desegregation"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "bolling-v-sharpe",
@@ -614,7 +772,8 @@
       "Reverse Incorporation",
       "Federal Government"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "loving-v-virginia",
@@ -629,7 +788,8 @@
       "Racial Classification",
       "Fundamental Rights"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "johnson-v-california",
@@ -643,7 +803,8 @@
       "Strict Scrutiny",
       "Racial Classification"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "us-railroad-retirement-board-v-fritz",
@@ -656,7 +817,8 @@
       "Equal Protection",
       "Rational Basis"
     ],
-    "keyQuote": "Where there are plausible reasons for Congress's action, our inquiry is at an end. It is of course constitutionally irrelevant whether this reasoning in fact underlay the legislative decision."
+    "keyQuote": "Where there are plausible reasons for Congress's action, our inquiry is at an end. It is of course constitutionally irrelevant whether this reasoning in fact underlay the legislative decision.",
+    "scenarioIds": []
   },
   {
     "id": "williamson-v-lee-optical",
@@ -669,7 +831,8 @@
       "Equal Protection",
       "Rational Basis"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "us-dept-agriculture-v-moreno",
@@ -683,7 +846,8 @@
       "Rational Basis",
       "Animus Doctrine"
     ],
-    "keyQuote": "A bare congressional desire to harm a politically unpopular group cannot constitute a legitimate governmental interest."
+    "keyQuote": "A bare congressional desire to harm a politically unpopular group cannot constitute a legitimate governmental interest.",
+    "scenarioIds": []
   },
   {
     "id": "city-of-cleburne-v-cleburne-living-center",
@@ -697,7 +861,8 @@
       "Rational Basis",
       "Animus Doctrine"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "romer-v-evans",
@@ -711,7 +876,8 @@
       "Rational Basis",
       "Animus Doctrine"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "washington-v-davis",
@@ -725,7 +891,10 @@
       "Disparate Impact",
       "Discriminatory Intent"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "disparate-impact-intent-framework"
+    ]
   },
   {
     "id": "personnel-administrator-v-feeney",
@@ -739,7 +908,10 @@
       "Disparate Impact",
       "Discriminatory Intent"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "disparate-impact-intent-framework"
+    ]
   },
   {
     "id": "village-of-arlington-heights-v-mhdc",
@@ -754,7 +926,8 @@
       "Discriminatory Intent",
       "Burden-Shifting"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "gomillion-v-lightfoot",
@@ -768,7 +941,10 @@
       "Discriminatory Intent",
       "Racial Gerrymandering"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "disparate-impact-intent-framework"
+    ]
   },
   {
     "id": "yick-wo-v-hopkins",
@@ -782,7 +958,10 @@
       "Discriminatory Intent",
       "Discriminatory Application"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "disparate-impact-intent-framework"
+    ]
   },
   {
     "id": "palmer-v-thompson",
@@ -796,7 +975,8 @@
       "Discriminatory Intent",
       "Disparate Impact"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "mccleskey-v-kemp",
@@ -811,7 +991,8 @@
       "Criminal Justice",
       "Death Penalty"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "regents-v-bakke",
@@ -826,7 +1007,10 @@
       "Affirmative Action",
       "Higher Education"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "equal-protection-scrutiny-framework"
+    ]
   },
   {
     "id": "city-of-richmond-v-croson",
@@ -841,7 +1025,10 @@
       "Affirmative Action",
       "Government Contracting"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "equal-protection-scrutiny-framework"
+    ]
   },
   {
     "id": "adarand-v-pena",
@@ -856,7 +1043,8 @@
       "Affirmative Action",
       "Congruence Principle"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "grutter-v-bollinger",
@@ -871,7 +1059,10 @@
       "Affirmative Action",
       "Higher Education"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "equal-protection-scrutiny-framework"
+    ]
   },
   {
     "id": "gratz-v-bollinger",
@@ -886,7 +1077,8 @@
       "Affirmative Action",
       "Higher Education"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "fisher-v-university-of-texas",
@@ -901,7 +1093,8 @@
       "Affirmative Action",
       "Higher Education"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "sffa-v-harvard",
@@ -916,7 +1109,8 @@
       "Affirmative Action",
       "Higher Education"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "parents-involved-v-seattle",
@@ -932,7 +1126,8 @@
       "School Desegregation",
       "Race-Neutral Measures"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "us-v-carolene-products",
@@ -947,7 +1142,8 @@
       "Political Process Theory",
       "Judicial Review"
     ],
-    "keyQuote": "Prejudice against discrete and insular minorities may be a special condition, which tends seriously to curtail the operation of those political processes ordinarily to be relied upon to protect minorities."
+    "keyQuote": "Prejudice against discrete and insular minorities may be a special condition, which tends seriously to curtail the operation of those political processes ordinarily to be relied upon to protect minorities.",
+    "scenarioIds": []
   },
   {
     "id": "reed-v-reed",
@@ -961,7 +1157,8 @@
       "Gender Discrimination",
       "Rational Basis With Bite"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "frontiero-v-richardson",
@@ -975,7 +1172,8 @@
       "Gender Discrimination",
       "Heightened Scrutiny"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "craig-v-boren",
@@ -989,7 +1187,8 @@
       "Gender Discrimination",
       "Intermediate Scrutiny"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "kahn-v-shevin",
@@ -1003,7 +1202,8 @@
       "Gender Discrimination",
       "Intermediate Scrutiny"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "weinberger-v-wiesenfeld",
@@ -1017,7 +1217,8 @@
       "Gender Discrimination",
       "Archaic Stereotypes"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "rostker-v-goldberg",
@@ -1032,7 +1233,8 @@
       "Intermediate Scrutiny",
       "Military"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "us-v-virginia",
@@ -1047,7 +1249,8 @@
       "Intermediate Scrutiny",
       "Higher Education"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "philadelphia-v-new-jersey",
@@ -1061,7 +1264,10 @@
       "Facial Discrimination",
       "State Protectionism"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "dormant-commerce-clause-flow-control"
+    ]
   },
   {
     "id": "dean-milk-v-madison",
@@ -1075,7 +1281,10 @@
       "Facial Discrimination",
       "Local Protectionism"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "dormant-commerce-clause-flow-control"
+    ]
   },
   {
     "id": "ca-carbone-v-clarkstown",
@@ -1090,7 +1299,8 @@
       "Flow Control",
       "Local Processing"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "united-haulers-v-oneida-herkimer",
@@ -1104,7 +1314,8 @@
       "Flow Control",
       "Government-Owned Facilities"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "west-lynn-creamery-v-healy",
@@ -1119,7 +1330,8 @@
       "Discriminatory Taxation",
       "Coupled Tax-and-Subsidy"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "maine-v-taylor",
@@ -1133,7 +1345,10 @@
       "Facial Discrimination",
       "Baitfish Exception"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": [
+      "dormant-commerce-clause-flow-control"
+    ]
   },
   {
     "id": "hunt-v-washington-apple",
@@ -1147,7 +1362,8 @@
       "Pike-Like Analysis",
       "Latent Discrimination"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "pike-v-bruce-church",
@@ -1161,7 +1377,8 @@
       "Pike Balancing Test",
       "Non-Discriminatory Laws"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "exxon-v-governor-of-maryland",
@@ -1175,7 +1392,8 @@
       "Substantial Burden Threshold",
       "Non-Discriminatory Laws"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "national-pork-producers-v-ross",
@@ -1190,7 +1408,8 @@
       "Substantial Burden Threshold",
       "Incommensurable Values"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   },
   {
     "id": "federal-preemption-framework",
@@ -1205,6 +1424,7 @@
       "Federalism",
       "Tenth Amendment"
     ],
-    "keyQuote": ""
+    "keyQuote": "",
+    "scenarioIds": []
   }
 ]

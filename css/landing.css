@@ -1,0 +1,244 @@
+/* ==============================================================
+   LANDING SCREEN
+   ============================================================== */
+#landing-screen {
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-xl);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ecf0f1;
+  text-align: center;
+}
+
+.landing-container {
+  max-width: 600px;
+  width: 100%;
+}
+
+.game-title {
+  font-size: var(--font-size-xxl);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-xs);
+  color: #ffffff;
+}
+
+.game-subtitle-large {
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xl);
+  font-weight: 400;
+}
+
+.landing-description {
+  margin-bottom: var(--space-xl);
+  line-height: 1.8;
+}
+
+.landing-description p {
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-md);
+  color: #d5dbdb;
+}
+
+.landing-description strong {
+  color: #ffffff;
+}
+
+.landing-description em {
+  color: var(--color-judiciary-light);
+  font-style: italic;
+}
+
+/* Selectors */
+.selector-group {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 var(--space-md) var(--space-lg);
+}
+
+.selector-label {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xs);
+}
+
+.selector {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.selector:focus {
+  outline: 2px solid var(--color-judiciary-light);
+  outline-offset: 2px;
+}
+
+.selector option {
+  background: #1a1a2e;
+  color: #ffffff;
+}
+
+/* Begin Button */
+.btn-primary {
+  display: inline-block;
+  background: var(--color-judiciary-light);
+  color: #ffffff;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  padding: var(--space-md) var(--space-xxl);
+  border-radius: var(--border-radius);
+  transition: background var(--transition-fast), transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+  letter-spacing: 0.02em;
+  margin-top: var(--space-lg);
+}
+
+.btn-primary:hover {
+  background: #2471a3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(41, 128, 185, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* ==============================================================
+   DARK-MODE TOGGLE (in header)
+   ============================================================== */
+.dark-mode-toggle {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  line-height: 1;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.dark-mode-toggle:hover {
+  background: var(--color-border-light);
+}
+
+.dark-mode-toggle:focus-visible {
+  outline: 2px solid var(--color-judiciary-light);
+  outline-offset: 2px;
+}
+
+/* Manual dark-mode class (toggled via JS) */
+body.dark-mode {
+  --color-bg: #1a1a2e;
+  --color-surface: #16213e;
+  --color-text: #ecf0f1;
+  --color-text-muted: #95a5a6;
+  --color-text-light: #7f8c8d;
+  --color-border: #2c3e50;
+  --color-border-light: #1c2a3a;
+  --color-judiciary-bg: rgba(41, 128, 185, 0.15);
+  --color-executive-bg: rgba(192, 57, 43, 0.15);
+  --color-legislature-bg: rgba(39, 174, 96, 0.15);
+  --color-correct-bg: rgba(39, 174, 96, 0.15);
+  --color-partial-bg: rgba(243, 156, 18, 0.15);
+  --color-incorrect-bg: rgba(231, 76, 60, 0.15);
+  --color-accent: #0f3460;
+  --color-accent-hover: #1a5276;
+  --app-background-texture:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 18%),
+    radial-gradient(circle at 82% 0%, rgba(41, 128, 185, 0.16) 0%, rgba(41, 128, 185, 0) 28%),
+    radial-gradient(circle at 50% 100%, rgba(15, 52, 96, 0.22) 0%, rgba(15, 52, 96, 0) 38%);
+  --feedback-panel-texture:
+    linear-gradient(180deg, rgba(22, 33, 62, 0.97) 0%, rgba(17, 24, 39, 0.95) 100%),
+    radial-gradient(circle at top left, rgba(41, 128, 185, 0.16) 0%, rgba(41, 128, 185, 0) 34%);
+  --feedback-panel-border: rgba(255, 255, 255, 0.08);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode #landing-screen {
+  background: linear-gradient(135deg, #0a0a1a 0%, #0f1a2e 50%, #0a2540 100%);
+}
+
+body.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode .professor-note,
+body.dark-mode .feedback-collapsible.professor-note {
+  background: rgba(41, 128, 185, 0.1);
+  border-color: rgba(41, 128, 185, 0.3);
+}
+
+body.dark-mode .other-side,
+body.dark-mode .feedback-collapsible.other-side {
+  background: rgba(243, 156, 18, 0.1);
+  border-color: rgba(243, 156, 18, 0.3);
+}
+
+body.dark-mode .analytical-lens-badge {
+  background: rgba(108, 52, 131, 0.15);
+  border-color: rgba(108, 52, 131, 0.3);
+}
+
+body.dark-mode .selector {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .selector option {
+  background: #0f1a2e;
+}
+
+body.dark-mode .results-table thead {
+  background: #0f3460;
+}
+
+body.dark-mode .results-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body.dark-mode .choice-review-row.review-correct {
+  background: rgba(39, 174, 96, 0.1);
+}
+body.dark-mode .choice-review-row.review-partial {
+  background: rgba(243, 156, 18, 0.1);
+}
+body.dark-mode .choice-review-row.review-incorrect {
+  background: rgba(231, 76, 60, 0.1);
+}
+
+body.dark-mode .dark-mode-toggle {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+body.dark-mode .segmented-progress .seg {
+  background: var(--color-border);
+}
+
+body.dark-mode .end-results-card {
+  background: var(--color-surface);
+}
+
+body.dark-mode .grade-ring {
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(41, 128, 185, 0.15);
+}
+

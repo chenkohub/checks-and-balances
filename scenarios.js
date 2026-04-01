@@ -5,7 +5,7 @@
  */
 
 import { loadCaseData, findCaseByReference, renderCasePopup } from './cases.js';
-import { showModal, announce } from './ui.js';
+import { showModal, hideModal, populateAppModal, announce } from './ui.js';
 
 function setText(id, text) {
   const element = document.getElementById(id);
@@ -153,6 +153,26 @@ export function renderScenario(scenario, stepIndex, onChoiceCallback, options = 
   if (doctrineTagEl) {
     doctrineTagEl.textContent = scenario.doctrineArea || '';
     doctrineTagEl.hidden = difficulty !== 'easy' && difficulty !== 'all';
+  }
+
+  // Hint button: visible on Easy only.
+  const hintBtn = document.getElementById('hint-btn');
+  const hintContent = document.getElementById('hint-content');
+  if (hintBtn && hintContent) {
+    if (difficulty === 'easy') {
+      const hintText = step.hint || ('Focus on: ' + (scenario.doctrineArea || 'the key constitutional principle'));
+      hintBtn.classList.remove('hidden');
+      hintContent.classList.add('hidden');
+      hintContent.textContent = hintText;
+      hintBtn.onclick = () => {
+        hintContent.classList.toggle('hidden');
+        hintBtn.textContent = hintContent.classList.contains('hidden') ? '💡 Show Hint' : '💡 Hide Hint';
+      };
+    } else {
+      hintBtn.classList.add('hidden');
+      hintContent.classList.add('hidden');
+      hintBtn.onclick = null;
+    }
   }
 
   const difficultyBadge = document.getElementById('difficulty-badge');
@@ -318,8 +338,12 @@ export function renderArgumentBuilder(step, onSubmitCallback) {
  * @param {object} hypo - { id, prompt, choices: [{ text, correct, explanation }] }
  * @param {function} onComplete - called with (wasCorrect: boolean) after the player answers
  */
-export function renderHypoVariation(hypo, onComplete) {
+export function renderHypoVariation(hypo, onComplete, { hypoIndex = 0, totalHypos = 1 } = {}) {
   const choices = Array.isArray(hypo.choices) ? hypo.choices : [];
+
+  const progressLabel = totalHypos > 1
+    ? `<span class="hypo-progress">Hypo ${hypoIndex + 1} of ${totalHypos}</span>`
+    : '';
 
   const choiceHtml = choices.map((choice, index) => `
     <button
@@ -334,6 +358,7 @@ export function renderHypoVariation(hypo, onComplete) {
   `).join('');
 
   const bodyHtml = `
+    ${progressLabel}
     <p class="hypo-prompt">${escapeHtml(hypo.prompt || '')}</p>
     <div class="hypo-choices" role="group" aria-label="Hypo variation choices">
       ${choiceHtml}
@@ -341,38 +366,31 @@ export function renderHypoVariation(hypo, onComplete) {
     <div id="hypo-result" class="hypo-result hidden"></div>
   `;
 
-  const { showModal: _showModal, hideModal, populateAppModal } = { showModal: null, hideModal: null, populateAppModal: null };
+  const title = `⚡ Hypo Check`;
 
-  // Inline import avoidance — populateAppModal is passed via the module import at the top.
-  // We use a temporary div approach: render into app-modal body directly.
-  const titleEl = document.getElementById('app-modal-title');
+  populateAppModal({
+    title,
+    bodyHtml,
+    closeOnOverlay: false,
+    onCancel: () => onComplete(false)
+  });
+
+  // Wire choice buttons — reveal answer inline, then show Continue.
   const bodyEl = document.getElementById('app-modal-body');
   const actionsEl = document.getElementById('app-modal-actions');
-  const closeBtn = document.getElementById('app-modal-close-btn');
-
-  if (!titleEl || !bodyEl || !actionsEl) {
+  if (!bodyEl || !actionsEl) {
     onComplete(false);
     return;
   }
 
-  titleEl.textContent = '⚡ Hypo Check';
-  bodyEl.innerHTML = bodyHtml;
-  actionsEl.innerHTML = '';
-
-  if (closeBtn) {
-    closeBtn.onclick = () => {
-      document.getElementById('app-modal')?.classList.add('hidden');
-      document.getElementById('app-modal')?.setAttribute('aria-hidden', 'true');
-      onComplete(false);
-    };
-  }
-
-  // Wire choice buttons — reveal answer inline, then show Continue.
   bodyEl.querySelectorAll('.hypo-choice-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const index = Number(btn.dataset.hypoIndex);
-      const choice = choices[index];
+      const idx = Number(btn.dataset.hypoIndex);
+      const choice = choices[idx];
       const wasCorrect = choice?.correct === true || choice?.correct === 'correct';
+
+      // Optional scoring: if the hypo choice has a points field, report it
+      const pointsAwarded = typeof choice?.points === 'number' ? choice.points : 0;
 
       bodyEl.querySelectorAll('.hypo-choice-btn').forEach((b) => {
         b.disabled = true;
@@ -382,9 +400,9 @@ export function renderHypoVariation(hypo, onComplete) {
 
       const resultEl = document.getElementById('hypo-result');
       if (resultEl) {
-        resultEl.classList.remove('hidden');
+        const pointsNote = pointsAwarded ? ` <span class="hypo-points">(+${pointsAwarded} pts)</span>` : '';
         resultEl.innerHTML = `
-          <p>${wasCorrect ? '✅ Correct analysis.' : '❌ Not quite.'}</p>
+          <p>${wasCorrect ? '✅ Correct analysis.' : '❌ Not quite.'}${pointsNote}</p>
           <p>${escapeHtml(choice?.explanation || '')}</p>
         `;
         resultEl.className = `hypo-result ${wasCorrect ? 'hypo-result-correct' : 'hypo-result-incorrect'}`;
@@ -395,23 +413,14 @@ export function renderHypoVariation(hypo, onComplete) {
       continueBtn.className = 'btn btn-primary';
       continueBtn.textContent = 'Continue';
       continueBtn.addEventListener('click', () => {
-        document.getElementById('app-modal')?.classList.add('hidden');
-        document.getElementById('app-modal')?.setAttribute('aria-hidden', 'true');
-        onComplete(wasCorrect);
+        hideModal('app-modal');
+        onComplete(wasCorrect, pointsAwarded);
       }, { once: true });
       actionsEl.innerHTML = '';
       actionsEl.appendChild(continueBtn);
       continueBtn.focus();
     }, { once: true });
   });
-
-  const modal = document.getElementById('app-modal');
-  if (modal) {
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    const firstBtn = bodyEl.querySelector('.hypo-choice-btn');
-    if (firstBtn) firstBtn.focus();
-  }
 }
 
 export async function renderFeedback({ scenario, choicesMade, pointsEarned, maxPoints, onContinue }) {

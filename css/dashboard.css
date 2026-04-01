@@ -1,0 +1,121 @@
+/* ==============================================================
+   DASHBOARD
+   ============================================================== */
+
+.dashboard-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.dashboard-header,
+.dashboard-panel-header,
+.toggle-row,
+.library-layout,
+.detail-actions,
+.score-summary,
+.reward-strip,
+.dashboard-actions,
+.card-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.dashboard-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.xp-meter {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  margin-top: 0.75rem;
+  background: rgba(26, 82, 118, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.xp-meter-fill,
+.doctrine-meter-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #1a5276, #2e86c1);
+  border-radius: inherit;
+}
+
+.doctrine-breakdown,
+.activity-list,
+.achievement-grid,
+.recommendation-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.achievement-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.achievement-badge {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.9rem;
+  border-radius: 16px;
+  background: rgba(26, 82, 118, 0.06);
+}
+
+.achievement-badge.is-new {
+  outline: 2px solid rgba(46, 134, 193, 0.4);
+}
+
+.achievement-icon {
+  font-size: 1.4rem;
+}
+
+.recommendation-card,
+.activity-row {
+  padding: 0.9rem;
+  border-radius: 16px;
+  background: rgba(26, 82, 118, 0.05);
+}
+
+.recommendation-tag {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0.72;
+}
+
+.activity-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.activity-row p {
+  margin: 0.25rem 0 0;
+}
+
+.activity-meta {
+  display: grid;
+  justify-items: end;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.compatibility-hidden {
+  display: none;
+}
+

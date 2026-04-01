@@ -1,0 +1,559 @@
+/* ==============================================================
+   RESPONSIVE — TABLET (≤ 768px)
+   ============================================================== */
+@media (max-width: 768px) {
+  :root {
+    --font-size-xxl: 2rem;
+    --font-size-xl: 1.5rem;
+    --font-size-lg: 1.25rem;
+  }
+
+  .game-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .header-left,
+  .header-right {
+    justify-content: center;
+  }
+
+  .game-header > * {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .score-display {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+
+  .scenario-area {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .scenario-description {
+    padding: var(--space-md);
+  }
+
+  .choice-btn {
+    padding: var(--space-md);
+    min-height: 56px;
+  }
+
+  .argument-builder {
+    grid-template-columns: 1fr;
+  }
+
+  .argument-submit-wrap {
+    position: sticky;
+    bottom: 0;
+    background: var(--color-surface, #fff);
+    padding: var(--space-sm, 0.5rem) 0;
+    border-top: 1px solid var(--color-border-light, #e2e8f0);
+    z-index: 5;
+  }
+
+  .argument-option-label {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .feedback-panel {
+    padding: var(--space-lg);
+    max-height: 95vh;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+  }
+
+  .result-banner {
+    flex-wrap: wrap;
+  }
+
+  .points-earned {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: var(--space-sm);
+  }
+
+  .score-summary {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .score-summary-item {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .results-table {
+    font-size: var(--font-size-xs);
+  }
+
+  .results-table th,
+  .results-table td {
+    padding: var(--space-sm);
+  }
+
+  .selector-group {
+    display: flex;
+    margin: 0 var(--space-sm) var(--space-md);
+  }
+
+  /* Collapsibles default to collapsed on mobile */
+  .feedback-collapsible:not([open]) > summary {
+    padding: var(--space-md);
+  }
+
+  /* Touch-friendly summary targets */
+  .feedback-collapsible > summary {
+    min-height: 56px;
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .case-link {
+    min-height: 44px;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .end-results-card {
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+
+/* ==============================================================
+   RESPONSIVE — SMALL PHONE (≤ 480px)
+   ============================================================== */
+@media (max-width: 480px) {
+  .game-title {
+    font-size: 1.75rem;
+  }
+
+  .game-subtitle-large {
+    letter-spacing: 0.3em;
+    font-size: var(--font-size-xs);
+  }
+
+  .landing-description p {
+    font-size: var(--font-size-base);
+  }
+
+  .grade-ring {
+    width: 120px;
+    height: 120px;
+  }
+
+  .grade-ring-inner {
+    width: 90px;
+    height: 90px;
+  }
+
+  .grade-letter {
+    font-size: 2.5rem;
+  }
+
+  .segmented-progress {
+    gap: 2px;
+    height: 8px;
+  }
+
+  .branch-badge {
+    font-size: var(--font-size-xs);
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .feedback-panel {
+    padding: var(--space-md);
+  }
+
+  .modal-overlay {
+    padding: var(--space-sm);
+    padding-top: var(--space-md);
+  }
+}
+
+
+/* ==============================================================
+   PHASE 6 — MODE SELECTOR PANEL
+   ============================================================== */
+
+.selectors-panel {
+  margin-bottom: var(--space-xl);
+}
+
+.selectors-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.mode-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  font-style: italic;
+  min-height: 2.5em;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+  transition: opacity var(--transition-base);
+}
+
+/* ==============================================================
+   PHASE 6 — TIMER ENHANCEMENTS
+   ============================================================== */
+
+.timer-display {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg);
+  border-radius: var(--border-radius);
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+.timer-icon {
+  font-size: var(--font-size-md);
+}
+
+.timer-display.warning {
+  color: var(--color-incorrect);
+  background: var(--color-incorrect-bg);
+}
+
+@keyframes timerCriticalPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.timer-display.critical {
+  color: #ffffff;
+  background: var(--color-incorrect);
+  animation: timerCriticalPulse 1s ease-in-out infinite;
+}
+
+.timer-display.expired {
+  color: var(--color-text-muted);
+  background: var(--color-border-light);
+  animation: none;
+}
+
+/* ==============================================================
+   PHASE 6 — GAME LAYOUT (Scenario + Precedent Sidebar)
+   ============================================================== */
+
+.game-layout {
+  display: flex;
+  flex: 1;
+  gap: var(--space-lg);
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.game-layout .scenario-area {
+  flex: 1;
+  padding: var(--space-xl) 0;
+  margin: 0;
+  max-width: none;
+}
+
+/* ==============================================================
+   PHASE 6 — PRECEDENT TRACKER SIDEBAR
+   ============================================================== */
+
+.precedent-tracker {
+  width: 280px;
+  flex-shrink: 0;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-surface);
+  border-left: 1px solid var(--color-border-light);
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+  position: sticky;
+  top: 0;
+}
+
+.precedent-tracker-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.precedent-tracker-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin-bottom: var(--space-lg);
+}
+
+.precedent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.precedent-empty {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: var(--space-md);
+  text-align: center;
+  background: var(--color-bg);
+  border-radius: var(--border-radius);
+}
+
+.precedent-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--color-border);
+  background: var(--color-bg);
+  animation: feedbackSectionIn 400ms ease both;
+}
+
+.precedent-item.precedent-affirmed {
+  border-left-color: var(--color-correct);
+  background: var(--color-correct-bg);
+}
+
+.precedent-item.precedent-denied {
+  border-left-color: var(--color-partial);
+  background: var(--color-partial-bg);
+}
+
+.precedent-icon {
+  font-size: var(--font-size-md);
+  flex-shrink: 0;
+}
+
+.precedent-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.precedent-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.precedent-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ==============================================================
+   PHASE 6 — EXAM PREP REVIEW SECTION
+   ============================================================== */
+
+.exam-review-intro {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+  line-height: 1.7;
+  text-align: center;
+}
+
+.exam-review-scenario {
+  margin-bottom: var(--space-md);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.exam-review-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  min-height: 48px;
+  user-select: none;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.exam-review-summary::-webkit-details-marker {
+  display: none;
+}
+
+.exam-review-summary::after {
+  content: "▸";
+  margin-left: auto;
+  transition: transform var(--transition-fast);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.exam-review-scenario[open] > .exam-review-summary::after {
+  transform: rotate(90deg);
+}
+
+.exam-review-number {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 999px;
+}
+
+.exam-review-title {
+  flex: 1;
+  color: var(--color-text);
+}
+
+.exam-review-score {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.exam-review-score.perf-good { color: var(--color-correct); }
+.exam-review-score.perf-ok { color: var(--color-partial); }
+.exam-review-score.perf-poor { color: var(--color-incorrect); }
+
+.exam-review-body {
+  padding: var(--space-lg);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.exam-review-choices {
+  margin-bottom: var(--space-lg);
+}
+
+.exam-review-explanation,
+.exam-review-professor,
+.exam-review-other-side {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  border-radius: var(--border-radius);
+}
+
+.exam-review-explanation {
+  background: var(--color-bg);
+}
+
+.exam-review-explanation h5,
+.exam-review-professor h5,
+.exam-review-other-side h5 {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text);
+}
+
+.exam-review-explanation p,
+.exam-review-professor p,
+.exam-review-other-side p {
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.exam-review-professor {
+  background: #eaf2f8;
+  border: 1px solid #aed6f1;
+}
+
+.exam-review-other-side {
+  background: #fef9e7;
+  border: 1px solid #f9e79f;
+}
+
+/* ==============================================================
+   PHASE 6 — SCREEN-READER ONLY UTILITY
+   ============================================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==============================================================
+   PHASE 6 — RESPONSIVE ADJUSTMENTS
+   ============================================================== */
+
+@media (max-width: 768px) {
+  .game-layout {
+    flex-direction: column;
+    padding: 0 var(--space-md);
+  }
+
+  .precedent-tracker {
+    width: 100%;
+    position: static;
+    max-height: none;
+    border-left: none;
+    border-top: 1px solid var(--color-border-light);
+    padding: var(--space-md);
+  }
+
+  .selectors-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .selector-group {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .exam-review-summary {
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .exam-review-body {
+    padding: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .precedent-tracker {
+    padding: var(--space-sm);
+  }
+
+  .precedent-item {
+    padding: var(--space-sm);
+  }
+
+  .exam-review-number {
+    display: none;
+  }
+}
+
+

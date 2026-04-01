@@ -1,0 +1,16 @@
+{
+  "_comment": "Copy this template to add a new case to data/cases.json. Remove all _comment fields before adding.",
+  "id": "case-name-v-party",
+  "_comment_id": "Convention: lowercase-hyphenated version of the case name",
+  "name": "Case Name v. Other Party",
+  "year": 2024,
+  "citation": "000 U.S. ___ (2024)",
+  "holding": "The court's legal holding — the rule of law established by the decision.",
+  "significance": "Why this case matters in constitutional law. Its doctrinal impact and how it relates to the broader legal landscape.",
+  "doctrineAreas": [
+    "Primary Doctrine Area",
+    "Secondary Doctrine Area"
+  ],
+  "_comment_doctrineAreas": "Array of doctrine area strings. Use existing doctrine names from cases.json for consistency.",
+  "keyQuote": "A memorable quote from the opinion, or empty string if none."
+}

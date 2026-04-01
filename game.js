@@ -844,6 +844,7 @@ function completeScenario({ timedOut = false, skipFeedback = false } = {}) {
       hideModal('feedback-modal');
       if (pendingHypos.length > 0) {
         gameState.pendingHypos = pendingHypos;
+        gameState.totalHypos = pendingHypos.length;
         processNextHypo();
       } else {
         advanceToNextScenario();
@@ -859,9 +860,15 @@ function processNextHypo() {
     return;
   }
 
-  renderHypoVariation(hypo, (_wasCorrect) => {
+  const hypoIndex = gameState.totalHypos - gameState.pendingHypos.length - 1;
+  const totalHypos = gameState.totalHypos;
+
+  renderHypoVariation(hypo, (_wasCorrect, pointsAwarded) => {
+    if (typeof pointsAwarded === 'number' && pointsAwarded > 0) {
+      gameState.legitimacyPoints = (gameState.legitimacyPoints || 0) + pointsAwarded;
+    }
     processNextHypo();
-  });
+  }, { hypoIndex, totalHypos });
 }
 
 function advanceToNextScenario() {
@@ -1007,12 +1014,13 @@ export async function initGame(options = {}) {
 
       if (weakInCatalog.length === 0) {
         displayError(
-          'No weak spots found yet. Play at least 2 sessions on each scenario first, then return to Weak Spots mode.'
+          'No weak spots identified yet. Complete at least 2 attempts on several scenarios so we can identify areas for improvement. Each scenario needs at least 2 plays with an average accuracy below 65% to qualify.'
         );
         return;
       }
 
       orderedScenarioIds = weakInCatalog.map((s) => s.id);
+      showToast(`${weakInCatalog.length} weak spot${weakInCatalog.length === 1 ? '' : 's'} queued for review.`, { type: 'info' });
     }
 
     if (!orderedScenarioIds.length) {
@@ -1540,6 +1548,7 @@ function openSettingsDrawer() {
   syncSettingsDrawer();
   drawer.classList.add('is-open');
   drawer.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
   overlay?.classList.remove('hidden');
   overlay?.removeAttribute('aria-hidden');
   btn?.setAttribute('aria-expanded', 'true');
@@ -1556,6 +1565,7 @@ function closeSettingsDrawer() {
   }
   drawer.classList.remove('is-open');
   drawer.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
   overlay?.classList.add('hidden');
   overlay?.setAttribute('aria-hidden', 'true');
   btn?.setAttribute('aria-expanded', 'false');

@@ -1,0 +1,97 @@
+/* ==============================================================
+   SCREEN MANAGEMENT
+   ============================================================== */
+.screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.screen.active {
+  display: flex;
+}
+.screen.hidden {
+  display: none;
+}
+
+/* ==============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-12px); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+
+/* Branch badge pulse on role change */
+@keyframes branchPulse {
+  0%   { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,0,0,0.15); }
+  50%  { transform: scale(1.08); box-shadow: 0 0 0 8px rgba(0,0,0,0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+}
+
+/* Progress segment pulse for current crisis */
+@keyframes segmentPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+/* Score flash */
+@keyframes scoreFlash {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Choice button flash — green */
+@keyframes flashGreen {
+  0%   { background: var(--color-correct-bg); border-color: var(--color-correct); color: var(--color-correct); }
+  100% { background: var(--color-correct-bg); border-color: var(--color-correct); color: var(--color-correct); }
+}
+
+/* Choice button flash — red */
+@keyframes flashRed {
+  0%   { background: var(--color-incorrect-bg); border-color: var(--color-incorrect); color: var(--color-incorrect); }
+  100% { background: var(--color-incorrect-bg); border-color: var(--color-incorrect); color: var(--color-incorrect); }
+}
+
+/* Choice button flash — yellow (partial) */
+@keyframes flashYellow {
+  0%   { background: var(--color-partial-bg); border-color: var(--color-partial); color: var(--color-partial); }
+  100% { background: var(--color-partial-bg); border-color: var(--color-partial); color: var(--color-partial); }
+}
+
+/* Staggered feedback section entrance */
+@keyframes feedbackSectionIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Utility animation classes */
+.anim-fade-in   { animation: fadeIn var(--transition-slow) forwards; }
+.anim-fade-out  { animation: fadeOut var(--transition-base) forwards; }
+.anim-slide-in  { animation: slideInRight var(--transition-slow) forwards; }
+.anim-scale-up  { animation: scaleUp var(--transition-slow) forwards; }
+
+.score-flash {
+  animation: scoreFlash 350ms ease;
+}
+

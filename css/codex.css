@@ -1,0 +1,50 @@
+/* ==============================================================
+   CODEX
+   ============================================================== */
+
+.codex-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.codex-tabs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.codex-tab {
+  border: 1px solid rgba(26, 82, 118, 0.16);
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  background: rgba(26, 82, 118, 0.06);
+  font-weight: 700;
+}
+
+.codex-tab.is-active {
+  background: #1a5276;
+  color: white;
+}
+
+.codex-panels {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.codex-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.codex-entry {
+  border: 1px solid rgba(26, 82, 118, 0.12);
+  border-radius: 16px;
+  padding: 1rem;
+  background: rgba(26, 82, 118, 0.04);
+}
+
+.codex-entry h3,
+.codex-entry h4 {
+  margin-top: 0;
+}
+

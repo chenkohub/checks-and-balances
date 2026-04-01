@@ -105,6 +105,55 @@ A strong pull request usually includes:
 - screenshots or short recordings for UI changes
 - a note on whether tests were added or updated
 
+## Content Authoring Workflow
+
+Use this workflow when adding new scenarios, cases, or hypo variations.
+
+### Templates
+
+Start from the template files in `data/templates/`:
+
+- **`scenario-template.json`** — Complete scenario with all required and optional fields
+- **`case-template.json`** — Case entry for `data/cases.json`
+- **`hypo-template.json`** — Hypo variation to add to a scenario's `hypoVariations` array
+
+Copy the relevant template, fill in the content, and remove all `_comment` fields before committing.
+
+### Validation
+
+Run the schema validator to catch errors before committing:
+
+```bash
+npm run validate
+```
+
+This checks all data files (`scenarios.json`, `cases.json`, `campaigns.json`) for:
+- Required fields and correct types
+- Valid enum values (branch, difficulty, step type, correct)
+- Cross-references between campaigns and scenarios
+- Hypo variation structure
+
+Fix any errors reported, then re-run until validation passes.
+
+### Cross-Links
+
+After adding scenarios that reference cases, regenerate the case-to-scenario cross-links:
+
+```bash
+npm run crosslink
+```
+
+This scans all scenario `caseReferences` and populates `scenarioIds` on each case in `cases.json`, enabling the codex to link cases back to the scenarios where they appear.
+
+### Full Workflow
+
+1. Copy the appropriate template from `data/templates/`
+2. Fill in the content, remove `_comment` fields
+3. Add the entry to the appropriate data file
+4. Run `npm run validate` — fix any errors
+5. Run `npm run crosslink` — regenerate case links
+6. Test in the browser and through `tests/index.html`
+
 ## Questions
 
 If you are unsure how to model a new doctrine area, start by reviewing:
