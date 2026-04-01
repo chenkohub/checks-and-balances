@@ -70,15 +70,28 @@
       <button class="app-nav-link" type="button" data-route="dashboard">My Progress</button>
       <button class="app-nav-link" type="button" data-route="codex">Codex</button>
     </nav>
-    <button
-      id="dark-mode-toggle"
-      class="btn btn-icon dark-mode-toggle"
-      aria-label="Toggle dark mode"
-      title="Toggle dark mode"
-      type="button"
-    >
-      🌙
-    </button>
+    <div class="header-controls">
+      <button
+        id="dark-mode-toggle"
+        class="btn btn-icon dark-mode-toggle"
+        aria-label="Toggle dark mode"
+        title="Toggle dark mode"
+        type="button"
+      >
+        🌙
+      </button>
+      <button
+        id="settings-btn"
+        class="btn btn-icon settings-btn"
+        aria-label="Open settings"
+        title="Settings"
+        aria-expanded="false"
+        aria-controls="settings-drawer"
+        type="button"
+      >
+        ⚙️
+      </button>
+    </div>
   </header>
 
   <main id="main-content" tabindex="-1" class="app-main">
@@ -407,6 +420,7 @@
               </table>
             </div>
           </section>
+
         </div>
       </div>
     </section>
@@ -591,6 +605,86 @@
 
   <div id="case-popup" class="case-popup hidden" role="tooltip" aria-live="polite" aria-hidden="true"></div>
   <div id="toast-stack" class="toast-stack" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Settings Drawer -->
+  <div id="settings-overlay" class="settings-overlay hidden" aria-hidden="true"></div>
+  <aside
+    id="settings-drawer"
+    class="settings-drawer"
+    aria-label="Settings"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="settings-drawer-header">
+      <h2 class="settings-drawer-title">Settings</h2>
+      <button id="settings-close-btn" class="btn btn-icon settings-close-btn" aria-label="Close settings" type="button">&times;</button>
+    </div>
+
+    <div class="settings-drawer-body">
+
+      <!-- Gameplay section -->
+      <section class="settings-section" aria-labelledby="settings-gameplay-heading">
+        <h3 id="settings-gameplay-heading" class="settings-section-heading">Gameplay</h3>
+
+        <div class="settings-row">
+          <label for="settings-difficulty" class="settings-label">Default Difficulty</label>
+          <select id="settings-difficulty" class="selector settings-select">
+            <option value="all">All Levels</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div class="settings-row">
+          <label for="settings-mode" class="settings-label">Default Mode</label>
+          <select id="settings-mode" class="selector settings-select">
+            <option value="standard">Standard</option>
+            <option value="examPrep">Exam Prep</option>
+            <option value="campaign">Campaign Queue</option>
+            <option value="weakSpots">Weak Spots</option>
+          </select>
+        </div>
+
+        <div class="settings-row" id="settings-timer-row">
+          <label for="settings-timer" class="settings-label">Exam Timer (minutes)</label>
+          <select id="settings-timer" class="selector settings-select">
+            <option value="30">30</option>
+            <option value="45">45</option>
+            <option value="60" selected>60</option>
+            <option value="90">90</option>
+            <option value="120">120</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Display section -->
+      <section class="settings-section" aria-labelledby="settings-display-heading">
+        <h3 id="settings-display-heading" class="settings-section-heading">Display</h3>
+
+        <div class="settings-row settings-row-toggle">
+          <span class="settings-label">Dark Mode</span>
+          <button id="settings-dark-mode-btn" class="btn btn-secondary settings-toggle-btn" type="button" aria-pressed="false">Off</button>
+        </div>
+
+        <div class="settings-row">
+          <label for="settings-mentor" class="settings-label">Mentor Character</label>
+          <select id="settings-mentor" class="selector settings-select">
+            <option value="chief-clerk">Chief Clerk</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Danger Zone section -->
+      <section class="settings-section settings-danger-zone" aria-labelledby="settings-danger-heading">
+        <h3 id="settings-danger-heading" class="settings-section-heading settings-danger-heading">Danger Zone</h3>
+        <p class="muted-copy">Permanently delete all game data and start over from scratch. Your difficulty and mode preferences will be kept.</p>
+        <button id="settings-reset-btn" class="btn btn-danger" type="button">Reset All Progress</button>
+      </section>
+
+    </div>
+  </aside>
 
   <script type="module" src="game.js?v=2026-04-01-rz4p0"></script>
   <script>

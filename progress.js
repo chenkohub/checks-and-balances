@@ -8,6 +8,10 @@ import { loadAnalyticsHistory } from './analytics.js';
 export const PROFILE_STORAGE_KEY = 'cb-sim-profile-v1';
 const PROFILE_VERSION = 1;
 
+export function clearPlayerProfile() {
+  localStorage.removeItem(PROFILE_STORAGE_KEY);
+}
+
 let campaignDataCache = null;
 let scenarioCatalogCache = null;
 

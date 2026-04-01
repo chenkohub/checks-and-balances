@@ -58,7 +58,10 @@ import {
   applySessionProgress,
   computeCompletionSummary,
   getScenarioProgress,
-  setSandboxEnabled
+  setSandboxEnabled,
+  clearPlayerProfile,
+  savePlayerProfile,
+  setMentorCharacter
 } from './progress.js';
 import { renderDashboard } from './dashboard.js';
 import { renderCampaignMap } from './map.js';
@@ -67,7 +70,8 @@ import { markAchievementsSeen, loadAchievementDefinitions } from './achievements
 import {
   getHomeMentorContent,
   getResultsMentorContent,
-  getCodexMentorContent
+  getCodexMentorContent,
+  loadCharacterData
 } from './character.js';
 import { loadCaseData, getAllCases } from './cases.js';
 import { initRouter, navigate, getCurrentRoute, registerScreen } from './router.js';
@@ -347,6 +351,22 @@ function loadSavedSessionState() {
 
 function clearSavedSessionState() {
   localStorage.removeItem(SAVE_STORAGE_KEY);
+}
+
+/**
+ * Full game reset: wipes the player profile, active session, and analytics
+ * history, then reloads the page so the app boots with a clean slate.
+ * Deliberately preserves UI preferences (difficulty, mode, dark mode).
+ */
+function resetAllGameData() {
+  stopSessionClock();
+  stopTimer();
+  clearSavedSessionState();
+  clearPlayerProfile();
+  clearAnalyticsHistory();
+  // Reset the first-visit flag so the welcome modal shows again.
+  try { localStorage.removeItem(FIRST_VISIT_KEY); } catch (_e) { /* ignore */ }
+  location.reload();
 }
 
 function resetGameState() {
@@ -1506,6 +1526,201 @@ async function handleRouteChange(event) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Settings Drawer
+// ---------------------------------------------------------------------------
+
+function openSettingsDrawer() {
+  const drawer = document.getElementById('settings-drawer');
+  const overlay = document.getElementById('settings-overlay');
+  const btn = document.getElementById('settings-btn');
+  if (!drawer) {
+    return;
+  }
+  syncSettingsDrawer();
+  drawer.classList.add('is-open');
+  drawer.setAttribute('aria-hidden', 'false');
+  overlay?.classList.remove('hidden');
+  overlay?.removeAttribute('aria-hidden');
+  btn?.setAttribute('aria-expanded', 'true');
+  // Move focus into drawer
+  drawer.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')?.focus();
+}
+
+function closeSettingsDrawer() {
+  const drawer = document.getElementById('settings-drawer');
+  const overlay = document.getElementById('settings-overlay');
+  const btn = document.getElementById('settings-btn');
+  if (!drawer) {
+    return;
+  }
+  drawer.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden', 'true');
+  overlay?.classList.add('hidden');
+  overlay?.setAttribute('aria-hidden', 'true');
+  btn?.setAttribute('aria-expanded', 'false');
+  btn?.focus();
+}
+
+function syncSettingsTimerRow() {
+  const modeEl = document.getElementById('settings-mode');
+  const timerRow = document.getElementById('settings-timer-row');
+  if (timerRow) {
+    timerRow.classList.toggle('hidden', modeEl?.value !== 'examPrep');
+  }
+}
+
+function syncSettingsDarkModeBtn() {
+  const isDark = document.documentElement.classList.contains('dark-mode');
+  const btn = document.getElementById('settings-dark-mode-btn');
+  if (btn) {
+    btn.textContent = isDark ? 'On' : 'Off';
+    btn.setAttribute('aria-pressed', String(isDark));
+  }
+}
+
+async function populateSettingsMentorSelect() {
+  const select = document.getElementById('settings-mentor');
+  if (!select) {
+    return;
+  }
+  try {
+    const data = await loadCharacterData();
+    const characters = data?.characters || [];
+    if (characters.length > 0) {
+      select.innerHTML = characters
+        .map((c) => `<option value="${c.id}">${c.name}</option>`)
+        .join('');
+    }
+  } catch (_e) {
+    // Keep the default option already in the HTML
+  }
+}
+
+function syncSettingsDrawer() {
+  const prefs = getPreferences();
+
+  // Gameplay
+  const diffEl = document.getElementById('settings-difficulty');
+  const modeEl = document.getElementById('settings-mode');
+  const timerEl = document.getElementById('settings-timer');
+  if (diffEl) {
+    diffEl.value = prefs.difficulty || 'all';
+  }
+  if (modeEl) {
+    modeEl.value = prefs.mode || 'standard';
+  }
+  if (timerEl) {
+    timerEl.value = String(prefs.timerMinutes || 60);
+  }
+  syncSettingsTimerRow();
+
+  // Display
+  syncSettingsDarkModeBtn();
+  const mentorEl = document.getElementById('settings-mentor');
+  if (mentorEl && currentProfile?.settings?.mentorCharacterId) {
+    mentorEl.value = currentProfile.settings.mentorCharacterId;
+  }
+}
+
+function applyDrawerPrefs() {
+  // Mirror drawer values into landing-screen selects so savePreferences() works correctly
+  const diffEl = document.getElementById('settings-difficulty');
+  const modeEl = document.getElementById('settings-mode');
+  const timerEl = document.getElementById('settings-timer');
+
+  const landingDiff = document.getElementById('difficulty-select');
+  const landingMode = document.getElementById('mode-select');
+  const landingTimer = document.getElementById('timer-select');
+
+  if (diffEl && landingDiff) {
+    landingDiff.value = diffEl.value;
+  }
+  if (modeEl && landingMode) {
+    landingMode.value = modeEl.value;
+    showModeDescription();
+  }
+  if (timerEl && landingTimer) {
+    landingTimer.value = timerEl.value;
+  }
+  savePreferences();
+}
+
+function bindSettingsDrawer() {
+  const settingsBtn = document.getElementById('settings-btn');
+  const closeBtn = document.getElementById('settings-close-btn');
+  const overlay = document.getElementById('settings-overlay');
+
+  settingsBtn?.addEventListener('click', openSettingsDrawer);
+  closeBtn?.addEventListener('click', closeSettingsDrawer);
+  overlay?.addEventListener('click', closeSettingsDrawer);
+
+  // Close on Escape (only if no other modal is open)
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      const drawer = document.getElementById('settings-drawer');
+      const appModal = document.getElementById('app-modal');
+      const feedbackModal = document.getElementById('feedback-modal');
+      const appModalOpen = appModal && !appModal.classList.contains('hidden');
+      const feedbackOpen = feedbackModal && !feedbackModal.classList.contains('hidden');
+      if (!appModalOpen && !feedbackOpen && drawer?.classList.contains('is-open')) {
+        closeSettingsDrawer();
+      }
+    }
+  });
+
+  // Gameplay controls
+  document.getElementById('settings-difficulty')?.addEventListener('change', applyDrawerPrefs);
+  document.getElementById('settings-mode')?.addEventListener('change', () => {
+    syncSettingsTimerRow();
+    applyDrawerPrefs();
+  });
+  document.getElementById('settings-timer')?.addEventListener('change', applyDrawerPrefs);
+
+  // Dark mode mirror
+  document.getElementById('settings-dark-mode-btn')?.addEventListener('click', () => {
+    // Reuse the existing dark-mode-toggle logic by programmatically clicking it
+    document.getElementById('dark-mode-toggle')?.click();
+    syncSettingsDarkModeBtn();
+  });
+
+  // Mentor character
+  document.getElementById('settings-mentor')?.addEventListener('change', async (event) => {
+    const characterId = event.target.value;
+    if (currentProfile) {
+      currentProfile.settings = currentProfile.settings || {};
+      currentProfile.settings.mentorCharacterId = characterId;
+      savePlayerProfile(currentProfile);
+    }
+    await setMentorCharacter(characterId, { scenarioCatalog, campaignData });
+    showToast('Mentor updated.');
+  });
+
+  // Reset
+  document.getElementById('settings-reset-btn')?.addEventListener('click', () => {
+    populateAppModal({
+      title: '⚠️ Reset all game data?',
+      bodyHtml: `
+        <p>This will permanently delete:</p>
+        <ul class="reset-confirm-list">
+          <li>All XP, levels, and star ratings</li>
+          <li>All campaign progress and unlocked nodes</li>
+          <li>All achievements</li>
+          <li>All session history and analytics</li>
+        </ul>
+        <p class="reset-confirm-warning">Your difficulty and mode preferences will be kept. <strong>This cannot be undone.</strong></p>
+      `,
+      confirmText: 'Reset Everything',
+      cancelText: 'Cancel',
+      onConfirm: resetAllGameData,
+      closeOnOverlay: false
+    });
+  });
+
+  // Populate mentor select asynchronously
+  populateSettingsMentorSelect();
+}
+
 function bindControls() {
   document.getElementById('begin-btn')?.addEventListener('click', () => initGame());
   document.getElementById('continue-campaign-btn')?.addEventListener('click', launchCurrentCampaignNode);
@@ -1582,6 +1797,8 @@ function bindControls() {
   });
 
   document.addEventListener('cb:routechange', handleRouteChange);
+
+  bindSettingsDrawer();
 }
 
 export function bootstrapApp() {
