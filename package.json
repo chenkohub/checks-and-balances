@@ -1,0 +1,16 @@
+{
+  "name": "checks-and-balances",
+  "version": "1.0.0",
+  "description": "Checks & Balances: The Simulation — a constitutional law educational game",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/bump-build.js",
+    "serve": "python3 -m http.server 8080",
+    "serve:node": "npx serve . -p 8080",
+    "test": "npx playwright test tests/playwright.spec.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.43.0",
+    "serve": "^14.2.0"
+  }
+}

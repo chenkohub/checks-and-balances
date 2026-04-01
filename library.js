@@ -155,9 +155,9 @@ function renderCards(entries, profile, handlers = {}) {
           <span class="status-chip status-${escapeHtml(entry.status)}">${statusLabel(entry)}</span>
         </div>
         <div class="scenario-card-stats">
-          <span>${'★'.repeat(entry.stars).padEnd(3, '☆')}</span>
-          <span>Best ${entry.bestPercent}%</span>
-          <span>${entry.attempts} attempt${entry.attempts === 1 ? '' : 's'}</span>
+          <span aria-label="${entry.stars} of 3 stars">${'★'.repeat(entry.stars)}${'☆'.repeat(3 - entry.stars)}</span>
+          <span class="${entry.completed ? 'scenario-card-best-score' : ''}">${entry.completed ? `Personal best: ${entry.bestPercent}%` : `${entry.attempts} attempt${entry.attempts === 1 ? '' : 's'}`}</span>
+          ${entry.completed && entry.bestPercent < 95 ? `<span class="scenario-card-beat-best">Can you beat it?</span>` : ''}
         </div>
         <div class="scenario-card-actions">
           <button type="button" class="btn btn-primary library-play-btn" data-scenario-id="${escapeHtml(entry.id)}" ${buttonDisabled ? 'disabled' : ''}>

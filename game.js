@@ -9,6 +9,7 @@ import {
   renderArgumentBuilder,
   renderCounterArgument,
   renderFeedback,
+  renderHypoVariation,
   renderEndGame,
   renderExamReview
 } from './scenarios.js';
@@ -48,7 +49,8 @@ import {
   recordCompletedSession,
   downloadAnalyticsCsv,
   clearAnalyticsHistory,
-  loadAnalyticsHistory
+  loadAnalyticsHistory,
+  getWeakScenarioIds
 } from './analytics.js';
 import {
   loadPlayerProfile,
@@ -162,8 +164,51 @@ const MODE_DESCRIPTIONS = Object.freeze({
   campaign:
     'Play the classic fixed campaign queue. Earlier rulings create precedents that reframe later crises.',
   freePlay:
-    'Launch one scenario directly from the campaign map or library.'
+    'Launch one scenario directly from the campaign map or library.',
+  weakSpots:
+    'Focus on scenarios where you score below 65%. Requires at least 2 recorded attempts per scenario before it qualifies.'
 });
+
+const FIRST_VISIT_KEY = 'cb-first-visit';
+
+function isFirstVisit() {
+  try {
+    return !localStorage.getItem(FIRST_VISIT_KEY);
+  } catch (_error) {
+    return false;
+  }
+}
+
+function showWelcomeModal() {
+  if (!isFirstVisit()) {
+    return;
+  }
+  try {
+    localStorage.setItem(FIRST_VISIT_KEY, '1');
+  } catch (_error) {
+    // localStorage unavailable — skip modal
+    return;
+  }
+
+  populateAppModal({
+    title: '⚖️ Welcome to Checks & Balances',
+    bodyHtml: `
+      <p>This is an interactive constitutional law simulation. You'll work through real-world crisis scenarios and build doctrine-by-doctrine expertise in separation of powers, federalism, and structural constitutional law.</p>
+      <details class="welcome-how-to-play" open>
+        <summary><strong>How to play</strong></summary>
+        <ul class="welcome-mode-list">
+          <li><strong>Standard</strong> — Shuffled scenarios with immediate feedback. Good for exploring new doctrine.</li>
+          <li><strong>Exam Prep</strong> — Timed simulation with deferred feedback. Mirrors bar exam conditions.</li>
+          <li><strong>Campaign</strong> — A fixed sequence where earlier rulings reshape later scenarios. The full experience.</li>
+          <li><strong>Weak Spots</strong> — Resurfaces scenarios you consistently struggle with, once you have play history.</li>
+        </ul>
+      </details>
+      <p class="welcome-tip">Tip: Start with the <strong>Campaign</strong> to see how precedents compound across doctrine areas.</p>
+    `,
+    confirmText: 'Start Playing',
+    closeOnOverlay: false
+  });
+}
 
 function createInitialGameState() {
   return {
@@ -190,7 +235,8 @@ function createInitialGameState() {
     analyticsRecorded: false,
     launchContext: null,
     practiceOnly: false,
-    resultsPayload: null
+    resultsPayload: null,
+    pendingHypos: []
   };
 }
 
@@ -531,7 +577,7 @@ function renderCurrentStep() {
     return;
   }
 
-  renderScenario(activeScenario, gameState.currentStepIndex, handleChoice);
+  renderScenario(activeScenario, gameState.currentStepIndex, handleChoice, { difficulty: currentScoreDifficulty() });
 }
 
 function beginSessionClock() {
@@ -759,10 +805,15 @@ function completeScenario({ timedOut = false, skipFeedback = false } = {}) {
     return;
   }
 
-  if (gameState.mode === 'examPrep' || skipFeedback) {
+  // Hard mode (standard) defers all scenario feedback to the end, mirroring exam prep.
+  const hardModeDeferred = gameState.difficulty === 'hard' && gameState.mode === 'standard';
+  if (gameState.mode === 'examPrep' || hardModeDeferred || skipFeedback) {
     advanceToNextScenario();
     return;
   }
+
+  // Capture hypo variations before clearing activeScenario
+  const pendingHypos = [...(activeScenario.hypoVariations ?? [])];
 
   renderFeedback({
     scenario: activeScenario,
@@ -771,14 +822,32 @@ function completeScenario({ timedOut = false, skipFeedback = false } = {}) {
     maxPoints: record.maxPoints,
     onContinue: () => {
       hideModal('feedback-modal');
-      advanceToNextScenario();
+      if (pendingHypos.length > 0) {
+        gameState.pendingHypos = pendingHypos;
+        processNextHypo();
+      } else {
+        advanceToNextScenario();
+      }
     }
+  });
+}
+
+function processNextHypo() {
+  const hypo = gameState.pendingHypos.shift();
+  if (!hypo) {
+    advanceToNextScenario();
+    return;
+  }
+
+  renderHypoVariation(hypo, (_wasCorrect) => {
+    processNextHypo();
   });
 }
 
 function advanceToNextScenario() {
   gameState.currentScenarioIndex += 1;
   clearCurrentScenarioProgress();
+  gameState.pendingHypos = [];
 
   if (gameState.currentScenarioIndex >= gameState.totalScenarios) {
     showEndGame();
@@ -907,8 +976,24 @@ export async function initGame(options = {}) {
     savePreferences();
 
     const catalog = await ensureScenarioCatalog(options.scenarioData);
-    const orderedScenarioIds = options.orderedScenarioIds
+    let orderedScenarioIds = options.orderedScenarioIds
       || buildSessionScenarioIds(catalog, selections.mode, selections.difficulty, options);
+
+    // Weak Spots mode: override orderedScenarioIds with the player's worst-performing scenarios.
+    if (selections.mode === 'weakSpots') {
+      const history = loadAnalyticsHistory();
+      const weakIds = getWeakScenarioIds(history);
+      const weakInCatalog = catalog.filter((s) => weakIds.includes(s.id)).slice(0, 10);
+
+      if (weakInCatalog.length === 0) {
+        displayError(
+          'No weak spots found yet. Play at least 2 sessions on each scenario first, then return to Weak Spots mode.'
+        );
+        return;
+      }
+
+      orderedScenarioIds = weakInCatalog.map((s) => s.id);
+    }
 
     if (!orderedScenarioIds.length) {
       displayError('No scenarios matched the current settings. Try choosing “All Levels.”');
@@ -1045,6 +1130,8 @@ async function renderHomeScreen() {
 
   const mentor = await getHomeMentorContent(currentProfile);
   renderMentorPanel('home-mentor-panel', mentor);
+
+  showWelcomeModal();
 }
 
 async function renderDashboardScreen() {
@@ -1332,7 +1419,9 @@ export async function showEndGame() {
   results.rewards = progressOutcome.rewards;
   renderEndGame(results);
 
-  if (gameState.mode === 'examPrep') {
+  const showDeferredReview = results.mode === 'examPrep'
+    || (results.mode === 'standard' && results.difficulty === 'hard');
+  if (showDeferredReview) {
     renderExamReview(results.scenarioResults);
   }
 

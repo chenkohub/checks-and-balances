@@ -135,10 +135,17 @@ export function updateProgressBar(currentIndex = 0, total = 0, history = []) {
       } else {
         segment.classList.add('seg-incorrect');
       }
+
+      const pct = Math.round(ratio * 100);
+      const label = [record.title, record.doctrineArea, `${pct}%`].filter(Boolean).join(' · ');
+      segment.title = label;
+      segment.dataset.doctrineArea = record.doctrineArea || '';
     } else if (index === currentIndex) {
       segment.classList.add('seg-current');
+      segment.title = 'Current scenario';
     } else {
       segment.classList.add('seg-upcoming');
+      segment.title = 'Upcoming';
     }
 
     segment.setAttribute('aria-hidden', 'true');

@@ -4088,4 +4088,184 @@ body.route-results .app-nav {
   color: var(--color-text-muted);
   margin: 0;
 }
+
+/* ==============================================================
+   P1 IMPROVEMENTS
+   ============================================================== */
+
+/* --- First-visit Welcome Modal --- */
+.welcome-mode-list {
+  margin: var(--space-sm) 0 var(--space-md) var(--space-md);
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
 }
+
+.welcome-mode-list li {
+  line-height: 1.5;
+}
+
+.welcome-tip {
+  background: var(--color-judiciary-bg);
+  border-left: 3px solid var(--color-judiciary-light);
+  border-radius: var(--border-radius);
+  padding: var(--space-sm) var(--space-md);
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.welcome-how-to-play {
+  margin: var(--space-md) 0;
+}
+
+.welcome-how-to-play summary {
+  cursor: pointer;
+  margin-bottom: var(--space-sm);
+}
+
+/* --- Progress Bar Doctrine Tooltips --- */
+.seg[title] {
+  cursor: default;
+  position: relative;
+}
+
+/* --- Argument Builder Sticky Submit --- */
+.argument-submit-wrap {
+  position: sticky;
+  bottom: 0;
+  padding: var(--space-sm) 0 var(--space-md);
+  background: linear-gradient(to bottom, transparent, var(--color-surface) 40%);
+  z-index: 2;
+}
+
+.argument-submit-wrap .btn {
+  width: 100%;
+}
+
+@media (min-width: 641px) {
+  .argument-submit-wrap {
+    position: static;
+    background: none;
+    padding: var(--space-md) 0 0;
+  }
+
+  .argument-submit-wrap .btn {
+    width: auto;
+  }
+}
+
+/* --- Richer Feedback: whyTempting / distinguishingPrinciple --- */
+.choice-review-detail {
+  margin-top: var(--space-sm);
+  font-size: var(--font-size-sm);
+}
+
+.choice-review-detail-summary {
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.choice-review-detail-summary::before {
+  content: '▸';
+  display: inline-block;
+  transition: transform 200ms ease;
+}
+
+.choice-review-detail[open] .choice-review-detail-summary::before {
+  transform: rotate(90deg);
+}
+
+.choice-review-detail p {
+  margin: var(--space-xs) 0 0 var(--space-md);
+  color: var(--color-text);
+  line-height: 1.55;
+}
+
+/* --- Hypo Variation Modal --- */
+.hypo-prompt {
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.hypo-choices {
+  display: grid;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.hypo-choice-btn {
+  text-align: left;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.hypo-choice-btn:hover:not(:disabled) {
+  background: var(--color-judiciary-bg);
+  border-color: var(--color-judiciary-light);
+}
+
+.hypo-choice-btn.hypo-choice-correct {
+  background: var(--color-correct-bg);
+  border-color: var(--color-correct);
+}
+
+.hypo-choice-btn.hypo-choice-incorrect {
+  background: var(--color-incorrect-bg);
+  border-color: var(--color-incorrect);
+}
+
+.hypo-result {
+  border-radius: var(--border-radius);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-sm);
+}
+
+.hypo-result.hidden {
+  display: none;
+}
+
+.hypo-result p {
+  margin: 0 0 0.25rem;
+}
+
+.hypo-result-correct {
+  background: var(--color-correct-bg);
+  border-left: 3px solid var(--color-correct);
+}
+
+.hypo-result-incorrect {
+  background: var(--color-incorrect-bg);
+  border-left: 3px solid var(--color-incorrect);
+}
+
+/* --- Library Card: Best Score Callout --- */
+.scenario-card-best-score {
+  font-weight: 700;
+  color: var(--color-judiciary);
+}
+
+.scenario-card-beat-best {
+  font-size: var(--font-size-xs);
+  color: var(--color-partial);
+  font-style: italic;
+}
+
+/* --- Weak Spots Mode --- */
+/* Mode select already handles description text; no extra chrome needed. */
+

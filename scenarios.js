@@ -136,7 +136,8 @@ export async function loadScenarioData() {
   return Array.isArray(data) ? data : (Array.isArray(data.scenarios) ? data.scenarios : []);
 }
 
-export function renderScenario(scenario, stepIndex, onChoiceCallback) {
+export function renderScenario(scenario, stepIndex, onChoiceCallback, options = {}) {
+  const { difficulty = 'all' } = options;
   const steps = Array.isArray(scenario.steps) ? scenario.steps : [];
   const step = steps[stepIndex];
   if (!step) {
@@ -146,7 +147,13 @@ export function renderScenario(scenario, stepIndex, onChoiceCallback) {
   setText('scenario-title', scenario.title);
   setHtml('scenario-description', formatRichText(scenario.description));
   setText('scenario-prompt', step.prompt || '');
-  setText('doctrine-tag', scenario.doctrineArea || '');
+
+  // Doctrine tag: visible on Easy only; hidden on Medium/Hard to raise difficulty.
+  const doctrineTagEl = document.getElementById('doctrine-tag');
+  if (doctrineTagEl) {
+    doctrineTagEl.textContent = scenario.doctrineArea || '';
+    doctrineTagEl.hidden = difficulty !== 'easy' && difficulty !== 'all';
+  }
 
   const difficultyBadge = document.getElementById('difficulty-badge');
   if (difficultyBadge) {
@@ -172,7 +179,10 @@ export function renderScenario(scenario, stepIndex, onChoiceCallback) {
   }
 
   choicesContainer.classList.remove('hidden');
-  renderChoiceButtons(choicesContainer, step.choices || [], onChoiceCallback);
+  // On Hard, include trap choices (trapOnly: true) to increase difficulty.
+  // On Easy/Medium/All, filter them out so only curated choices appear.
+  const choices = (step.choices || []).filter((c) => difficulty === 'hard' || !c.trapOnly);
+  renderChoiceButtons(choicesContainer, choices, onChoiceCallback);
 }
 
 export function renderCounterArgument(step, onChoiceCallback) {
@@ -221,10 +231,12 @@ export function renderArgumentBuilder(step, onSubmitCallback) {
         <h3 id="argument-options-heading" class="builder-section-title">Select Supporting Arguments</h3>
         <p class="builder-instructions">Choose every argument you want to include. Strong arguments add points; weak arguments subtract points.</p>
         <div id="argument-option-list" class="argument-builder-options"></div>
-        <button type="button" id="submit-args-btn" class="btn btn-primary btn-submit-args" disabled>
-          Evaluate Arguments
-        </button>
       </section>
+    </div>
+    <div class="argument-submit-wrap">
+      <button type="button" id="submit-args-btn" class="btn btn-primary btn-submit-args" disabled>
+        Evaluate Arguments
+      </button>
     </div>
   `;
 
@@ -299,6 +311,109 @@ export function renderArgumentBuilder(step, onSubmitCallback) {
   }, { once: true });
 }
 
+/**
+ * Renders a single hypo variation as a lightweight modal using the app-modal.
+ * Hypo variations are educational "what if?" follow-ups that carry no score impact.
+ *
+ * @param {object} hypo - { id, prompt, choices: [{ text, correct, explanation }] }
+ * @param {function} onComplete - called with (wasCorrect: boolean) after the player answers
+ */
+export function renderHypoVariation(hypo, onComplete) {
+  const choices = Array.isArray(hypo.choices) ? hypo.choices : [];
+
+  const choiceHtml = choices.map((choice, index) => `
+    <button
+      type="button"
+      class="btn hypo-choice-btn"
+      data-hypo-index="${index}"
+      aria-label="Hypo choice ${index + 1}: ${escapeHtml(choice.text)}"
+    >
+      <span class="choice-index" aria-hidden="true">${String.fromCharCode(65 + index)}</span>
+      <span>${escapeHtml(choice.text)}</span>
+    </button>
+  `).join('');
+
+  const bodyHtml = `
+    <p class="hypo-prompt">${escapeHtml(hypo.prompt || '')}</p>
+    <div class="hypo-choices" role="group" aria-label="Hypo variation choices">
+      ${choiceHtml}
+    </div>
+    <div id="hypo-result" class="hypo-result hidden"></div>
+  `;
+
+  const { showModal: _showModal, hideModal, populateAppModal } = { showModal: null, hideModal: null, populateAppModal: null };
+
+  // Inline import avoidance — populateAppModal is passed via the module import at the top.
+  // We use a temporary div approach: render into app-modal body directly.
+  const titleEl = document.getElementById('app-modal-title');
+  const bodyEl = document.getElementById('app-modal-body');
+  const actionsEl = document.getElementById('app-modal-actions');
+  const closeBtn = document.getElementById('app-modal-close-btn');
+
+  if (!titleEl || !bodyEl || !actionsEl) {
+    onComplete(false);
+    return;
+  }
+
+  titleEl.textContent = '⚡ Hypo Check';
+  bodyEl.innerHTML = bodyHtml;
+  actionsEl.innerHTML = '';
+
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      document.getElementById('app-modal')?.classList.add('hidden');
+      document.getElementById('app-modal')?.setAttribute('aria-hidden', 'true');
+      onComplete(false);
+    };
+  }
+
+  // Wire choice buttons — reveal answer inline, then show Continue.
+  bodyEl.querySelectorAll('.hypo-choice-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const index = Number(btn.dataset.hypoIndex);
+      const choice = choices[index];
+      const wasCorrect = choice?.correct === true || choice?.correct === 'correct';
+
+      bodyEl.querySelectorAll('.hypo-choice-btn').forEach((b) => {
+        b.disabled = true;
+        b.classList.toggle('hypo-choice-correct', b === btn && wasCorrect);
+        b.classList.toggle('hypo-choice-incorrect', b === btn && !wasCorrect);
+      });
+
+      const resultEl = document.getElementById('hypo-result');
+      if (resultEl) {
+        resultEl.classList.remove('hidden');
+        resultEl.innerHTML = `
+          <p>${wasCorrect ? '✅ Correct analysis.' : '❌ Not quite.'}</p>
+          <p>${escapeHtml(choice?.explanation || '')}</p>
+        `;
+        resultEl.className = `hypo-result ${wasCorrect ? 'hypo-result-correct' : 'hypo-result-incorrect'}`;
+      }
+
+      const continueBtn = document.createElement('button');
+      continueBtn.type = 'button';
+      continueBtn.className = 'btn btn-primary';
+      continueBtn.textContent = 'Continue';
+      continueBtn.addEventListener('click', () => {
+        document.getElementById('app-modal')?.classList.add('hidden');
+        document.getElementById('app-modal')?.setAttribute('aria-hidden', 'true');
+        onComplete(wasCorrect);
+      }, { once: true });
+      actionsEl.innerHTML = '';
+      actionsEl.appendChild(continueBtn);
+      continueBtn.focus();
+    }, { once: true });
+  });
+
+  const modal = document.getElementById('app-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+    const firstBtn = bodyEl.querySelector('.hypo-choice-btn');
+    if (firstBtn) firstBtn.focus();
+  }
+}
+
 export async function renderFeedback({ scenario, choicesMade, pointsEarned, maxPoints, onContinue }) {
   const feedbackContent = document.getElementById('feedback-content');
   const closeButton = document.getElementById('feedback-close-btn');
@@ -313,7 +428,20 @@ export async function renderFeedback({ scenario, choicesMade, pointsEarned, maxP
       ? { icon: '⚠️', title: 'Partial credit earned', cssClass: 'review-partial' }
       : { icon: '❌', title: 'Needs review', cssClass: 'review-incorrect' };
 
-  const choiceRows = (choicesMade || []).map((choice) => `
+  // Merge scenario choice data into the choicesMade records to access whyTempting.
+  const stepChoiceMap = new Map();
+  (scenario.steps || []).forEach((step, stepIndex) => {
+    (step.choices || []).forEach((choice) => {
+      stepChoiceMap.set(`${stepIndex}-${choice.id}`, choice);
+    });
+  });
+
+  const choiceRows = (choicesMade || []).map((choice) => {
+    const sourceChoice = stepChoiceMap.get(`${choice.stepIndex}-${choice.choiceId}`) || {};
+    const whyTempting = sourceChoice.whyTempting || '';
+    const distinguishingPrinciple = sourceChoice.distinguishingPrinciple || '';
+
+    return `
     <div class="choice-review-row ${choice.outcome === 'correct' ? 'review-correct' : choice.outcome === 'partial' ? 'review-partial' : 'review-incorrect'}">
       <div class="choice-review-header">
         <span class="choice-review-step">Step ${choice.stepNumber}</span>
@@ -322,8 +450,21 @@ export async function renderFeedback({ scenario, choicesMade, pointsEarned, maxP
       </div>
       <p class="choice-review-text">${escapeHtml(choice.choiceText)}</p>
       <p class="choice-review-explanation">${escapeHtml(choice.explanation)}</p>
+      ${whyTempting ? `
+        <details class="choice-review-detail">
+          <summary class="choice-review-detail-summary">Why is this answer tempting?</summary>
+          <p>${escapeHtml(whyTempting)}</p>
+        </details>
+      ` : ''}
+      ${distinguishingPrinciple ? `
+        <details class="choice-review-detail">
+          <summary class="choice-review-detail-summary">Key distinction</summary>
+          <p>${escapeHtml(distinguishingPrinciple)}</p>
+        </details>
+      ` : ''}
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   feedbackContent.innerHTML = `
     <div class="result-banner ${performanceLabel.cssClass}">

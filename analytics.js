@@ -109,6 +109,34 @@ export function getWeakestDoctrines(history = loadAnalyticsHistory(), limit = 3)
   return getDoctrineBreakdown(history).slice(0, Math.max(0, limit));
 }
 
+/**
+ * Returns scenario IDs the player consistently struggles with.
+ * A scenario qualifies when it has >= minAttempts plays AND
+ * an average accuracy below the threshold.
+ */
+export function getWeakScenarioIds(history = loadAnalyticsHistory(), { threshold = 0.65, minAttempts = 2 } = {}) {
+  const byScenario = {};
+
+  (Array.isArray(history) ? history : []).forEach((session) => {
+    (session.scenarios || []).forEach((s) => {
+      if (!s.scenarioId) {
+        return;
+      }
+      if (!byScenario[s.scenarioId]) {
+        byScenario[s.scenarioId] = { total: 0, attempts: 0 };
+      }
+      const accuracy = s.maxScore > 0 ? s.scoreEarned / s.maxScore : 0;
+      byScenario[s.scenarioId].total += accuracy;
+      byScenario[s.scenarioId].attempts += 1;
+    });
+  });
+
+  return Object.entries(byScenario)
+    .filter(([, v]) => v.attempts >= minAttempts && (v.total / v.attempts) < threshold)
+    .sort((a, b) => (a[1].total / a[1].attempts) - (b[1].total / b[1].attempts))
+    .map(([id]) => id);
+}
+
 export function buildAnalyticsCsv(history = loadAnalyticsHistory()) {
   const rows = [[
     'Session ID',
