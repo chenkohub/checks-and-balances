@@ -5,6 +5,11 @@ window.__CB_DISABLE_BOOTSTRAP__ = true;
 const suites = [
   './scoring.test.js',
   './data-validation.test.js',
+  './router.test.js',
+  './progress.test.js',
+  './map.test.js',
+  './library.test.js',
+  './achievements.test.js',
   './integration.test.js'
 ];
 

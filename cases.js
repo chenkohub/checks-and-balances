@@ -141,6 +141,21 @@ function positionPopup(popup, anchorElement) {
   popup.style.left = `${Math.max(window.scrollX + padding, left)}px`;
 }
 
+function formatCaseMetadata(record = {}) {
+  const parts = [];
+  const hasDisplayYear = record.year !== null && record.year !== '' && Number.isFinite(Number(record.year));
+
+  if (hasDisplayYear) {
+    parts.push(String(record.year));
+  }
+
+  if (typeof record.citation === 'string' && record.citation.trim()) {
+    parts.push(record.citation.trim());
+  }
+
+  return parts.join(' — ');
+}
+
 export function hideCasePopup() {
   const popup = document.getElementById('case-popup');
   if (!popup) {
@@ -166,10 +181,12 @@ export function renderCasePopup(caseOrReference, anchorElement) {
     return null;
   }
 
+  const caseMetadata = formatCaseMetadata(record);
+
   popup.innerHTML = `
     <button type="button" class="case-popup-close" aria-label="Close case details">&times;</button>
     <h4 class="case-popup-name">${record.name}</h4>
-    <p class="case-popup-year">${record.year} — ${record.citation}</p>
+    ${caseMetadata ? `<p class="case-popup-year">${caseMetadata}</p>` : ''}
     <p class="case-popup-holding"><strong>Holding:</strong> ${record.holding}</p>
     <p class="case-popup-significance"><strong>Significance:</strong> ${record.significance}</p>
     ${record.keyQuote ? `<blockquote class="case-popup-quote">“${record.keyQuote}”</blockquote>` : ''}

@@ -404,3 +404,87 @@ export function initDarkModeToggle() {
     announce(isDark ? 'Dark mode enabled.' : 'Light mode enabled.');
   });
 }
+
+function resolveElement(target) {
+  if (!target) {
+    return null;
+  }
+  if (typeof target === 'string') {
+    return document.getElementById(target);
+  }
+  return target;
+}
+
+export function showToast(message, options = {}) {
+  const stack = document.getElementById('toast-stack');
+  if (!stack) {
+    return null;
+  }
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${options.variant || 'info'}`;
+  toast.setAttribute('role', 'status');
+  toast.innerHTML = `
+    ${options.title ? `<strong>${options.title}</strong>` : ''}
+    <span>${message}</span>
+  `;
+  stack.appendChild(toast);
+
+  const removeToast = () => {
+    toast.classList.add('is-leaving');
+    window.setTimeout(() => toast.remove(), prefersReducedMotion() ? 0 : 220);
+  };
+
+  window.setTimeout(removeToast, Number(options.duration || 2800));
+  return toast;
+}
+
+export function highlightTopNav(routeName = 'home') {
+  document.querySelectorAll('.app-nav-link[data-route]').forEach((element) => {
+    const isActive = element.getAttribute('data-route') === routeName;
+    element.classList.toggle('is-active', isActive);
+    element.setAttribute('aria-current', isActive ? 'page' : 'false');
+  });
+}
+
+export function setAppShellContext(routeName = 'home') {
+  document.body.dataset.route = routeName;
+  document.body.classList.toggle('route-game', routeName === 'game');
+  document.body.classList.toggle('route-results', routeName === 'results');
+}
+
+export function renderMentorPanel(target, mentor) {
+  const container = resolveElement(target);
+  if (!container) {
+    return;
+  }
+
+  if (!mentor) {
+    container.innerHTML = '';
+    container.classList.add('hidden');
+    return;
+  }
+
+  container.classList.remove('hidden');
+  container.classList.add('mentor-panel');
+  container.innerHTML = `
+    <div class="mentor-avatar-wrap">
+      ${mentor.avatar ? `<img src="${mentor.avatar}" alt="${mentor.name}" class="mentor-avatar" />` : ''}
+    </div>
+    <div class="mentor-copy">
+      <span class="mentor-label">Mentor</span>
+      <h3 class="mentor-name">${mentor.name}</h3>
+      <p class="mentor-line">${mentor.line || ''}</p>
+    </div>
+  `;
+}
+
+export function animateRewardStrip(target = 'results-reward-strip') {
+  const element = resolveElement(target);
+  if (!element) {
+    return;
+  }
+  element.classList.remove('reward-strip-pop');
+  void element.offsetWidth;
+  element.classList.add('reward-strip-pop');
+}

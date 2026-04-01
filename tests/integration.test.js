@@ -1,4 +1,7 @@
 import { initGame, __testHooks, SAVE_STORAGE_KEY } from '../game.js';
+import { renderCasePopup, hideCasePopup } from '../cases.js';
+import { loadPlayerProfile, applySessionProgress } from '../progress.js';
+import { recordCompletedSession, loadAnalyticsHistory } from '../analytics.js';
 import { test, assert, equal, includes, wait } from './test-utils.js';
 
 function clone(value) {
@@ -303,4 +306,205 @@ test('Finishing the last scenario displays the final score and grade.', async ()
   equal(document.getElementById('end-total-score').textContent, '10');
   equal(document.getElementById('end-percentage').textContent, '100%');
   equal(document.querySelector('#end-grade-badge .grade-letter').textContent, 'A');
+});
+
+
+test('Case popup shows citation cleanly when a reference has no decision year.', async () => {
+  prepareEnvironment();
+
+  const anchorButton = document.createElement('button');
+  anchorButton.type = 'button';
+  anchorButton.textContent = 'Open reference';
+  document.body.appendChild(anchorButton);
+
+  const popup = renderCasePopup({
+    id: 'federal-preemption-framework',
+    name: 'Federal Preemption Framework (Supremacy Clause, Article VI)',
+    year: null,
+    citation: 'U.S. Const. art. VI, cl. 2',
+    holding: 'Federal law preempts state law when Congress intends it.',
+    significance: 'Constitutional authority entries should still render cleanly in the popup.',
+    doctrineAreas: ['Federal Preemption'],
+    keyQuote: ''
+  }, anchorButton);
+
+  assert(popup, 'Expected case popup to render for reference data.');
+  equal(popup.querySelector('.case-popup-year').textContent, 'U.S. Const. art. VI, cl. 2');
+
+  hideCasePopup();
+  anchorButton.remove();
+});
+
+
+const progressionCatalog = [
+  { id: 'alpha', title: 'Alpha Scenario', doctrineArea: 'Doctrine Alpha', branch: 'judiciary', difficulty: 'easy' },
+  { id: 'beta', title: 'Beta Scenario', doctrineArea: 'Doctrine Beta', branch: 'judiciary', difficulty: 'medium' },
+  { id: 'gamma', title: 'Gamma Scenario', doctrineArea: 'Doctrine Gamma', branch: 'judiciary', difficulty: 'hard' }
+];
+
+const progressionCampaign = {
+  version: 1,
+  regions: [
+    { id: 'executive-power', label: 'Executive Power' }
+  ],
+  nodes: [
+    { id: 'alpha', scenarioId: 'alpha', regionId: 'executive-power', requiresAll: [], requiresAny: [], requiresMinStarsInRegion: 0 },
+    { id: 'beta', scenarioId: 'beta', regionId: 'executive-power', requiresAll: ['alpha'], requiresAny: [], requiresMinStarsInRegion: 0 },
+    { id: 'gamma', scenarioId: 'gamma', regionId: 'executive-power', requiresAll: ['beta'], requiresAny: [], requiresMinStarsInRegion: 0 }
+  ],
+  edges: [
+    { from: 'alpha', to: 'beta' },
+    { from: 'beta', to: 'gamma' }
+  ],
+  mainPath: ['alpha', 'beta', 'gamma']
+};
+
+function buildProgressResult({
+  sessionId = `session-${Date.now()}`,
+  scenarioId = 'alpha',
+  title = 'Alpha Scenario',
+  doctrineArea = 'Doctrine Alpha',
+  difficulty = 'easy',
+  pointsEarned = 10,
+  maxPoints = 10,
+  percentage = 100,
+  mode = 'freePlay',
+  playedAt = '2026-03-26T12:00:00.000Z'
+} = {}) {
+  return {
+    sessionId,
+    playedAt,
+    mode,
+    difficulty,
+    finalScore: pointsEarned,
+    maxScore: maxPoints,
+    percentage,
+    totalTimeMs: 1000,
+    scenarioResults: [{
+      scenarioId,
+      title,
+      doctrineArea,
+      difficulty,
+      pointsEarned,
+      maxPoints,
+      choicesMade: []
+    }]
+  };
+}
+
+function recordResultAnalytics(result) {
+  const scenario = result.scenarioResults[0];
+  recordCompletedSession({
+    sessionId: result.sessionId,
+    playedAt: result.playedAt,
+    mode: result.mode,
+    difficulty: result.difficulty,
+    finalScore: result.finalScore,
+    maxScore: result.maxScore,
+    percentage: result.percentage,
+    grade: { letter: 'A', title: 'Excellent' },
+    totalTimeMs: result.totalTimeMs || 1000,
+    scenarios: [{
+      scenarioId: scenario.scenarioId,
+      title: scenario.title,
+      doctrineArea: scenario.doctrineArea,
+      scoreEarned: scenario.pointsEarned,
+      maxScore: scenario.maxPoints,
+      choices: []
+    }]
+  });
+}
+
+function resetProgressionEnvironment() {
+  localStorage.clear();
+}
+
+test('Completing an official free-play scenario grants stars and unlocks the next node.', async () => {
+  resetProgressionEnvironment();
+  const profile = await loadPlayerProfile({ scenarioCatalog: progressionCatalog, campaignData: progressionCampaign, analyticsHistory: [] });
+  const result = buildProgressResult();
+  recordResultAnalytics(result);
+
+  const outcome = await applySessionProgress(result, {
+    profile,
+    scenarioCatalog: progressionCatalog,
+    campaignData: progressionCampaign,
+    practiceOnly: false,
+    analyticsHistory: loadAnalyticsHistory(),
+    launchContext: { scenarioId: 'alpha', source: 'library' },
+    mode: 'freePlay'
+  });
+
+  equal(outcome.profile.scenarioProgress.alpha.stars, 3);
+  assert(outcome.profile.campaign.unlockedNodeIds.includes('beta'), 'Official free play should unlock the downstream node.');
+});
+
+test('Completing a locked sandbox run records analytics but does not grant progression.', async () => {
+  resetProgressionEnvironment();
+  const profile = await loadPlayerProfile({ scenarioCatalog: progressionCatalog, campaignData: progressionCampaign, analyticsHistory: [] });
+  const result = buildProgressResult({
+    sessionId: 'sandbox-beta',
+    scenarioId: 'beta',
+    title: 'Beta Scenario',
+    doctrineArea: 'Doctrine Beta',
+    difficulty: 'medium',
+    mode: 'freePlay'
+  });
+  recordResultAnalytics(result);
+
+  const outcome = await applySessionProgress(result, {
+    profile,
+    scenarioCatalog: progressionCatalog,
+    campaignData: progressionCampaign,
+    practiceOnly: true,
+    analyticsHistory: loadAnalyticsHistory(),
+    launchContext: { scenarioId: 'beta', source: 'library' },
+    mode: 'freePlay'
+  });
+
+  equal(loadAnalyticsHistory().length, 1);
+  assert(outcome.profile.scenarioProgress.beta.completed === false, 'Sandbox runs should not mark locked scenarios complete.');
+  assert(outcome.profile.campaign.unlockedNodeIds.includes('beta') === false, 'Sandbox runs should not unlock campaign nodes.');
+});
+
+test('Completing a campaign node advances the campaign to the next node.', async () => {
+  resetProgressionEnvironment();
+  const profile = await loadPlayerProfile({ scenarioCatalog: progressionCatalog, campaignData: progressionCampaign, analyticsHistory: [] });
+  const result = buildProgressResult({ sessionId: 'campaign-alpha' });
+  recordResultAnalytics(result);
+
+  const outcome = await applySessionProgress(result, {
+    profile,
+    scenarioCatalog: progressionCatalog,
+    campaignData: progressionCampaign,
+    practiceOnly: false,
+    analyticsHistory: loadAnalyticsHistory(),
+    launchContext: { scenarioId: 'alpha', source: 'campaign' },
+    mode: 'freePlay'
+  });
+
+  equal(outcome.profile.campaign.currentNodeId, 'beta');
+  assert(outcome.profile.campaign.unlockedNodeIds.includes('beta'), 'The next campaign node should unlock after a campaign clear.');
+});
+
+test('Profile and current campaign state persist after a refresh.', async () => {
+  resetProgressionEnvironment();
+  const profile = await loadPlayerProfile({ scenarioCatalog: progressionCatalog, campaignData: progressionCampaign, analyticsHistory: [] });
+  const result = buildProgressResult({ sessionId: 'persist-alpha' });
+  recordResultAnalytics(result);
+
+  await applySessionProgress(result, {
+    profile,
+    scenarioCatalog: progressionCatalog,
+    campaignData: progressionCampaign,
+    practiceOnly: false,
+    analyticsHistory: loadAnalyticsHistory(),
+    launchContext: { scenarioId: 'alpha', source: 'campaign' },
+    mode: 'freePlay'
+  });
+
+  const reloaded = await loadPlayerProfile({ scenarioCatalog: progressionCatalog, campaignData: progressionCampaign, analyticsHistory: loadAnalyticsHistory() });
+  equal(reloaded.scenarioProgress.alpha.stars, 3);
+  equal(reloaded.campaign.currentNodeId, 'beta');
+  assert(reloaded.campaign.unlockedNodeIds.includes('beta'), 'Unlocked campaign state should persist after reload.');
 });

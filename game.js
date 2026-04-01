@@ -1,13 +1,6 @@
 /**
  * game.js
- * Core game controller for Checks & Balances: The Simulation.
- *
- * Responsibilities:
- * - session state and persistence
- * - mode selection and scenario ordering
- * - campaign precedent tracking and downstream effects
- * - exam timer coordination
- * - end-of-game analytics recording
+ * App bootstrap plus current-run orchestration.
  */
 
 import {
@@ -28,7 +21,6 @@ import {
 } from './scoring.js';
 import {
   showScreen,
-  animateScreenTransition,
   updateBranchIndicator,
   updateProgressBar,
   updateScore,
@@ -37,7 +29,11 @@ import {
   initDarkModeToggle,
   populateAppModal,
   hideModal,
-  announce
+  announce,
+  showToast,
+  setAppShellContext,
+  renderMentorPanel,
+  animateRewardStrip
 } from './ui.js';
 import {
   startTimer,
@@ -50,10 +46,29 @@ import {
 } from './timer.js';
 import {
   recordCompletedSession,
-  renderDashboard,
   downloadAnalyticsCsv,
-  clearAnalyticsHistory
+  clearAnalyticsHistory,
+  loadAnalyticsHistory
 } from './analytics.js';
+import {
+  loadPlayerProfile,
+  loadCampaignData,
+  applySessionProgress,
+  computeCompletionSummary,
+  getScenarioProgress,
+  setSandboxEnabled
+} from './progress.js';
+import { renderDashboard } from './dashboard.js';
+import { renderCampaignMap } from './map.js';
+import { renderLibrary } from './library.js';
+import { markAchievementsSeen, loadAchievementDefinitions } from './achievements.js';
+import {
+  getHomeMentorContent,
+  getResultsMentorContent,
+  getCodexMentorContent
+} from './character.js';
+import { loadCaseData, getAllCases } from './cases.js';
+import { initRouter, navigate, getCurrentRoute, registerScreen } from './router.js';
 
 export const SAVE_STORAGE_KEY = 'cb-sim-session-v1';
 export const PREFERENCES_STORAGE_KEY = 'cb-sim-preferences-v1';
@@ -145,7 +160,9 @@ const MODE_DESCRIPTIONS = Object.freeze({
   examPrep:
     'Timed exam simulation. Feedback is deferred until the end. Exam Prep always uses hard-mode scoring and includes pause/extend controls for accessibility.',
   campaign:
-    'Play the fixed campaign sequence. Earlier rulings create precedents that reframe later crises. Difficulty changes scoring, not the campaign order.'
+    'Play the classic fixed campaign queue. Earlier rulings create precedents that reframe later crises.',
+  freePlay:
+    'Launch one scenario directly from the campaign map or library.'
 });
 
 function createInitialGameState() {
@@ -170,16 +187,22 @@ function createInitialGameState() {
     currentScenarioMaxPoints: 0,
     elapsedMs: 0,
     startedAt: null,
-    analyticsRecorded: false
+    analyticsRecorded: false,
+    launchContext: null,
+    practiceOnly: false,
+    resultsPayload: null
   };
 }
 
 export const gameState = createInitialGameState();
 
 let scenarioCatalog = [];
+let campaignData = null;
+let currentProfile = null;
 let activeScenario = null;
 let sessionClockId = null;
 let bootstrapComplete = false;
+let savedSessionPrompted = false;
 
 function deepClone(value) {
   if (typeof structuredClone === 'function') {
@@ -209,13 +232,11 @@ function savePreferences() {
   const modeSelect = document.getElementById('mode-select');
   const timerSelect = document.getElementById('timer-select');
 
-  const preferences = {
+  localStorage.setItem(PREFERENCES_STORAGE_KEY, JSON.stringify({
     difficulty: difficultySelect?.value || 'all',
     mode: modeSelect?.value || 'standard',
     timerMinutes: Number(timerSelect?.value || 60)
-  };
-
-  localStorage.setItem(PREFERENCES_STORAGE_KEY, JSON.stringify(preferences));
+  }));
 }
 
 function applyPreferencesToControls() {
@@ -236,28 +257,22 @@ function applyPreferencesToControls() {
 }
 
 function readCurrentSelections() {
-  const difficultySelect = document.getElementById('difficulty-select');
-  const modeSelect = document.getElementById('mode-select');
-  const timerSelect = document.getElementById('timer-select');
-
   return {
-    difficulty: difficultySelect?.value || 'all',
-    mode: modeSelect?.value || 'standard',
-    timerMinutes: Math.max(1, Number(timerSelect?.value || 60))
+    difficulty: document.getElementById('difficulty-select')?.value || 'all',
+    mode: document.getElementById('mode-select')?.value || 'standard',
+    timerMinutes: Math.max(1, Number(document.getElementById('timer-select')?.value || 60))
   };
 }
 
 function showModeDescription() {
-  const modeSelect = document.getElementById('mode-select');
+  const mode = document.getElementById('mode-select')?.value || 'standard';
   const timerGroup = document.getElementById('timer-group');
-  const modeDescription = document.getElementById('mode-description');
-  const mode = modeSelect?.value || 'standard';
-
+  const description = document.getElementById('mode-description');
   if (timerGroup) {
     timerGroup.classList.toggle('hidden', mode !== 'examPrep');
   }
-  if (modeDescription) {
-    modeDescription.textContent = MODE_DESCRIPTIONS[mode] || '';
+  if (description) {
+    description.textContent = MODE_DESCRIPTIONS[mode] || '';
   }
 }
 
@@ -307,6 +322,13 @@ async function ensureScenarioCatalog(overrideData) {
   return scenarioCatalog;
 }
 
+async function ensureProgressData() {
+  await ensureScenarioCatalog();
+  campaignData = campaignData || await loadCampaignData();
+  currentProfile = await loadPlayerProfile({ scenarioCatalog, campaignData });
+  return { scenarioCatalog, campaignData, profile: currentProfile };
+}
+
 function shuffleArray(items) {
   const copy = [...items];
   for (let index = copy.length - 1; index > 0; index -= 1) {
@@ -318,6 +340,10 @@ function shuffleArray(items) {
 
 function buildSessionScenarioIds(catalog, mode, difficulty, options = {}) {
   const allScenarios = Array.isArray(catalog) ? catalog : [];
+
+  if (mode === 'freePlay' && options.scenarioId) {
+    return [options.scenarioId].filter((id) => allScenarios.some((scenario) => scenario.id === id));
+  }
 
   if (mode === 'campaign') {
     return campaignOrder.filter((id) => allScenarios.some((scenario) => scenario.id === id));
@@ -362,31 +388,39 @@ function updatePrecedentTracker() {
     return;
   }
 
-  list.innerHTML = entries
-    .map(([key, value]) => {
-      const meta = PRECEDENT_METADATA[key] || {
-        name: key,
-        trueLabel: 'Established',
-        falseLabel: 'Rejected'
-      };
-      return `
-        <li class="precedent-item ${value ? 'precedent-affirmed' : 'precedent-denied'}">
-          <span class="precedent-icon" aria-hidden="true">${value ? '✅' : '⚠️'}</span>
-          <div class="precedent-detail">
-            <span class="precedent-name">${meta.name}</span>
-            <span class="precedent-label">${value ? meta.trueLabel : meta.falseLabel}</span>
-          </div>
-        </li>
-      `;
-    })
-    .join('');
+  list.innerHTML = entries.map(([key, value]) => {
+    const meta = PRECEDENT_METADATA[key] || {
+      name: key,
+      trueLabel: 'Established',
+      falseLabel: 'Rejected'
+    };
+    return `
+      <li class="precedent-item ${value ? 'precedent-affirmed' : 'precedent-denied'}">
+        <span class="precedent-icon" aria-hidden="true">${value ? '✅' : '⚠️'}</span>
+        <div class="precedent-detail">
+          <span class="precedent-name">${meta.name}</span>
+          <span class="precedent-label">${value ? meta.trueLabel : meta.falseLabel}</span>
+        </div>
+      </li>
+    `;
+  }).join('');
 }
 
 function applyPrecedentConditionsToScenario(scenario) {
   const conditions = Array.isArray(scenario.precedentConditions) ? scenario.precedentConditions : [];
+  const triggeredLabels = [];
+
   conditions.forEach((condition) => {
     if (gameState.precedentState[condition.precedent] !== condition.value) {
       return;
+    }
+
+    const meta = PRECEDENT_METADATA[condition.precedent];
+    if (meta) {
+      const label = condition.value ? meta.trueLabel : meta.falseLabel;
+      if (label && !triggeredLabels.includes(label)) {
+        triggeredLabels.push(label);
+      }
     }
 
     if (condition.descriptionAppend) {
@@ -430,11 +464,27 @@ function applyPrecedentConditionsToScenario(scenario) {
       }
     });
   });
+
+  scenario._triggeredPrecedents = triggeredLabels;
 }
 
 function setScenarioChrome(scenario) {
   updateBranchIndicator(scenario.branch || 'judiciary');
   updateProgressBar(gameState.currentScenarioIndex, gameState.totalScenarios, gameState.history);
+
+  const banner = document.getElementById('precedent-banner');
+  const bannerText = document.getElementById('precedent-banner-text');
+  const triggered = Array.isArray(scenario._triggeredPrecedents) ? scenario._triggeredPrecedents : [];
+
+  if (banner && bannerText) {
+    if (triggered.length > 0 && gameState.mode === 'campaign') {
+      bannerText.textContent = `Your earlier rulings apply here: ${triggered.join(' · ')}`;
+      banner.classList.remove('hidden');
+      announce(`Precedent in effect: ${triggered.join(', ')}.`);
+    } else {
+      banner.classList.add('hidden');
+    }
+  }
 }
 
 function loadActiveScenario({ preserveProgress = false } = {}) {
@@ -754,7 +804,9 @@ function buildFinalResults() {
     mode: gameState.mode,
     difficulty: gameState.difficulty,
     totalTimeMs: gameState.elapsedMs,
-    playedAt: new Date().toISOString()
+    playedAt: new Date().toISOString(),
+    practiceOnly: gameState.practiceOnly,
+    launchContext: deepClone(gameState.launchContext)
   };
 }
 
@@ -790,34 +842,19 @@ function recordAnalytics(results) {
   gameState.analyticsRecorded = true;
 }
 
-export async function showEndGame() {
-  stopSessionClock();
-  if (gameState.mode === 'examPrep') {
-    stopTimer();
-  }
-
-  const results = buildFinalResults();
-  recordAnalytics(results);
-  renderEndGame(results);
-
-  if (gameState.mode === 'examPrep') {
-    renderExamReview(results.scenarioResults);
-  }
-
-  clearSavedSessionState();
-  gameState.activeSession = false;
-
-  await animateScreenTransition('game-screen', 'end-screen');
-  announce(`Simulation complete. Final grade ${results.grade.letter}.`);
-}
-
 function displayError(message) {
-  const target = document.getElementById('landing-screen') || document.body;
-  const errorBox = document.createElement('div');
-  errorBox.className = 'error-message';
-  errorBox.setAttribute('role', 'alert');
-  errorBox.innerHTML = `<strong>Unable to continue.</strong><p>${message}</p>`;
-  target.appendChild(errorBox);
+  const errorMessage = document.getElementById('error-message');
+  if (errorMessage) {
+    errorMessage.textContent = message ?? 'An error occurred. Please refresh the page.';
+  }
+
+  showScreen('error-screen');
+
+  const retryBtn = document.getElementById('error-retry-btn');
+  if (retryBtn && !retryBtn.dataset.wired) {
+    retryBtn.dataset.wired = '1';
+    retryBtn.addEventListener('click', () => location.reload());
+  }
 }
 
 function validateSavedState(savedState) {
@@ -837,22 +874,31 @@ function hydrateSavedState(savedState) {
     precedentState: savedState.precedentState && typeof savedState.precedentState === 'object'
       ? savedState.precedentState
       : {},
-    currentScenarioChoices: Array.isArray(savedState.currentScenarioChoices) ? savedState.currentScenarioChoices : []
+    currentScenarioChoices: Array.isArray(savedState.currentScenarioChoices) ? savedState.currentScenarioChoices : [],
+    launchContext: savedState.launchContext || null,
+    practiceOnly: Boolean(savedState.practiceOnly)
   });
 }
 
-async function enterGameScreen(skipTransition = false) {
-  if (skipTransition) {
-    showScreen('game-screen');
-    return;
-  }
-  await animateScreenTransition('landing-screen', 'game-screen');
+function enterGameScreen(routeParams = {}) {
+  showScreen('game-screen');
+  setAppShellContext('game');
+  navigate('game', routeParams);
 }
 
 function updateTimerButtonsAfterPauseState() {
   gameState.timerPaused = getTimerState().paused;
   syncExamTimerControls();
   saveSessionState();
+}
+
+function buildGameRouteParams(options = {}) {
+  const singleScenarioId = gameState.orderedScenarioIds.length === 1 ? gameState.orderedScenarioIds[0] : options.scenarioId;
+  return {
+    scenario: singleScenarioId || '',
+    mode: gameState.mode || options.mode || '',
+    practiceOnly: gameState.practiceOnly ? 1 : ''
+  };
 }
 
 export async function initGame(options = {}) {
@@ -880,10 +926,17 @@ export async function initGame(options = {}) {
       totalScenarios: orderedScenarioIds.length,
       startedAt: new Date().toISOString(),
       timerRemainingSeconds: Math.round(selections.timerMinutes * 60),
-      timerPaused: false
+      timerPaused: false,
+      launchContext: options.launchContext || null,
+      practiceOnly: Boolean(options.practiceOnly)
     });
 
-    await enterGameScreen(Boolean(options.skipTransition));
+    enterGameScreen({
+      scenario: options.scenarioId || (orderedScenarioIds.length === 1 ? orderedScenarioIds[0] : ''),
+      mode: selections.mode,
+      practiceOnly: gameState.practiceOnly ? 1 : ''
+    });
+
     updateScore(gameState.legitimacyPoints, false);
     syncModeSpecificChrome();
     beginSessionClock();
@@ -907,7 +960,7 @@ async function resumeSavedSession(savedState) {
   hydrateSavedState(savedState);
   gameState.activeSession = true;
 
-  await enterGameScreen(false);
+  enterGameScreen(buildGameRouteParams({ scenarioId: getCurrentScenarioId() }));
   updateScore(gameState.legitimacyPoints, false);
   syncModeSpecificChrome();
   beginSessionClock();
@@ -923,10 +976,11 @@ async function resumeSavedSession(savedState) {
 
 function promptToResumeSavedSession() {
   const savedState = loadSavedSessionState();
-  if (!validateSavedState(savedState)) {
+  if (!validateSavedState(savedState) || savedSessionPrompted) {
     return;
   }
 
+  savedSessionPrompted = true;
   populateAppModal({
     title: 'Resume your previous session?',
     bodyHtml: `
@@ -944,22 +998,239 @@ function promptToResumeSavedSession() {
   });
 }
 
-async function openDashboardScreen() {
-  await ensureScenarioCatalog();
-  renderDashboard(scenarioCatalog);
-  await animateScreenTransition('landing-screen', 'dashboard-screen');
+async function refreshProfile() {
+  await ensureProgressData();
+  return currentProfile;
 }
 
-async function returnToLanding(fromScreenId = 'end-screen') {
+function getCampaignNodeScenario(nodeId) {
+  const node = (campaignData?.nodes || []).find((entry) => entry.id === nodeId);
+  return node ? getScenarioById(node.scenarioId) : null;
+}
+
+function latestSessionSummary() {
+  return loadAnalyticsHistory()[0] || null;
+}
+
+async function renderHomeScreen() {
+  await refreshProfile();
+
+  const completion = computeCompletionSummary(currentProfile, scenarioCatalog);
+  const currentNode = (campaignData?.nodes || []).find((node) => node.id === currentProfile?.campaign?.currentNodeId);
+  const currentScenario = currentNode ? getScenarioById(currentNode.scenarioId) : null;
+  const latestSession = latestSessionSummary();
+  const achievementDefs = await loadAchievementDefinitions();
+  const latestAchievementId = currentProfile?.achievements?.earnedIds?.slice(-1)[0] || null;
+  const latestAchievement = achievementDefs.find((entry) => entry.id === latestAchievementId) || null;
+
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.textContent = value;
+    }
+  };
+
+  setText('home-level-value', String(currentProfile?.level || 1));
+  setText('home-streak-value', `${currentProfile?.streak?.currentDays || 0} day${Number(currentProfile?.streak?.currentDays || 0) === 1 ? '' : 's'}`);
+  setText('home-completion-value', `${completion.percent}%`);
+  setText('home-continue-copy', currentScenario ? `Node: ${currentScenario.title}` : 'Campaign complete');
+  setText('home-continue-progress', `${completion.percent}% map complete`);
+  setText('home-achievement-summary', latestAchievement ? `Latest achievement: ${latestAchievement.title}` : 'No achievements earned yet.');
+  setText('home-run-summary', latestSession ? `Latest run: ${latestSession.percentage}% in ${latestSession.mode}` : 'Complete your first scenario to start the campaign record.');
+
+  const continueButton = document.getElementById('continue-campaign-btn');
+  if (continueButton) {
+    continueButton.disabled = !currentScenario;
+  }
+
+  const mentor = await getHomeMentorContent(currentProfile);
+  renderMentorPanel('home-mentor-panel', mentor);
+}
+
+async function renderDashboardScreen() {
+  await refreshProfile();
+  await renderDashboard(currentProfile, scenarioCatalog);
+}
+
+async function renderMapScreen() {
+  await refreshProfile();
+  await renderCampaignMap({
+    profile: currentProfile,
+    scenarioCatalog,
+    onPlay: async (node, options = {}) => {
+      const scenario = getScenarioById(node.scenarioId);
+      if (!scenario) {
+        return;
+      }
+      await launchFreePlayScenario(scenario.id, options);
+    },
+    onViewInLibrary: (node) => {
+      navigate('library', { search: node.scenarioId });
+    }
+  });
+}
+
+async function renderLibraryScreen(routeParams = {}) {
+  await refreshProfile();
+  if (routeParams?.sandbox === '1') {
+    currentProfile.settings.sandboxEnabled = true;
+    await setSandboxEnabled(true, { scenarioCatalog, campaignData });
+  }
+  if (routeParams?.search) {
+    const searchEl = document.getElementById('library-search');
+    if (searchEl) {
+      searchEl.value = routeParams.search;
+    }
+  }
+  await renderLibrary({
+    scenarioCatalog,
+    profile: currentProfile,
+    onPlay: async (entry, options = {}) => {
+      await launchFreePlayScenario(entry.id, options);
+    }
+  });
+}
+
+function buildCodexCaseMarkup(cases = []) {
+  return `
+    <div class="codex-list">
+      ${cases.slice(0, 18).map((record) => `
+        <article class="codex-entry">
+          <h3>${record.name}</h3>
+          <p><strong>${record.citation || ''}</strong> ${record.year ? `(${record.year})` : ''}</p>
+          <p>${record.holding}</p>
+        </article>
+      `).join('')}
+    </div>
+  `;
+}
+
+function buildCodexDoctrineMarkup() {
+  const doctrineMap = new Map();
+  scenarioCatalog.forEach((scenario) => {
+    const current = doctrineMap.get(scenario.doctrineArea) || [];
+    current.push(scenario);
+    doctrineMap.set(scenario.doctrineArea, current);
+  });
+  return `
+    <div class="codex-list">
+      ${[...doctrineMap.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([doctrine, scenarios]) => `
+        <article class="codex-entry">
+          <h3>${doctrine}</h3>
+          <p>${scenarios.length} scenario${scenarios.length === 1 ? '' : 's'} in the library.</p>
+          <p>${scenarios.slice(0, 3).map((scenario) => scenario.title).join(' · ')}</p>
+        </article>
+      `).join('')}
+    </div>
+  `;
+}
+
+function buildCodexPrecedentMarkup() {
+  return `
+    <div class="codex-list">
+      ${Object.values(PRECEDENT_METADATA).map((entry) => `
+        <article class="codex-entry">
+          <h3>${entry.name}</h3>
+          <p>${entry.trueLabel}</p>
+          <p>${entry.falseLabel}</p>
+        </article>
+      `).join('')}
+    </div>
+  `;
+}
+
+async function buildCodexMentorNotesMarkup() {
+  const mentor = await getCodexMentorContent(currentProfile);
+  return `
+    <div class="codex-list">
+      ${(mentor?.notes || []).map((note) => `
+        <article class="codex-entry">
+          <p>${note}</p>
+        </article>
+      `).join('')}
+    </div>
+  `;
+}
+
+function setCodexTab(activeTab) {
+  document.querySelectorAll('.codex-tab').forEach((button) => {
+    const isActive = button.dataset.codexTab === activeTab;
+    button.classList.toggle('is-active', isActive);
+    button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
+  document.querySelectorAll('.codex-panel').forEach((panel) => {
+    const isActive = panel.dataset.codexPanel === activeTab;
+    panel.classList.toggle('hidden', !isActive);
+    panel.classList.toggle('is-active', isActive);
+  });
+}
+
+async function renderCodexScreen() {
+  await refreshProfile();
+  await loadCaseData();
+  const panels = {
+    cases: document.querySelector('[data-codex-panel="cases"]'),
+    doctrines: document.querySelector('[data-codex-panel="doctrines"]'),
+    precedents: document.querySelector('[data-codex-panel="precedents"]'),
+    'mentor-notes': document.querySelector('[data-codex-panel="mentor-notes"]')
+  };
+
+  if (panels.cases) {
+    panels.cases.innerHTML = buildCodexCaseMarkup(getAllCases());
+  }
+  if (panels.doctrines) {
+    panels.doctrines.innerHTML = buildCodexDoctrineMarkup();
+  }
+  if (panels.precedents) {
+    panels.precedents.innerHTML = buildCodexPrecedentMarkup();
+  }
+  if (panels['mentor-notes']) {
+    panels['mentor-notes'].innerHTML = await buildCodexMentorNotesMarkup();
+  }
+  setCodexTab('cases');
+}
+
+async function launchFreePlayScenario(scenarioId, options = {}) {
+  const scenario = getScenarioById(scenarioId);
+  if (!scenario) {
+    return;
+  }
+  await initGame({
+    scenarioId,
+    orderedScenarioIds: [scenarioId],
+    selections: {
+      mode: 'freePlay',
+      difficulty: scenario.difficulty || 'medium',
+      timerMinutes: readCurrentSelections().timerMinutes
+    },
+    practiceOnly: Boolean(options.practiceOnly),
+    launchContext: {
+      source: options.source || 'library',
+      scenarioId
+    }
+  });
+}
+
+async function launchCurrentCampaignNode() {
+  await refreshProfile();
+  const currentNode = (campaignData?.nodes || []).find((node) => node.id === currentProfile?.campaign?.currentNodeId);
+  if (!currentNode) {
+    navigate('campaign');
+    return;
+  }
+  await launchFreePlayScenario(currentNode.scenarioId, { source: 'campaign', practiceOnly: false });
+}
+
+async function returnHome() {
   stopSessionClock();
   stopTimer();
-  await animateScreenTransition(fromScreenId, 'landing-screen');
-  showModeDescription();
+  savedSessionPrompted = true;
+  navigate('home');
 }
 
 async function saveAndQuit() {
   if (!sessionIsActive()) {
-    returnToLanding('game-screen');
+    navigate('home');
     return;
   }
 
@@ -969,39 +1240,224 @@ async function saveAndQuit() {
   }
   saveSessionState();
   stopSessionClock();
-  await animateScreenTransition('game-screen', 'landing-screen');
+  navigate('home');
   announce('Session saved. You can resume it later from this device.');
+}
+
+function showAchievementToasts(achievements = []) {
+  achievements.forEach((achievement) => {
+    showToast(achievement.title, {
+      title: 'Achievement unlocked',
+      variant: 'success'
+    });
+  });
+}
+
+async function renderResultsChrome(results) {
+  const rewards = results.rewards || {};
+  const starDelta = (rewards.starUpdates || []).reduce((sum, entry) => sum + (entry.currentStars - entry.previousStars), 0);
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.textContent = String(value);
+    }
+  };
+
+  setText('results-xp-earned', rewards.xpEarned || 0);
+  setText('results-stars-earned', starDelta);
+  setText('results-unlocks-earned', (rewards.unlockedNodeIds || []).length);
+  setText('results-achievements-earned', (rewards.achievements || []).length);
+  animateRewardStrip('results-reward-strip');
+
+  const mentor = await getResultsMentorContent(results, currentProfile);
+  renderMentorPanel('results-mentor-panel', mentor);
+
+  const continueButton = document.getElementById('results-continue-campaign-btn');
+  if (continueButton) {
+    continueButton.toggleAttribute('disabled', !(currentProfile?.campaign?.currentNodeId));
+    continueButton.onclick = launchCurrentCampaignNode;
+  }
+
+  const mapButton = document.getElementById('results-open-map-btn');
+  if (mapButton) {
+    mapButton.onclick = () => navigate('campaign');
+  }
+
+  const libraryButton = document.getElementById('results-open-library-btn');
+  if (libraryButton) {
+    libraryButton.onclick = () => navigate('library');
+  }
+
+  const replayButton = document.getElementById('results-replay-btn');
+  if (replayButton) {
+    replayButton.onclick = () => {
+      const replayScenarioId = results?.launchContext?.scenarioId || results?.scenarioResults?.[0]?.scenarioId;
+      if (!replayScenarioId) {
+        navigate('home');
+        return;
+      }
+      launchFreePlayScenario(replayScenarioId, {
+        source: results?.launchContext?.source || 'results',
+        practiceOnly: Boolean(results?.practiceOnly)
+      });
+    };
+  }
+
+  showAchievementToasts(rewards.achievements || []);
+  if ((rewards.unlockedNodeIds || []).length > 0) {
+    showToast(`${rewards.unlockedNodeIds.length} new node${rewards.unlockedNodeIds.length === 1 ? '' : 's'} unlocked.`, {
+      title: 'Campaign progress',
+      variant: 'info'
+    });
+  }
+}
+
+export async function showEndGame() {
+  stopSessionClock();
+  if (gameState.mode === 'examPrep') {
+    stopTimer();
+  }
+
+  const results = buildFinalResults();
+  recordAnalytics(results);
+  const progressOutcome = await applySessionProgress(results, {
+    scenarioCatalog,
+    campaignData,
+    practiceOnly: gameState.practiceOnly,
+    launchContext: gameState.launchContext,
+    mode: gameState.mode,
+    analyticsHistory: loadAnalyticsHistory()
+  });
+  currentProfile = progressOutcome.profile;
+  results.rewards = progressOutcome.rewards;
+  renderEndGame(results);
+
+  if (gameState.mode === 'examPrep') {
+    renderExamReview(results.scenarioResults);
+  }
+
+  await renderResultsChrome(results);
+  clearSavedSessionState();
+  gameState.activeSession = false;
+  gameState.resultsPayload = results;
+
+  showScreen('end-screen');
+  setAppShellContext('results');
+  navigate('results', {
+    scenario: results?.launchContext?.scenarioId || results?.scenarioResults?.[0]?.scenarioId || '',
+    practiceOnly: results.practiceOnly ? 1 : ''
+  });
+  announce(`Simulation complete. Final grade ${results.grade.letter}.`);
+}
+
+async function handleRouteChange(event) {
+  const route = event?.detail || getCurrentRoute();
+  setAppShellContext(route.routeName);
+
+  try {
+    switch (route.routeName) {
+      case 'home':
+        showScreen('landing-screen');
+        await renderHomeScreen();
+        if (!savedSessionPrompted) {
+          promptToResumeSavedSession();
+        }
+        break;
+      case 'campaign':
+        showScreen('map-screen');
+        await renderMapScreen();
+        break;
+      case 'library':
+        showScreen('library-screen');
+        await renderLibraryScreen(route.params || {});
+        break;
+      case 'dashboard':
+        showScreen('dashboard-screen');
+        await renderDashboardScreen();
+        await markAchievementsSeen(currentProfile?.achievements?.earnedIds || []);
+        break;
+      case 'codex':
+        showScreen('codex-screen');
+        await renderCodexScreen();
+        break;
+      case 'game':
+        if (sessionIsActive()) {
+          showScreen('game-screen');
+          setAppShellContext('game');
+          break;
+        }
+        if (route.params?.scenario) {
+          await ensureScenarioCatalog();
+          const scenario = getScenarioById(route.params.scenario);
+          if (scenario) {
+            await launchFreePlayScenario(scenario.id, {
+              practiceOnly: route.params.practiceOnly === '1',
+              source: route.params.source || 'route'
+            });
+            break;
+          }
+        }
+        navigate('home');
+        break;
+      case 'results':
+        if (gameState.resultsPayload) {
+          showScreen('end-screen');
+          setAppShellContext('results');
+          break;
+        }
+        navigate('home');
+        break;
+      default:
+        navigate('home');
+        break;
+    }
+  } catch (error) {
+    console.error(error);
+    displayError(error.message || 'Unable to render this screen.');
+  }
 }
 
 function bindControls() {
   document.getElementById('begin-btn')?.addEventListener('click', () => initGame());
-  document.getElementById('restart-btn')?.addEventListener('click', async () => {
-    clearSavedSessionState();
-    resetGameState();
-    await returnToLanding('end-screen');
+  document.getElementById('continue-campaign-btn')?.addEventListener('click', launchCurrentCampaignNode);
+  document.getElementById('my-progress-btn')?.addEventListener('click', () => navigate('dashboard'));
+  document.getElementById('open-map-btn')?.addEventListener('click', () => navigate('campaign'));
+  document.getElementById('open-library-btn')?.addEventListener('click', () => navigate('library'));
+  document.getElementById('open-codex-btn')?.addEventListener('click', () => navigate('codex'));
+  document.getElementById('dashboard-back-btn')?.addEventListener('click', () => navigate('home'));
+  document.getElementById('restart-btn')?.addEventListener('click', returnHome);
+
+  document.querySelectorAll('[data-route]').forEach((element) => {
+    if (element.classList.contains('campaign-node')) {
+      return;
+    }
+    element.addEventListener('click', () => {
+      const route = element.getAttribute('data-route');
+      if (route) {
+        navigate(route);
+      }
+    });
   });
-  document.getElementById('my-progress-btn')?.addEventListener('click', openDashboardScreen);
-  document.getElementById('dashboard-back-btn')?.addEventListener('click', async () => {
-    await animateScreenTransition('dashboard-screen', 'landing-screen');
-  });
+
   document.getElementById('export-csv-btn')?.addEventListener('click', () => {
     downloadAnalyticsCsv();
     announce('CSV export started.');
   });
+
   document.getElementById('clear-history-btn')?.addEventListener('click', () => {
     populateAppModal({
-      title: 'Clear all saved history?',
-      bodyHtml: '<p>This will erase every stored session from the Performance Dashboard. Your current in-progress game will not be affected.</p>',
+      title: 'Clear saved analytics history?',
+      bodyHtml: '<p>This removes your session history and CSV export data. Campaign unlocks, XP, and stars remain in your profile.</p>',
       confirmText: 'Clear History',
       cancelText: 'Cancel',
       onConfirm: async () => {
         clearAnalyticsHistory();
-        await ensureScenarioCatalog();
-        renderDashboard(scenarioCatalog);
-        announce('Performance history cleared.');
+        await renderDashboardScreen();
+        announce('Analytics history cleared.');
       }
     });
   });
+
   document.getElementById('save-quit-btn')?.addEventListener('click', saveAndQuit);
   document.getElementById('timer-pause-btn')?.addEventListener('click', () => {
     pauseTimer();
@@ -1026,11 +1482,17 @@ function bindControls() {
   document.getElementById('difficulty-select')?.addEventListener('change', savePreferences);
   document.getElementById('timer-select')?.addEventListener('change', savePreferences);
 
+  document.querySelectorAll('.codex-tab').forEach((button) => {
+    button.addEventListener('click', () => setCodexTab(button.dataset.codexTab));
+  });
+
   window.addEventListener('beforeunload', () => {
     if (sessionIsActive()) {
       saveSessionState();
     }
   });
+
+  document.addEventListener('cb:routechange', handleRouteChange);
 }
 
 export function bootstrapApp() {
@@ -1042,14 +1504,26 @@ export function bootstrapApp() {
   applyPreferencesToControls();
   showModeDescription();
   initDarkModeToggle();
+
+  registerScreen('landing-screen', 'home');
+  registerScreen('map-screen', 'campaign');
+  registerScreen('library-screen', 'library');
+  registerScreen('dashboard-screen', 'dashboard');
+  registerScreen('codex-screen', 'codex');
+  registerScreen('game-screen', 'game');
+  registerScreen('end-screen', 'results');
+  registerScreen('error-screen', 'error');
+
   bindControls();
-  showScreen('landing-screen');
-  promptToResumeSavedSession();
+  initRouter();
 }
 
 export const __testHooks = {
   getStateSnapshot: () => deepClone(gameState),
   getActiveScenario: () => deepClone(activeScenario),
+  async loadProfileForTests() {
+    return refreshProfile();
+  },
   setScenarioCatalogForTests(catalog) {
     scenarioCatalog = deepClone(catalog || []);
   },
@@ -1058,6 +1532,7 @@ export const __testHooks = {
     resetGameState();
     stopSessionClock();
     stopTimer();
+    savedSessionPrompted = true;
   },
   loadScenarioDirectly() {
     loadActiveScenario({ preserveProgress: false });
@@ -1069,6 +1544,21 @@ export const __testHooks = {
     applyPrecedentConditionsToScenario(clone);
     gameState.precedentState = previous;
     return clone;
+  },
+  async renderHomeForTests() {
+    await renderHomeScreen();
+  },
+  async renderMapForTests() {
+    await renderMapScreen();
+  },
+  async renderLibraryForTests() {
+    await renderLibraryScreen();
+  },
+  async renderDashboardForTests() {
+    await renderDashboardScreen();
+  },
+  async renderCodexForTests() {
+    await renderCodexScreen();
   }
 };
 

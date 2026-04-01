@@ -11,6 +11,10 @@ async function loadJson(path) {
 
 const VALID_CORRECT_VALUES = new Set(['correct', 'partial', 'incorrect']);
 
+function hasValidReferenceYear(value) {
+  return value === null || Number.isFinite(Number(value));
+}
+
 function validateChoice(choice, scenarioId, stepIndex, choiceIndex) {
   assert(choice && typeof choice === 'object', `Choice ${scenarioId} step ${stepIndex + 1} choice ${choiceIndex + 1} must be an object.`);
   assert(typeof choice.text === 'string' && choice.text.trim(), `Choice ${scenarioId} step ${stepIndex + 1} choice ${choiceIndex + 1} is missing text.`);
@@ -58,18 +62,18 @@ test('Every choice uses only canonical correct values.', async () => {
   });
 });
 
-test('Every case in cases.json contains the required case law fields.', async () => {
+test('Every reference in cases.json contains the required reference fields.', async () => {
   const cases = await loadJson('../data/cases.json');
   assert(Array.isArray(cases) && cases.length > 0, 'Expected cases.json to contain a non-empty array.');
 
   cases.forEach((record) => {
-    assert(typeof record.id === 'string' && record.id.trim(), 'Case is missing id.');
-    assert(typeof record.name === 'string' && record.name.trim(), `Case ${record.id} is missing name.`);
-    assert(Number.isFinite(Number(record.year)), `Case ${record.id} is missing year.`);
-    assert(typeof record.citation === 'string', `Case ${record.id} is missing citation.`);
-    assert(typeof record.holding === 'string' && record.holding.trim(), `Case ${record.id} is missing holding.`);
-    assert(typeof record.significance === 'string' && record.significance.trim(), `Case ${record.id} is missing significance.`);
-    assert(Array.isArray(record.doctrineAreas), `Case ${record.id} is missing doctrineAreas.`);
-    assert('keyQuote' in record, `Case ${record.id} must include keyQuote, even if empty.`);
+    assert(typeof record.id === 'string' && record.id.trim(), 'Reference is missing id.');
+    assert(typeof record.name === 'string' && record.name.trim(), `Reference ${record.id} is missing name.`);
+    assert(hasValidReferenceYear(record.year), `Reference ${record.id} must include a numeric year or null.`);
+    assert(typeof record.citation === 'string', `Reference ${record.id} is missing citation.`);
+    assert(typeof record.holding === 'string' && record.holding.trim(), `Reference ${record.id} is missing holding.`);
+    assert(typeof record.significance === 'string' && record.significance.trim(), `Reference ${record.id} is missing significance.`);
+    assert(Array.isArray(record.doctrineAreas), `Reference ${record.id} is missing doctrineAreas.`);
+    assert('keyQuote' in record, `Reference ${record.id} must include keyQuote, even if empty.`);
   });
 });

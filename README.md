@@ -155,7 +155,7 @@ Renders scenario content and interactive step types:
 - exam-prep review panels
 
 #### `cases.js`
-Loads and searches `cases.json` and renders case-tooltip popups from scenario case references.
+Loads and searches `cases.json` and renders case-tooltip popups from scenario case references, including doctrinal and constitutional authority entries.
 
 #### `scoring.js`
 Pure scoring logic for:
@@ -200,7 +200,7 @@ Persistent session-history and dashboard support, including:
 Canonical scenario content file. This project now uses a single standardized schema throughout.
 
 #### `data/cases.json`
-Case law reference catalog used for case popups and search.
+Reference catalog used for case popups and search. Entries may be judicial decisions or doctrinal/constitutional authorities.
 
 #### `tests/`
 Lightweight browser-based test suite with no framework dependency.
@@ -354,13 +354,13 @@ Each `stepModifications` item may contain:
 
 ## Case Data Schema
 
-The case data file is an array of case objects.
+The case data file is an array of reference objects. Most entries are case summaries, but the file may also include doctrinal or constitutional authorities used by the popup system.
 
 | Field | Type | Required | Description |
 |---|---|---:|---|
 | `id` | string | yes | Unique machine-readable identifier. |
 | `name` | string | yes | Full case name. |
-| `year` | number | yes | Year of decision. |
+| `year` | number or null | yes | Year of decision when applicable. Use `null` for doctrinal or constitutional authority entries without a single decision year. |
 | `citation` | string | yes | Reporter citation. |
 | `holding` | string | yes | Brief statement of the holding. |
 | `significance` | string | yes | Why the case matters doctrinally. |
@@ -379,6 +379,21 @@ The case data file is an array of case objects.
   "significance": "Established the modern framework for evaluating clashes between presidential and congressional power.",
   "doctrineAreas": ["Youngstown Framework", "Presidential Power"],
   "keyQuote": "The framers suspected that emergency powers would tend to kindle emergencies."
+}
+```
+
+### Example Authority Entry
+
+```json
+{
+  "id": "federal-preemption-framework",
+  "name": "Federal Preemption Framework (Supremacy Clause, Article VI)",
+  "year": null,
+  "citation": "U.S. Const. art. VI, cl. 2",
+  "holding": "Federal law preempts state law when Congress intends it.",
+  "significance": "Captures the preemption framework when a scenario references constitutional authority rather than a single judicial opinion.",
+  "doctrineAreas": ["Federal Preemption", "Supremacy Clause"],
+  "keyQuote": ""
 }
 ```
 
@@ -425,7 +440,7 @@ Use `partial` only when you want the player to receive half credit.
 
 ### Step 4: Add Case References
 
-Under `caseReferences`, list the cases that should appear as clickable references.
+Under `caseReferences`, list the cases or doctrinal authorities that should appear as clickable references.
 
 Example:
 
@@ -436,7 +451,7 @@ Example:
 ]
 ```
 
-The UI will try to match those strings against `data/cases.json`.
+The UI will try to match those strings against `data/cases.json`, including doctrinal authority entries when present.
 
 ### Step 5: Add Optional Teaching Layers
 
