@@ -12,7 +12,11 @@
       "Article III Jurisdiction"
     ],
     "keyQuote": "It is emphatically the province and duty of the judicial department to say what the law is.",
-    "scenarioIds": []
+    "scenarioIds": [
+      "agency-defiance-judicial-review",
+      "president-refuses-court-order",
+      "second-amendment-interpretation-methods"
+    ]
   },
   {
     "id": "mcculloch-v-maryland",
@@ -29,8 +33,10 @@
     ],
     "keyQuote": "Let the end be legitimate, let it be within the scope of the constitution, and all means which are appropriate, which are plainly adapted to that end, which are not prohibited, but consist with the letter and spirit of the constitution, are constitutional.",
     "scenarioIds": [
-      "scenario_009",
-      "scenario_023"
+      "homegrown-psychedelics-regulation",
+      "mcculloch-modern-bank",
+      "the-purchase-mandate",
+      "the-subpoenaed-tapes"
     ]
   },
   {
@@ -47,8 +53,13 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_021",
-      "scenario_022"
+      "domestic-violence-housing-act",
+      "federal-mental-health-act",
+      "homegrown-psychedelics-regulation",
+      "mcculloch-modern-bank",
+      "nutrition-mandate-inactivity",
+      "the-home-garden-prohibition",
+      "the-school-zone-statute"
     ]
   },
   {
@@ -66,14 +77,18 @@
     ],
     "keyQuote": "The framers suspected that emergency powers would tend to kindle emergencies.",
     "scenarioIds": [
-      "scenario_006",
-      "scenario_007",
-      "scenario_008",
-      "scenario_028",
-      "scenario_029",
-      "scenario_030",
-      "scenario_031",
-      "scenario_032",
+      "climate-executive-agreement",
+      "double-insulated-inspector-general",
+      "passport-recognition-power",
+      "the-foreign-arms-embargo",
+      "the-frozen-accounts",
+      "the-frozen-accounts-statutory-twist",
+      "the-hostage-crisis-executive-agreement",
+      "the-passport-dispute",
+      "the-tariff-gambit",
+      "the-treaty-enforcement-memo",
+      "the-unilateral-bombing-campaign",
+      "unilateral-military-strike",
       "youngstown-full-analysis",
       "youngstown-steel-seizure"
     ]
@@ -93,7 +108,9 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_033"
+      "gerrymandering-challenge",
+      "the-partisan-gerrymander-challenge",
+      "unilateral-military-strike"
     ]
   },
   {
@@ -110,7 +127,8 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_033"
+      "the-partisan-gerrymander-challenge",
+      "voter-id-fundamental-interest"
     ]
   },
   {
@@ -128,7 +146,10 @@
     ],
     "keyQuote": "Nowhere in the Constitution is there any explicit reference to a privilege of confidentiality, yet to the extent this interest relates to the effective discharge of a President's powers, it is constitutionally based.",
     "scenarioIds": [
-      "scenario_009"
+      "agency-defiance-judicial-review",
+      "executive-privilege-congressional-subpoena",
+      "president-refuses-court-order",
+      "the-subpoenaed-tapes"
     ]
   },
   {
@@ -145,9 +166,10 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "presidential-campaign-rally-assault",
       "presidential-immunity-framework",
-      "scenario_010",
-      "scenario_011"
+      "the-rally-gone-wrong",
+      "the-state-of-the-union-incident"
     ]
   },
   {
@@ -165,11 +187,13 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "ai-oversight-legislative-veto",
+      "congressional-inspector-general",
       "ins-v-chadha-legislative-veto",
-      "scenario_016",
-      "scenario_017",
-      "scenario_018",
-      "scenario_032"
+      "the-approval-requirement",
+      "the-nullification-resolution",
+      "the-sixtyday-window",
+      "the-unilateral-bombing-campaign"
     ]
   },
   {
@@ -188,8 +212,8 @@
     "keyQuote": "",
     "scenarioIds": [
       "nondelegation-intelligible-principle",
-      "scenario_014",
-      "scenario_015"
+      "the-public-interest-mandate",
+      "the-registration-directive"
     ]
   },
   {
@@ -207,9 +231,10 @@
     "keyQuote": "",
     "scenarioIds": [
       "nondelegation-intelligible-principle",
-      "scenario_014",
-      "scenario_015",
-      "scenario_028"
+      "pandemic-emergency-delegation",
+      "the-foreign-arms-embargo",
+      "the-public-interest-mandate",
+      "the-registration-directive"
     ]
   },
   {
@@ -227,8 +252,9 @@
     "keyQuote": "Legislators might seek to take credit for addressing a social problem by sending it to the executive for resolution, while at the same time blaming the executive for the problems that attend whatever measures he chooses to pursue.",
     "scenarioIds": [
       "nondelegation-intelligible-principle",
-      "scenario_014",
-      "scenario_015"
+      "pandemic-emergency-delegation",
+      "the-public-interest-mandate",
+      "the-registration-directive"
     ]
   },
   {
@@ -245,8 +271,10 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_019",
-      "scenario_020"
+      "congressional-inspector-general",
+      "tech-czar-appointments",
+      "the-congressional-commission",
+      "the-unsupervised-adjudicator"
     ]
   },
   {
@@ -263,8 +291,8 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_019",
-      "scenario_020"
+      "the-congressional-commission",
+      "the-unsupervised-adjudicator"
     ]
   },
   {
@@ -296,6 +324,8 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "double-insulated-inspector-general",
+      "independent-ai-safety-director",
       "removal-independent-agency-head",
       "seila-law-deep-dive"
     ]
@@ -315,6 +345,8 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "double-insulated-inspector-general",
+      "independent-ai-safety-director",
       "removal-independent-agency-head",
       "removal-multi-member-commission",
       "seila-law-deep-dive"
@@ -335,6 +367,9 @@
     ],
     "keyQuote": "This wolf comes as a wolf.",
     "scenarioIds": [
+      "congressional-inspector-general",
+      "double-insulated-inspector-general",
+      "independent-ai-safety-director",
       "removal-multi-member-commission",
       "seila-law-deep-dive"
     ]
@@ -353,7 +388,9 @@
       "Unitary Executive"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "congressional-inspector-general"
+    ]
   },
   {
     "id": "collins-v-yellen",
@@ -405,9 +442,10 @@
     ],
     "keyQuote": "The President must be free to act with energy, vigor, and decisiveness.",
     "scenarioIds": [
+      "presidential-campaign-rally-assault",
       "presidential-immunity-framework",
-      "scenario_010",
-      "scenario_011"
+      "the-rally-gone-wrong",
+      "the-state-of-the-union-incident"
     ]
   },
   {
@@ -424,8 +462,9 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "presidential-campaign-rally-assault",
       "presidential-immunity-framework",
-      "scenario_011"
+      "the-rally-gone-wrong"
     ]
   },
   {
@@ -443,9 +482,16 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_021",
-      "scenario_022",
-      "scenario_023"
+      "domestic-violence-housing-act",
+      "federal-gun-registry-commandeering",
+      "federal-mental-health-act",
+      "homegrown-psychedelics-regulation",
+      "intrastate-endangered-species",
+      "mcculloch-modern-bank",
+      "nutrition-mandate-inactivity",
+      "the-home-garden-prohibition",
+      "the-purchase-mandate",
+      "the-school-zone-statute"
     ]
   },
   {
@@ -462,7 +508,11 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_021"
+      "domestic-violence-housing-act",
+      "federal-mental-health-act",
+      "homegrown-psychedelics-regulation",
+      "intrastate-endangered-species",
+      "the-school-zone-statute"
     ]
   },
   {
@@ -480,7 +530,11 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_022"
+      "domestic-violence-housing-act",
+      "federal-mental-health-act",
+      "homegrown-psychedelics-regulation",
+      "intrastate-endangered-species",
+      "the-home-garden-prohibition"
     ]
   },
   {
@@ -498,7 +552,12 @@
       "Federalism"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "carbon-emissions-charge",
+      "education-medicaid-spending-coercion",
+      "education-standards-funding",
+      "national-broadband-mandate"
+    ]
   },
   {
     "id": "south-dakota-v-dole",
@@ -515,10 +574,12 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "education-medicaid-spending-coercion",
+      "education-standards-funding",
       "federal-preemption-cannabis",
-      "scenario_024",
-      "scenario_025",
-      "spending-clause-coercion"
+      "spending-clause-coercion",
+      "the-highway-incentive",
+      "the-medicaid-ultimatum"
     ]
   },
   {
@@ -536,9 +597,11 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "federal-gun-registry-commandeering",
       "federal-preemption-cannabis",
-      "scenario_026",
-      "scenario_027"
+      "the-background-check-order",
+      "the-waste-disposal-directive",
+      "treaty-delegation-international-body"
     ]
   },
   {
@@ -556,9 +619,11 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "federal-gun-registry-commandeering",
       "federal-preemption-cannabis",
-      "scenario_026",
-      "scenario_027"
+      "the-background-check-order",
+      "the-waste-disposal-directive",
+      "treaty-delegation-international-body"
     ]
   },
   {
@@ -576,9 +641,10 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
+      "federal-gun-registry-commandeering",
       "federal-preemption-cannabis",
-      "scenario_026",
-      "scenario_027"
+      "the-background-check-order",
+      "the-waste-disposal-directive"
     ]
   },
   {
@@ -595,7 +661,10 @@
       "Youngstown Framework"
     ],
     "keyQuote": "The President alone has the power to speak or listen as a representative of the nation. He makes treaties with the advice and consent of the Senate; but he alone negotiates.",
-    "scenarioIds": []
+    "scenarioIds": [
+      "climate-executive-agreement",
+      "passport-recognition-power"
+    ]
   },
   {
     "id": "dames-moore-v-regan",
@@ -612,11 +681,12 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_006",
-      "scenario_007",
-      "scenario_008",
-      "scenario_029",
-      "scenario_030",
+      "climate-executive-agreement",
+      "the-frozen-accounts",
+      "the-frozen-accounts-statutory-twist",
+      "the-hostage-crisis-executive-agreement",
+      "the-tariff-gambit",
+      "the-treaty-enforcement-memo",
       "youngstown-full-analysis"
     ]
   },
@@ -636,9 +706,11 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_007",
-      "scenario_030",
-      "scenario_031"
+      "climate-executive-agreement",
+      "the-frozen-accounts-statutory-twist",
+      "the-passport-dispute",
+      "the-treaty-enforcement-memo",
+      "treaty-delegation-international-body"
     ]
   },
   {
@@ -656,8 +728,9 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_007",
-      "scenario_031",
+      "passport-recognition-power",
+      "the-frozen-accounts-statutory-twist",
+      "the-passport-dispute",
       "youngstown-full-analysis"
     ]
   },
@@ -676,7 +749,8 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_033"
+      "gerrymandering-challenge",
+      "the-partisan-gerrymander-challenge"
     ]
   },
   {
@@ -694,7 +768,7 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "scenario_033"
+      "the-partisan-gerrymander-challenge"
     ]
   },
   {
@@ -757,7 +831,9 @@
       "School Desegregation"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "resegregation-after-unitary-status"
+    ]
   },
   {
     "id": "bolling-v-sharpe",
@@ -789,7 +865,9 @@
       "Fundamental Rights"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "marriage-counseling-mandate"
+    ]
   },
   {
     "id": "johnson-v-california",
@@ -832,7 +910,12 @@
       "Rational Basis"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "drug-conviction-business-license-ban",
+      "food-truck-licensing-ban",
+      "food-truck-proximity-ban",
+      "post-dobbs-six-week-ban"
+    ]
   },
   {
     "id": "us-dept-agriculture-v-moreno",
@@ -862,7 +945,10 @@
       "Animus Doctrine"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "drug-conviction-business-license-ban",
+      "food-truck-licensing-ban"
+    ]
   },
   {
     "id": "romer-v-evans",
@@ -877,7 +963,11 @@
       "Animus Doctrine"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "adoption-agency-orientation-ban",
+      "drug-conviction-business-license-ban",
+      "food-truck-licensing-ban"
+    ]
   },
   {
     "id": "washington-v-davis",
@@ -893,7 +983,13 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "disparate-impact-intent-framework"
+      "disparate-impact-intent-framework",
+      "police-promotion-exam-disparate-impact",
+      "post-dobbs-six-week-ban",
+      "pregnancy-leave-classification",
+      "race-neutral-admissions-post-sffa",
+      "school-admissions-test-disparate-impact",
+      "voter-id-fundamental-interest"
     ]
   },
   {
@@ -910,7 +1006,9 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "disparate-impact-intent-framework"
+      "disparate-impact-intent-framework",
+      "pregnancy-leave-classification",
+      "school-admissions-test-disparate-impact"
     ]
   },
   {
@@ -927,7 +1025,10 @@
       "Burden-Shifting"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "police-promotion-exam-disparate-impact",
+      "race-neutral-admissions-post-sffa"
+    ]
   },
   {
     "id": "gomillion-v-lightfoot",
@@ -960,7 +1061,8 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "disparate-impact-intent-framework"
+      "disparate-impact-intent-framework",
+      "police-promotion-exam-disparate-impact"
     ]
   },
   {
@@ -1009,7 +1111,8 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "equal-protection-scrutiny-framework"
+      "equal-protection-scrutiny-framework",
+      "fire-department-diversity-program"
     ]
   },
   {
@@ -1127,7 +1230,10 @@
       "Race-Neutral Measures"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "race-neutral-admissions-post-sffa",
+      "resegregation-after-unitary-status"
+    ]
   },
   {
     "id": "us-v-carolene-products",
@@ -1143,7 +1249,9 @@
       "Judicial Review"
     ],
     "keyQuote": "Prejudice against discrete and insular minorities may be a special condition, which tends seriously to curtail the operation of those political processes ordinarily to be relied upon to protect minorities.",
-    "scenarioIds": []
+    "scenarioIds": [
+      "food-truck-proximity-ban"
+    ]
   },
   {
     "id": "reed-v-reed",
@@ -1173,7 +1281,9 @@
       "Heightened Scrutiny"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "gender-identity-birth-certificate"
+    ]
   },
   {
     "id": "craig-v-boren",
@@ -1188,7 +1298,12 @@
       "Intermediate Scrutiny"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "gender-identity-birth-certificate",
+      "inheritance-rights-nonmarital-children",
+      "male-parental-leave-discrimination",
+      "women-stem-scholarship"
+    ]
   },
   {
     "id": "kahn-v-shevin",
@@ -1203,7 +1318,9 @@
       "Intermediate Scrutiny"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "women-stem-scholarship"
+    ]
   },
   {
     "id": "weinberger-v-wiesenfeld",
@@ -1218,7 +1335,9 @@
       "Archaic Stereotypes"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "male-parental-leave-discrimination"
+    ]
   },
   {
     "id": "rostker-v-goldberg",
@@ -1250,7 +1369,9 @@
       "Higher Education"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "women-stem-scholarship"
+    ]
   },
   {
     "id": "philadelphia-v-new-jersey",
@@ -1266,7 +1387,12 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "dormant-commerce-clause-flow-control"
+      "dairy-subsidy-scheme",
+      "dormant-commerce-clause-flow-control",
+      "insurance-regulation-mccarran-ferguson",
+      "nonresident-fishing-license-fees",
+      "state-drone-privacy-preemption",
+      "state-wine-shipping-ban"
     ]
   },
   {
@@ -1283,7 +1409,11 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "dormant-commerce-clause-flow-control"
+      "dairy-subsidy-scheme",
+      "dormant-commerce-clause-flow-control",
+      "nonresident-fishing-license-fees",
+      "state-truck-length-safety",
+      "state-wine-shipping-ban"
     ]
   },
   {
@@ -1315,7 +1445,9 @@
       "Government-Owned Facilities"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "nonresident-fishing-license-fees"
+    ]
   },
   {
     "id": "west-lynn-creamery-v-healy",
@@ -1347,7 +1479,8 @@
     ],
     "keyQuote": "",
     "scenarioIds": [
-      "dormant-commerce-clause-flow-control"
+      "dormant-commerce-clause-flow-control",
+      "state-wine-shipping-ban"
     ]
   },
   {
@@ -1363,7 +1496,9 @@
       "Latent Discrimination"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "humane-poultry-standards-dcc"
+    ]
   },
   {
     "id": "pike-v-bruce-church",
@@ -1378,7 +1513,10 @@
       "Non-Discriminatory Laws"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "humane-poultry-standards-dcc",
+      "state-truck-length-safety"
+    ]
   },
   {
     "id": "exxon-v-governor-of-maryland",
@@ -1393,7 +1531,9 @@
       "Non-Discriminatory Laws"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "humane-poultry-standards-dcc"
+    ]
   },
   {
     "id": "national-pork-producers-v-ross",
@@ -1409,7 +1549,9 @@
       "Incommensurable Values"
     ],
     "keyQuote": "",
-    "scenarioIds": []
+    "scenarioIds": [
+      "humane-poultry-standards-dcc"
+    ]
   },
   {
     "id": "federal-preemption-framework",

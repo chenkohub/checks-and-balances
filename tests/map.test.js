@@ -18,7 +18,7 @@ const scenarioCatalog = [
     difficulty: 'easy'
   },
   {
-    id: 'scenario_006',
+    id: 'the-frozen-accounts',
     title: 'The Frozen Accounts',
     doctrineArea: 'Youngstown Zone 2 / Frankfurter Historical Practice Test',
     branch: 'judiciary',
@@ -74,13 +74,13 @@ function baseProfile() {
     scenarioProgress: {
       'youngstown-steel-seizure': { unlocked: true, completed: true, stars: 3 },
       'ins-v-chadha-legislative-veto': { unlocked: true, completed: false, stars: 0 },
-      scenario_006: { unlocked: false, completed: false, stars: 0 }
+      the-frozen-accounts: { unlocked: false, completed: false, stars: 0 }
     },
     campaign: {
       currentNodeId: 'ins-v-chadha-legislative-veto',
       unlockedNodeIds: ['youngstown-steel-seizure', 'ins-v-chadha-legislative-veto'],
       completedNodeIds: ['youngstown-steel-seizure'],
-      discoveredRegionIds: ['executive-power', 'administrative-state']
+      discoveredRegionIds: ['executive-power', 'separation-of-powers']
     }
   };
 }
@@ -104,12 +104,12 @@ test('Selected nodes show labels while unrelated side-path nodes stay hidden.', 
   __testHooks.clear();
   await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
 
-  const selectableNode = document.querySelector('[data-node-id="scenario_006"]');
+  const selectableNode = document.querySelector('[data-node-id="the-frozen-accounts"]');
   selectableNode.click();
   await wait(60);
 
-  const selectedNode = document.querySelector('[data-node-id="scenario_006"]');
-  const unrelatedNode = document.querySelector('[data-node-id="scenario_009"]');
+  const selectedNode = document.querySelector('[data-node-id="the-frozen-accounts"]');
+  const unrelatedNode = document.querySelector('[data-node-id="the-subpoenaed-tapes"]');
 
   assert(selectedNode.classList.contains('show-label'), 'Selected nodes should surface their label.');
   assert(!unrelatedNode.classList.contains('show-label'), 'Unrelated non-main-path nodes should keep labels hidden.');
@@ -152,7 +152,7 @@ test('Selected nodes highlight adjacent edges.', async () => {
   __testHooks.clear();
   await renderCampaignMap({ profile: baseProfile(), scenarioCatalog, onPlay: () => {}, onViewInLibrary: () => {} });
 
-  const node = document.querySelector('[data-node-id="scenario_006"]');
+  const node = document.querySelector('[data-node-id="the-frozen-accounts"]');
   node.click();
   await wait(60);
 
@@ -187,8 +187,8 @@ test('Completed nodes unlock expected children on the map.', async () => {
 
 test('computeNodeState marks sandbox-only scenarios without changing unlock state.', () => {
   const node = {
-    id: 'scenario_006',
-    scenarioId: 'scenario_006'
+    id: 'the-frozen-accounts',
+    scenarioId: 'the-frozen-accounts'
   };
 
   const state = computeNodeState(baseProfile(), node, { allowSandboxPractice: true });

@@ -81,20 +81,33 @@ export const PREFERENCES_STORAGE_KEY = 'cb-sim-preferences-v1';
 
 export const campaignOrder = Object.freeze([
   'youngstown-steel-seizure',
+  'the-subpoenaed-tapes',
+  'presidential-immunity-framework',
   'ins-v-chadha-legislative-veto',
   'nondelegation-intelligible-principle',
+  'epa-carbon-major-questions',
   'removal-independent-agency-head',
-  'removal-multi-member-commission',
+  'mcculloch-modern-bank',
   'spending-clause-coercion',
-  'scenario_021',
-  'scenario_022',
-  'scenario_026',
-  'presidential-immunity-framework',
-  'scenario_009',
-  'scenario_032',
-  'scenario_033',
-  'scenario_029',
-  'scenario_030'
+  'the-school-zone-statute',
+  'the-home-garden-prohibition',
+  'the-purchase-mandate',
+  'the-waste-disposal-directive',
+  'state-wine-shipping-ban',
+  'dormant-commerce-clause-flow-control',
+  'the-foreign-arms-embargo',
+  'the-hostage-crisis-executive-agreement',
+  'the-unilateral-bombing-campaign',
+  'environmental-standing',
+  'the-partisan-gerrymander-challenge',
+  'president-refuses-court-order',
+  'equal-protection-scrutiny-framework',
+  'school-admissions-test-disparate-impact',
+  'male-parental-leave-discrimination',
+  'food-truck-licensing-ban',
+  'disparate-impact-intent-framework',
+  'grand-jury-incorporation',
+  'post-dobbs-six-week-ban'
 ]);
 
 export const PRECEDENT_METADATA = Object.freeze({
@@ -157,6 +170,31 @@ export const PRECEDENT_METADATA = Object.freeze({
     name: 'Foreign Affairs Deference',
     trueLabel: 'Deference to crisis-management authority strengthened',
     falseLabel: 'Textual limits on foreign-affairs authority emphasized'
+  },
+  heightenedScrutinyForRace: {
+    name: 'Racial Scrutiny',
+    trueLabel: 'Strict scrutiny applied to racial classifications',
+    falseLabel: 'Lower scrutiny applied to racial classifications'
+  },
+  intentRequiredForEP: {
+    name: 'Discriminatory Intent',
+    trueLabel: 'Discriminatory intent required for EP violation',
+    falseLabel: 'Disparate impact alone may trigger EP concerns'
+  },
+  animusInvalidatesLaw: {
+    name: 'Legislative Animus',
+    trueLabel: 'Courts probe actual legislative purpose for animus',
+    falseLabel: 'Facial rational-basis justifications accepted'
+  },
+  geduldigPregnancyRule: {
+    name: 'Pregnancy Classification',
+    trueLabel: 'Pregnancy classifications are not sex-based (Geduldig)',
+    falseLabel: 'Pregnancy classifications treated as sex-based'
+  },
+  selectiveIncorporation: {
+    name: 'Incorporation Doctrine',
+    trueLabel: 'Selective incorporation under McDonald applied',
+    falseLabel: 'Alternative incorporation framework adopted'
   }
 });
 

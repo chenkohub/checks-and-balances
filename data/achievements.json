@@ -196,6 +196,126 @@
         "minAttempts": 20,
         "minAccuracy": 75
       }
+    },
+    {
+      "id": "judicial-power-mastery",
+      "title": "Judicial Power Mastery",
+      "description": "Average at least 85% across at least 3 Judicial Power scenarios.",
+      "icon": "\u2696\ufe0f",
+      "rule": {
+        "type": "regionMastery",
+        "regionId": "judicial-power",
+        "minCompleted": 3,
+        "minAveragePercent": 85
+      }
+    },
+    {
+      "id": "congressional-power-mastery",
+      "title": "Congressional Power Mastery",
+      "description": "Average at least 85% across at least 3 Congressional Power scenarios.",
+      "icon": "\ud83c\udfdb\ufe0f",
+      "rule": {
+        "type": "regionMastery",
+        "regionId": "congressional-power",
+        "minCompleted": 3,
+        "minAveragePercent": 85
+      }
+    },
+    {
+      "id": "separation-of-powers-mastery",
+      "title": "Separation of Powers Mastery",
+      "description": "Average at least 85% across at least 3 Separation of Powers scenarios.",
+      "icon": "\ud83d\udd00",
+      "rule": {
+        "type": "regionMastery",
+        "regionId": "separation-of-powers",
+        "minCompleted": 3,
+        "minAveragePercent": 85
+      }
+    },
+    {
+      "id": "foreign-affairs-mastery",
+      "title": "Foreign Affairs Mastery",
+      "description": "Average at least 85% across at least 3 Foreign Affairs scenarios.",
+      "icon": "\ud83c\udf10",
+      "rule": {
+        "type": "regionMastery",
+        "regionId": "foreign-affairs",
+        "minCompleted": 3,
+        "minAveragePercent": 85
+      }
+    },
+    {
+      "id": "equal-protection-mastery",
+      "title": "Equal Protection Mastery",
+      "description": "Average at least 85% across at least 3 Equal Protection scenarios.",
+      "icon": "\ud83d\udee1\ufe0f",
+      "rule": {
+        "type": "regionMastery",
+        "regionId": "equal-protection",
+        "minCompleted": 3,
+        "minAveragePercent": 85
+      }
+    },
+    {
+      "id": "due-process-mastery",
+      "title": "Due Process Mastery",
+      "description": "Average at least 85% across at least 3 Due Process scenarios.",
+      "icon": "\ud83d\udcdc",
+      "rule": {
+        "type": "regionMastery",
+        "regionId": "due-process",
+        "minCompleted": 3,
+        "minAveragePercent": 85
+      }
+    },
+    {
+      "id": "equal-protection-scholar",
+      "title": "Equal Protection Scholar",
+      "description": "Achieve 80%+ accuracy across 3+ Equal Protection scenarios.",
+      "icon": "\u2696\ufe0f",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "equal-protection",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "due-process-authority",
+      "title": "Due Process Authority",
+      "description": "Achieve 80%+ accuracy across 3+ Due Process scenarios.",
+      "icon": "\ud83d\udcdc",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "due-process",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "dormant-commerce-clause-expert",
+      "title": "Dormant Commerce Clause Expert",
+      "description": "Achieve 80%+ accuracy across 3+ Dormant Commerce Clause scenarios.",
+      "icon": "\ud83d\udea7",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "dormant-commerce",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
+    },
+    {
+      "id": "war-powers-strategist",
+      "title": "War Powers Strategist",
+      "description": "Achieve 80%+ accuracy across 3+ War Powers / Foreign Affairs scenarios.",
+      "icon": "\ud83c\udf96\ufe0f",
+      "rule": {
+        "type": "doctrineAccuracy",
+        "doctrineSlugPrefix": "war-powers",
+        "minAttempts": 3,
+        "minAccuracy": 80
+      }
     }
   ]
 }
